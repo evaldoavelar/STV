@@ -7,9 +7,9 @@
     <meta name="description" content="Trabalho de Pós Graduação"/>
 
     <!--css customizados-->
-    <link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all"/>
-    <link href="css/theme.min.css" rel="stylesheet" type="text/css" media="all"/>
-    <link href="css/style.css" rel="stylesheet" type="text/css" media="all"/>
+    <link href="{{ URL::asset('css/bootstrap.css')}}" rel="stylesheet" type="text/css" media="all"/>
+    <link href="{{ URL::asset('css/theme.min.css')}}" rel="stylesheet" type="text/css" media="all"/>
+    <link href="{{ URL::asset('css/style.css')}}" rel="stylesheet" type="text/css" media="all"/>
 
     <!--//theme-style-->
 
@@ -23,8 +23,8 @@
     </script>
 
     <!--//theme-style-->
-    <script src="js/jquery-2.2.3.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+    <script src="{{ URL::asset('js/jquery-2.2.3.min.js')}}"></script>
+    <script src="{{ URL::asset('js/bootstrap.min.js')}}"></script>
     <!--- start-rate---->
 
 
@@ -65,7 +65,7 @@
                     </ul>
                 </li>
                 <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="categorias" id="download" aria-expanded="false">Meus Cursos
+                    <a class="" href="meus-cursos" id="download" aria-expanded="false">Meus Cursos
                         <span class="card"></span></a>
                 </li>
 

@@ -6,14 +6,7 @@
 
 @section('container')
 
-    <div class="container">
-        <ul class="nav nav-tabs">
-            <li role="presentation" class="active"><a href="#">Curso</a></li>
-            <li role="presentation"><a href="#">Vídeos</a></li>
-            <li role="presentation"><a href="#">Material Didático</a></li>
-            <li role="presentation"><a href="#">Atividades</a></li>
-        </ul>
-    </div>
+    @include('cursos.partial.curso-tabs',array( "indice" => "video"  ))
 
     <section>
         <div class="container">
@@ -22,56 +15,90 @@
                 <div class="panel panel-default">
 
                     <div class="panel-heading">
-                        <h1>Dados do Cursos </h1>
+                        <h1>Vídeos do Curso </h1>
                     </div>
                     <div class="panel-body">
 
-                        <form class="form-horizontal" role="form">
+                        @if( ! isset( $novo ))
 
-                            <div class="form-group">
-                                <label for="titulo" class="col-sm-3 control-label">Título</label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="titulo" name="titulo" placeholder="Título">
-                                    <p class="help-block">Título do Curso</p>
+                            <form class="form-horizontal" role="form">
+
+                                <div class="form-group">
+                                    <label for="titulo" class="col-sm-3 control-label">Título</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" id="titulo" name="titulo"
+                                               placeholder="Título">
+                                        <p class="help-block">Título do Vídeo</p>
+                                    </div>
                                 </div>
+
+                                <div class="form-group">
+                                    <label for="descricao" class="col-sm-3 control-label">Descrição</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" id="descricao" name="descricao"
+                                               placeholder="Descrição">
+                                        <p class="help-block">Descrição do Vídeo</p>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label for="urlvideo" class="col-sm-3 control-label">Url</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" id="urlvideo" name="urlvideo"
+                                               placeholder="URl">
+                                        <p class="help-block">Informe a URL do Vídeo</p>
+                                    </div>
+                                </div>
+
+
+                                <button type="submit" class="btn btn-default ">Salvar Vídeo</button>
+                            </form>
+
+                        @else
+
+                            <div class="container">
+
+                                <p><a href="" class="btn btn-default">Novo</a> </p>
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th>Título</th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>Aula: Definindo as operações CRUD - Curso Completo de FireDac - Aula 7</td>
+                                        <td><span class="glyphicon glyphicon-edit"></span></td>
+                                        <td><span class="glyphicon glyphicon-trash"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Formulário de cadastro com FireMonkey e FireUI - Curso Completo de FireDac - Aula 8</td>
+                                        <td><span class="glyphicon glyphicon-edit"></span></td>
+                                        <td><span class="glyphicon glyphicon-trash"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Aula: Firedac com SQLite e Android - Curso Completo de FireDac - Aula 9</td>
+                                        <td><span class="glyphicon glyphicon-edit"></span></td>
+                                        <td><span class="glyphicon glyphicon-trash"></span></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
                             </div>
 
-                            <div class="form-group">
-                                <label for="instrutor" class="col-sm-3 control-label">Instrutor</label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="instrutor" name="instrutor"
-                                           placeholder="Instrutor">
-                                    <p class="help-block">Nome do Instrutor do Curso</p>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="categoria" class="col-sm-3 control-label">Categoria</label>
-                                <div class="col-sm-9">
-                                    <select class="form-control" name="categoria">
-                                        <option disabled selected>Selecione</option>
-                                        <option>Informatica</option>
-                                        <option>Ketchup</option>
-                                        <option>Relish</option>
-                                    </select>
-                                    <p class="help-block">Selecione uma Categoria para o Curso </p>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="palavraschave" class="col-sm-3 control-label">Palavras-chave</label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="palavraschave" name="palavraschave"
-                                           placeholder="Palavras-chave">
-                                    <p class="help-block">Defina algumas Palavras-chaves para identificar o Curso</p>
-                                </div>
-                            </div>
-
-
-                            <button type="submit" class="btn btn-default ">Salvar Curso</button>
-                        </form>
+                        @endif
                     </div>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="video">
+        <div class="container ">
+            <div class="row">
+
             </div>
         </div>
     </section>

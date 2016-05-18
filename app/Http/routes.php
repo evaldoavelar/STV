@@ -36,10 +36,36 @@ Route::get('/curso-video', function () {
     return view('cursos/curso-video');
 });
 
+Route::get('/meus-cursos', function () {
+    return view('cursos/meus-cursos');
+});
+
+
+
 
 Route::get('/usuario-cadastro', function () {
     return view('usuario/cadastro');
 });
+
+Route::get('/curso-cadastro', function () {
+    return view('cursos/curso-cadastro');
+});
+
+Route::get('/curso-cadastro-video', function () {
+    return view('cursos/curso-cadastro-video');
+});
+
+
+Route::get('/curso-cadastro-material', function () {
+    return view('cursos/curso-cadastro-material');
+});
+
+Route::get('/curso-cadastro-atividade', function () {
+    return view('cursos/curso-cadastro-atividade');
+});
+
+
+
 
 /*
 |--------------------------------------------------------------------------

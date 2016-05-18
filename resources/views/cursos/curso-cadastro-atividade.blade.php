@@ -6,9 +6,9 @@
 
 @section('container')
 
-    @include('cursos.partial.curso-tabs',array( "indice" => "material"  ))
+    @include('cursos.partial.curso-tabs',array( "indice" => "atividade"  ))
 
-    <section>
+    <div>
         <div class="container">
 
             <div class="row">
@@ -20,6 +20,8 @@
                     <div class="panel-body">
 
                         @if( ! isset( $novo ))
+
+
 
                             <form class="form-horizontal" role="form">
 
@@ -35,30 +37,125 @@
                                 <div class="form-group">
                                     <label for="descricao" class="col-sm-3 control-label">Descrição</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control" id="descricao" name="descricao"
-                                               placeholder="Descrição">
+                                        <textarea  class="form-control" id="descricao" name="descricao"
+                                               placeholder="Descrição"></textarea>
                                         <p class="help-block">Descrição do Material</p>
                                     </div>
                                 </div>
 
+                                <div id="questoes">
+                                    <legend>Questões</legend>
 
-                                <div class="form-group">
-                                    <label for="arquivo" class="col-sm-3 control-label">Arquivo</label>
+                                    <div id="questao1" class="questao">
+
+
+
+                                        <div class="form-group">
+                                            <label for="titulo" class="col-sm-3 control-label">Enunciado</label>
+                                            <div class="col-sm-9">
+                                                <textarea class="form-control" id="pergunta1" name="pergunta1"
+                                                       placeholder="Enuciado da Questão"></textarea>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="col-xs-1 col-sm-3"></div>
+                                            <div class="col-xs-1 col-sm-1">
+                                                <input type="radio" name="correta" class="pull-right" value="1">
+                                            </div>
+                                            <div class="col-xs-7 col-sm-7">
+                                                <input type="text" class="form-control" id="resposta" name="resposta"
+                                                       placeholder="Resposta">
+                                            </div>
+                                            <div class="col-xs-1 col-sm-1">
+                                                <span class="glyphicon glyphicon-ban-circle questao-excluir"
+                                                      title="Remover Opção"></span>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <div class="col-xs-1 col-sm-3"></div>
+                                            <div class="col-xs-1 col-sm-1">
+                                                <input type="radio" name="correta" class="pull-right" value="1">
+                                            </div>
+                                            <div class="col-xs-7 col-sm-7">
+                                                <input type="text" class="form-control" id="resposta" name="resposta"
+                                                       placeholder="Resposta">
+                                            </div>
+                                            <div class="col-xs-1 col-sm-1">
+                                                <span class="glyphicon glyphicon-ban-circle questao-excluir"
+                                                      title="Remover Opção"></span>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <div class="col-xs-1 col-sm-3"></div>
+                                            <div class="col-xs-1 col-sm-1">
+                                                <input type="radio" name="correta" class="pull-right" value="1">
+                                            </div>
+                                            <div class="col-xs-7 col-sm-7">
+                                                <input type="text" class="form-control" id="resposta" name="resposta"
+                                                       placeholder="Resposta">
+                                            </div>
+                                            <div class="col-xs-1 col-sm-1">
+                                                <span class="glyphicon glyphicon-ban-circle questao-excluir"
+                                                      title="Remover Opção"></span>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <div class="col-xs-1 col-sm-3"></div>
+                                            <div class="col-xs-1 col-sm-1">
+                                                <input type="radio" name="correta" class="pull-right" value="1">
+                                            </div>
+                                            <div class="col-xs-7 col-sm-7">
+                                                <input type="text" class="form-control" id="resposta" name="resposta"
+                                                       placeholder="Resposta">
+                                            </div>
+                                            <div class="col-xs-1 col-sm-1">
+                                                <span class="glyphicon glyphicon-ban-circle questao-excluir"
+                                                      title="Remover Opção"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group ">
+                                            <div class="col-sm-3 "></div>
+                                            <div class="col-sm-9">
+                                                <div class=" btn-group btn-group-xs " role="group" aria-label="...">
+                                                    <button type="button" class="btn btn-success">
+                                                        <span class="glyphicon  glyphicon-plus"></span>Adicionar Resposta
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+                                <legend>Questões</legend>
+
+                                <div class="form-group ">
+                                    <div class="col-sm-3 "></div>
                                     <div class="col-sm-9">
-                                        <input type="file" id="arquivo" name="arquivo">
-                                        <p class="help-block">Selecione o arquivo</p>
+                                        <div class=" btn-group btn-group-sm " role="group" aria-label="...">
+                                            <button type="button" class="btn btn-primary">Nova Questão</button>
+                                        </div>
                                     </div>
                                 </div>
 
-
-                                <button type="submit" class="btn btn-default ">Salvar Material</button>
+                                <button type="submit" class="btn btn-default ">Salvar Atividade</button>
                             </form>
 
                         @else
 
                             <div class="container">
 
-                                <p><a href="" class="btn btn-default">Novo</a> </p>
+                                <p><a href="" class="btn btn-default">Novo</a></p>
                                 <table class="table">
                                     <thead>
                                     <tr>
@@ -93,13 +190,7 @@
                 </div>
             </div>
         </div>
-    </section>
+        </section>
 
-    <section id="video">
-        <div class="container ">
-            <div class="row">
 
-            </div>
-        </div>
-    </section>
 @stop

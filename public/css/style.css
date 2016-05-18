@@ -76,12 +76,20 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
     color: #FFFFFF;
 }
 
+.questao input[type=radio], .questao-excluir{
+  margin-top: 10px !important;
+    font-size: 1.5em;
+    color: #ac2925;
+    cursor: pointer;
+}
+
+
+
 .contador{
     padding-top: 2.8em;
     padding-bottom: 5px;
 }
 .contador:not(:first-child) {
-
     border-top: 1px solid #c4c4c4;
 }
 
