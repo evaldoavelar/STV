@@ -76,13 +76,16 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
     color: #FFFFFF;
 }
 
-.questao input[type=radio], .questao-excluir{
+.questao input[type=radio],.resposta-excluir {
   margin-top: 10px !important;
     font-size: 1.5em;
     color: #ac2925;
     cursor: pointer;
 }
 
+.questao-excluir{
+
+}
 
 
 .contador{

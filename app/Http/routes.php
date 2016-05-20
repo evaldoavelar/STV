@@ -64,6 +64,13 @@ Route::get('/curso-cadastro-atividade', function () {
     return view('cursos/curso-cadastro-atividade');
 });
 
+Route::get('/atividade-questao', function () {
+    return view('cursos/partial/atividade-questao');
+});
+
+Route::get('/atividade-resposta', function () {
+    return view('cursos/partial/atividade-resposta');
+});
 
 
 

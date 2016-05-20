@@ -187,6 +187,7 @@
         <p>Desenvolvido por Evaldo Avelar Marques</p>
     </div>
 
+    @yield('scripts')
 </footer>
 
 </body>
