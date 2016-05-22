@@ -21,7 +21,7 @@
     <div class="respostas">
         {{-- inserir 4 respostas iniciais para a atividade--}}
         @for ($i = 0; $i < 4; $i++)
-            @include('cursos.partial.atividade-resposta')
+            @include('cursos.partial.atividade-resposta',array( "valor" => $i  ))
         @endfor
     </div>
 

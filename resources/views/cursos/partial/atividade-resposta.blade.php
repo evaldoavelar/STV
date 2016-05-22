@@ -2,7 +2,7 @@
 <div class="form-group">
     <div class="col-xs-1 col-sm-3"></div>
     <div class="col-xs-1 col-sm-1">
-        <input type="radio" name="correta" class="pull-right" value="">
+        <input type="radio" name="correta" class="pull-right" value="{{ isset($valor)? $valor : '1'  }}">
     </div>
     <div class="col-xs-7 col-sm-7">
         <textarea type="text"  class="form-control" id="resposta" name="resposta" placeholder="Resposta"> </textarea>

@@ -120,10 +120,9 @@
 
                         configurarAdicionarQuestao('.questao-adicionar');
 
-                        configurarExcluirResposta('.resposta-excluir');
-
                         configurarExcluirQuestao('.questao-excluir');
 
+                        configurarExcluirResposta('.resposta-excluir');
                     },
                     error: function (event) {
                         console.log("Erro na Requisição Ajax ");
@@ -157,8 +156,15 @@
 
                     //adicionar o novo click
                     $(value).click(function () {
-                        //auto remover
-                        $(this.parentNode.parentNode).remove();
+                        var root = this.parentNode.parentNode.parentNode;
+                        if (root.childElementCount === 1) {
+                            alert('A questão deve ter ao menos uma resposta!');
+                        } else {
+                            if (confirm('Excluir a resposta?')) {
+                                //auto remover
+                                $(this.parentNode.parentNode).remove();
+                            }
+                        }
                     });
 
                 });
@@ -173,16 +179,22 @@
 
                     //adicionar o novo click
                     $(value).click(function () {
-                        //auto remover
-                        $(this.parentNode.parentNode).closest('.questao').remove();
+                        if (confirm('Excluir a Questão?')) {
+                            //auto remover
+                            $(this.parentNode.parentNode).closest('.questao').remove();
+                        }
                     });
 
                 });
             }
 
             function AdicionarResposta(div) {
+
+                //obter o numero de elementos
+                var count = div.children().size() ;
+
                 $.ajax({
-                    url: "{{ url('/atividade-resposta') }}",
+                    url: "{{ url('/atividade-resposta') }}/"+count,
                     success: function (result) {
                         console.log("Requisição Ajax completada com sucesso");
                         console.log("Adicionando resultado");
@@ -193,9 +205,11 @@
                         console.log("Erro na Requisição Ajax ");
                     }
                 });
+
             }
 
 
-        });
+        })
+        ;
     </script>
 @stop
