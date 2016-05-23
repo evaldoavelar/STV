@@ -68,13 +68,9 @@ Route::get('/atividade-questao', function () {
     return view('cursos/partial/atividade-questao');
 });
 
-Route::get('/atividade-resposta/{valor}','Atividade@novaResposta')->where('id', '[0-9]+');;
-
-/*Route::get('/atividade-resposta', function () {
-    return view('cursos/partial/atividade-resposta');
-});*/
-
-
+/*Rotas Atividade */
+Route::get('/atividade-resposta/{valor}','AtividadeController@novaResposta')->where('valor', '[0-9]+');;
+Route::post('/atividade/salvar', 'AtividadeController@salvar');
 
 /*
 |--------------------------------------------------------------------------

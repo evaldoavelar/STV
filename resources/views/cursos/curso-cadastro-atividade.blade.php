@@ -22,9 +22,7 @@
 
                     @if( ! isset( $novo ))
 
-
-
-                        <form class="form-horizontal" role="form">
+                        <form class="form-horizontal" role="form" action="{{url('atividade/salvar')}}" method="post">
 
                             <div class="form-group">
                                 <label for="titulo" class="col-sm-3 control-label">Título</label>

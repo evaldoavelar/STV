@@ -11,9 +11,7 @@
     <link href="{{ URL::asset('css/theme.min.css')}}" rel="stylesheet" type="text/css" media="all"/>
     <link href="{{ URL::asset('css/style.css')}}" rel="stylesheet" type="text/css" media="all"/>
 
-    <!--//theme-style-->
-
-
+    <!--scripts-->
     <script type="application/x-javascript"> addEventListener("load", function () {
             setTimeout(hideURLbar, 0);
         }, false);
@@ -22,11 +20,8 @@
         }
     </script>
 
-    <!--//theme-style-->
     <script src="{{ URL::asset('js/jquery-2.2.3.min.js')}}"></script>
     <script src="{{ URL::asset('js/bootstrap.min.js')}}"></script>
-    <!--- start-rate---->
-
 
 </head>
 <body>
@@ -36,7 +31,7 @@
 <div class="navbar navbar-default navbar-static-top ">
     <div class="container">
 
-        <!-- Brand and toggle get grouped for better mobile display -->
+        <!-- Brand and toggle -->
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
                     data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -74,7 +69,7 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <span class="glyphicon glyphicon-user"></span> 
                             <strong>Usuário</strong>
-                            <span class="caret"></span></a>
+                            <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
                             <li>
