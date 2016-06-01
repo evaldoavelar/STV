@@ -62,7 +62,7 @@
                             </div>
 
 
-                            <button type="submit" class="btn btn-default">Criar Usuário</button>
+                            <button type="submit" class="btn btn-default">Salvar</button>
                         </form>
                     </div>
                 </div>

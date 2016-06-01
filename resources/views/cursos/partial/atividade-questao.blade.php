@@ -13,7 +13,7 @@
     <div class="form-group">
         <label for="titulo" class="col-sm-3 control-label">Enunciado</label>
         <div class="col-sm-9">
-            <textarea class="form-control" id="pergunta1" name="pergunta1" placeholder="Enuciado da Questão"></textarea>
+            <textarea class="form-control" id="pergunta1" name="questao[]['enunciado']" placeholder="Enuciado da Questão"></textarea>
             <p class="help-block">Respostas</p>
         </div>
     </div>

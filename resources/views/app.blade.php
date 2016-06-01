@@ -46,19 +46,31 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav pull-right">
                 <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">Cursos <span
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">Cursos<span
                                 class="caret"></span></a>
                     <ul class="dropdown-menu dropdown-menu-right " aria-labelledby="download">
-                        <li><a href="/categorias/1" target="_top">Matémática</a></li>
+                        <li><a href="categorias/1" target="_top">Matémática</a></li>
                         <li class="divider"></li>
-                        <li><a href="/categorias/1" target="_top">Portugês</a></li>
+                        <li><a href="categorias/1" target="_top">Portugês</a></li>
                         <li class="divider"></li>
-                        <li><a href="/categorias/1" target="_top">História</a></li>
+                        <li><a href="categorias/1" target="_top">História</a></li>
                         <li class="divider"></li>
-                        <li><a href="/categorias" target="_top">Todas</a></li>
+                        <li><a href="categorias" target="_top">Todas</a></li>
 
                     </ul>
                 </li>
+
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">Administração <span
+                                class="caret"></span></a>
+                    <ul class="dropdown-menu dropdown-menu-right " aria-labelledby="download">
+                        <li><a href="usuario-lista" target="_top">Usuários</a></li>
+                        <li class="divider"></li>
+                        <li><a href="curso-lista" target="_top">Cursos</a></li>
+
+                    </ul>
+                </li>
+
                 <li class="dropdown">
                     <a class="" href="meus-cursos" id="download" aria-expanded="false">Meus Cursos
                         <span class="card"></span></a>
@@ -81,7 +93,7 @@
                                             </p>
                                         </div>
                                         <div class="col-lg-8">
-                                            <p class="text-left"><strong>Usuário</strong></p>
+                                             <p class="text-left"><strong>Usuário</strong></p>
                                             <p class="text-left small">correoElectronico@email.com</p>
                                             <p class="text-left">
                                                 <a href="#" class="btn btn-info btn-block btn-sm">Perfil</a>

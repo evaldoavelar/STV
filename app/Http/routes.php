@@ -11,24 +11,15 @@
 |
 */
 
-Route::get('/', function () {
+Route::get('/1', function () {
     return view('welcome');
 });
-
+Route::get('/', 'teste@index');
 
 Route::get('/teste', 'teste@index');
 
 Route::get('/home', function () {
     return view('home/home');
-});
-
-
-Route::get('/categorias', function () {
-    return view('cursos/listagem-categorias');
-});
-
-Route::get('/curso-detalhes', function () {
-    return view('cursos/curso-detalhes');
 });
 
 
@@ -41,10 +32,24 @@ Route::get('/meus-cursos', function () {
 });
 
 
+Route::get('/categorias', function () {
+    return view('cursos/listagem-categorias');
+});
 
+Route::get('/curso-lista', function () {
+    return view('cursos/curso-listagem');
+});
+
+Route::get('/curso-detalhes', function () {
+    return view('cursos/curso-detalhes');
+});
+
+Route::get('/usuario-lista', function () {
+    return view('usuario/usuario-listagem');
+});
 
 Route::get('/usuario-cadastro', function () {
-    return view('usuario/cadastro');
+    return view('usuario/usuario-cadastro');
 });
 
 Route::get('/curso-cadastro', function () {
