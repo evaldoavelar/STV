@@ -41,7 +41,11 @@ Route::get('/curso-lista', function () {
 });
 
 Route::get('/curso-detalhes', function () {
-    return view('cursos/curso-detalhes');
+    return view('cursos/curso-usuario-detalhes');
+});
+
+Route::get('/curso-admin-detalhes', function () {
+    return view('cursos/curso-admin-detalhes');
 });
 
 Route::get('/usuario-lista', function () {
