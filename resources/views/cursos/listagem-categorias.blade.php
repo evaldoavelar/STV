@@ -54,7 +54,7 @@
                             <p>CSS, Jquery, Bootstrap, HTML 5, Java script, Angular JS e muito mais. Saiba tudo de Front
                                 End!</p>
 
-                            <p><a href="curso-detalhes"><span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> Ver Cursos</a> </p>
+                            <p><a href="cursos-por-categoria"><span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> Ver Cursos</a> </p>
                         </div>
                     </div>
                 </div>
@@ -71,43 +71,7 @@
                             <p>CSS, Jquery, Bootstrap, HTML 5, Java script, Angular JS e muito mais. Saiba tudo de Front
                                 End!</p>
 
-                            <p><a href="curso-detalhes"><span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> Ver Cursos</a> </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row ">
-                <div class="col-lg-6 col-md-6 col-sm-12">
-
-                    <div class="panel panel-default">
-                        <div class="panel-heading ">
-                            <h4><span class="glyphicon glyphicon-facetime-video" aria-hidden="true"></span> Front-End  <span class="badge pull-right"> 6 Cursos</span></h4>
-
-                        </div>
-                        <div class=" panel-body ">
-
-                            <p>CSS, Jquery, Bootstrap, HTML 5, Java script, Angular JS e muito mais. Saiba tudo de Front
-                                End!</p>
-
-                            <p><a href="curso-detalhes"><span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> Ver Cursos</a> </p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-6 col-md-6 col-sm-12">
-
-                    <div class="panel panel-default">
-                        <div class="panel-heading ">
-                            <h4><span class="glyphicon glyphicon-facetime-video" aria-hidden="true"></span> Front-End  <span class="badge pull-right"> 6 Cursos</span></h4>
-
-                        </div>
-                        <div class=" panel-body ">
-
-                            <p>CSS, Jquery, Bootstrap, HTML 5, Java script, Angular JS e muito mais. Saiba tudo de Front
-                                End!</p>
-
-                            <p><a href="curso-detalhes"><span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> Ver Cursos</a> </p>
+                            <p><a href="cursos-por-categoria"><span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> Ver Cursos</a> </p>
                         </div>
                     </div>
                 </div>
@@ -126,7 +90,7 @@
                             <p>CSS, Jquery, Bootstrap, HTML 5, Java script, Angular JS e muito mais. Saiba tudo de Front
                                 End!</p>
 
-                            <p><a href="curso-detalhes"><span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> Ver Cursos</a> </p>
+                            <p><a href="cursos-por-categoria"><span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> Ver Cursos</a> </p>
                         </div>
                     </div>
                 </div>
@@ -143,7 +107,43 @@
                             <p>CSS, Jquery, Bootstrap, HTML 5, Java script, Angular JS e muito mais. Saiba tudo de Front
                                 End!</p>
 
-                            <p><a href="curso-detalhes"><span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> Ver Cursos</a> </p>
+                            <p><a href="cursos-por-categoria"><span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> Ver Cursos</a> </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row ">
+                <div class="col-lg-6 col-md-6 col-sm-12">
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading ">
+                            <h4><span class="glyphicon glyphicon-facetime-video" aria-hidden="true"></span> Front-End  <span class="badge pull-right"> 6 Cursos</span></h4>
+
+                        </div>
+                        <div class=" panel-body ">
+
+                            <p>CSS, Jquery, Bootstrap, HTML 5, Java script, Angular JS e muito mais. Saiba tudo de Front
+                                End!</p>
+
+                            <p><a href="cursos-por-categoria"><span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> Ver Cursos</a> </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-sm-12">
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading ">
+                            <h4><span class="glyphicon glyphicon-facetime-video" aria-hidden="true"></span> Front-End  <span class="badge pull-right"> 6 Cursos</span></h4>
+
+                        </div>
+                        <div class=" panel-body ">
+
+                            <p>CSS, Jquery, Bootstrap, HTML 5, Java script, Angular JS e muito mais. Saiba tudo de Front
+                                End!</p>
+
+                            <p><a href="cursos-por-categoria"><span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> Ver Cursos</a> </p>
                         </div>
                     </div>
                 </div>

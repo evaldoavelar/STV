@@ -31,6 +31,10 @@ Route::get('/meus-cursos', function () {
     return view('cursos/meus-cursos');
 });
 
+Route::get('/cursos-por-categoria', function () {
+    return view('cursos/cursos-por-categoria');
+});
+
 
 Route::get('/categorias', function () {
     return view('cursos/listagem-categorias');
