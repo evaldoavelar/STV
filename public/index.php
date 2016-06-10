@@ -56,3 +56,10 @@ $response = $kernel->handle(
 $response->send();
 
 $kernel->terminate($request, $response);
+
+//definir o diretorio padrão para o hostgator
+$app->bind('path.public', function() {
+    return __DIR__;
+});
+
+

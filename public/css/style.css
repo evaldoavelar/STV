@@ -1,6 +1,6 @@
 @font-face {
     font-family: 'Neuropol-Regular';
-    src: url('/fonts/Neuropol-Regular/Neuropol-Regular.eot?#iefix') format('embedded-opentype'), url('/fonts/Neuropol-Regular/Neuropol-Regular.woff') format('woff'), url('/fonts/Neuropol-Regular/Neuropol-Regular.ttf') format('truetype'), url('/fonts/Neuropol-Regular/Neuropol-Regular.svg#Neuropol-Regular') format('svg');
+    src: url('css/fonts/Neuropol-Regular/Neuropol-Regular.eot?#iefix') format('embedded-opentype'), url('fonts/Neuropol-Regular/Neuropol-Regular.woff') format('woff'), url('fonts/Neuropol-Regular/Neuropol-Regular.ttf') format('truetype'), url('fonts/Neuropol-Regular/Neuropol-Regular.svg#Neuropol-Regular') format('svg');
     font-weight: normal;
     font-style: normal;
 }
