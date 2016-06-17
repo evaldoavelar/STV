@@ -16,6 +16,7 @@ class CreateTableRespostas extends Migration
             $table->increments('id');
             $table->boolean('correta');
             $table->text('enunciado',200);
+            $table->timestamps();
             $table->integer('questao_id');
             $table->foreign('questao_id')->references('id')->on('questoes')->onDelete('cascade');
         });

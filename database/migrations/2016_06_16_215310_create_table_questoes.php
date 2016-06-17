@@ -15,6 +15,7 @@ class CreateTableQuestoes extends Migration
         Schema::create('questoes', function (Blueprint $table) {
             $table->increments('id');
             $table->text('enunciado',200);
+            $table->timestamps();
             $table->integer('atividades_id');
             $table->foreign('atividades_id')->references('id')->on('atividades')->onDelete('cascade');
         });

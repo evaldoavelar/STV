@@ -20,6 +20,7 @@ class CreateTableCursos extends Migration
             $table->integer('categoria_id');
             $table->text('palavras_chaves',200);
             $table->foreign('categoria_id')->references('id')->on('categorias');
+            $table->timestamps();
         });
     }
 
