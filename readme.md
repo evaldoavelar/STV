@@ -1,27 +1,27 @@
-# Laravel PHP Framework
+# STV
+Trabalho de Conclusão de Curso de Especialização em Desenvolvimento de Aplicações Web como requisito parcial à obtenção do título de especialista.
 
-[![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
-[![Total Downloads](https://poser.pugx.org/laravel/framework/d/total.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Stable Version](https://poser.pugx.org/laravel/framework/v/stable.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Unstable Version](https://poser.pugx.org/laravel/framework/v/unstable.svg)](https://packagist.org/packages/laravel/framework)
-[![License](https://poser.pugx.org/laravel/framework/license.svg)](https://packagist.org/packages/laravel/framework)
+##1. Apresentação
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as authentication, routing, sessions, queueing, and caching.
+1.1. Contexto
 
-Laravel is accessible, yet powerful, providing tools needed for large, robust applications. A superb inversion of control container, expressive migration system, and tightly integrated unit testing support give you the tools you need to build any application with which you are tasked.
+No momento atual em que vivemos, onde empresas precisam ser competitivas, manter colaboradores continuamente atualizados
+ é um grande desafio. Assegurar que estes participem de treinamentos em relação a práticas e as tecnologias necessárias
+ao bom funcionamento do processo como “qualidade de atendimento”, “uso sustentável de recursos”, “gestão do tempo”,
+“tecnologia A B ou C”, “sistema X, Y ou Z”, etc. A forma tradicional de se assegurar essa atualização é por meio de
+treinamentos periódicos presenciais, que exigem que as pessoas estejam, durante determinado período tempo em um local
+específico.
 
-## Official Documentation
+O grande problema dessa abordagem é que ela exige um local adequado além de conciliação do horário entre os envolvidos
+o que pode causar adiamento e até cancelamento dos treinamentos. Motivar os funcionários a participar é outro desafio,
+porque muitas vezes podem estar focados em suas tarefas cotidianas.
 
-Documentation for the framework can be found on the [Laravel website](http://laravel.com/docs).
+Nos últimos anos, surgiram vários serviços na Web (ex.: udemy.com, lynda.com, codeacademy.com, codeschool.com, etc.)
+que oferecem treinamentos online e, assim, substituem a necessidade de encontros presenciais.
+Essas plataformas, porém, são ofertados por empresas estrangeiras, geralmente em inglês,e sem permitir alguma
+personalização do material.
 
-## Contributing
+Em outras palavras, são cursos genéricos, direcionados a qualquer instituição. Abre-se espaço, assim, para que seja
+criada uma aplicação web a ser instalada no servidor de cada empresa, que gerencie os seus próprios cursos,
+a participação de seus empregados nesses cursos e ainda ofereça condições de avaliação da aprendizagem.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](http://laravel.com/docs/contributions).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
