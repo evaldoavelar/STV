@@ -15,10 +15,10 @@ class CreateTableRespostas extends Migration
         Schema::create('respostas', function (Blueprint $table) {
             $table->increments('id');
             $table->boolean('correta');
-            $table->text('enunciado',200);
-            $table->timestamps();
-            $table->integer('questao_id');
+            $table->text('enunciado',200);            
+            $table->integer('questao_id')->unsigned();   
             $table->foreign('questao_id')->references('id')->on('questoes')->onDelete('cascade');
+            $table->timestamps();
         });
     }
 
@@ -29,6 +29,6 @@ class CreateTableRespostas extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('respostas');
+        
     }
 }

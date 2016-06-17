@@ -63,6 +63,11 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
     width: 100%;
 }
 
+.error{
+    color: #d32b2b;
+    padding-left: 30px;
+}
+
 /*Manter um tamanho padrão da caixa idependente do conteudo*/
 
 .thumbnail h3, .thumbnail-p {

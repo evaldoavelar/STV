@@ -22,6 +22,21 @@ Route::get('/home', function () {
     return view('home/home');
 });
 
+Route::group(['middleware' => ['web']], function () {
+    /*------------------- Curso ------------------------*/
+    Route::get('/curso-cadastro', 'CursoController@novo');
+    Route::post('/curso-salvar', 'CursoController@salvar');
+    Route::get('/curso-lista', 'CursoController@listagem');
+    Route::get('/curso-admin-detalhes/{id}', 'CursoController@detalhesAdmin')->where('id', '[0-9]+');
+    Route::get('/curso-editar/{id}', 'CursoController@editar')->where('id', '[0-9]+');
+
+    /*------------------- Material ------------------------*/
+
+    Route::get('/curso-cadastro-material/{curso}','MaterialController@novo')->where('curso', '[0-9]+');
+
+    /*------------------- Vídeos ------------------------*/
+});
+
 
 Route::get('/curso-video', function () {
     return view('cursos/curso-video');
@@ -40,17 +55,12 @@ Route::get('/categorias', function () {
     return view('cursos/listagem-categorias');
 });
 
-Route::get('/curso-lista', function () {
-    return view('cursos/curso-listagem');
-});
+
 
 Route::get('/curso-detalhes', function () {
     return view('cursos/curso-usuario-detalhes');
 });
 
-Route::get('/curso-admin-detalhes', function () {
-    return view('cursos/curso-admin-detalhes');
-});
 
 Route::get('/usuario-lista', function () {
     return view('usuario/usuario-listagem');
@@ -60,18 +70,13 @@ Route::get('/usuario-cadastro', function () {
     return view('usuario/usuario-cadastro');
 });
 
-Route::get('/curso-cadastro', function () {
-    return view('cursos/curso-cadastro');
-});
 
 Route::get('/curso-cadastro-video', function () {
     return view('cursos/curso-cadastro-video');
 });
 
 
-Route::get('/curso-cadastro-material', function () {
-    return view('cursos/curso-cadastro-material');
-});
+
 
 Route::get('/curso-cadastro-atividade', function () {
     return view('cursos/curso-cadastro-atividade');

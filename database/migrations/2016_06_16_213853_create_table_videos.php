@@ -16,10 +16,10 @@ class CreateTableVideos extends Migration
             $table->increments('id');
             $table->string('titulo',200)->unique();
             $table->string('descricao',200);
-            $table->string('url',max);
-            $table->timestamps();
-            $table->integer('curso_id');
+            $table->string('url',1000);            
+            $table->integer('curso_id')->unsigned();
             $table->foreign('curso_id')->references('id')->on('cursos')->onDelete('cascade');;
+            $table->timestamps();
         });
     }
 
@@ -30,6 +30,6 @@ class CreateTableVideos extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('videos');
+    
     }
 }

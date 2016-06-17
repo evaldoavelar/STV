@@ -19,30 +19,30 @@
     <section>
         <div class="container">
             <div class="row">
-                    <nav class="navbar navbar-default">
-                        <div class="container-fluid">
-                            <!-- Collect the nav links, forms, and other content for toggling -->
-                            <div class="navbar-collapse" id="bs-example-navbar-collapse-1">
-                                <ul class="nav navbar-nav">
-                                    <li><a href="curso-cadastro" class="">Novo</a></li>
-                                    <li><a href="" class=""></a></li>
-                                </ul>
-                                <form class="navbar-form navbar-left " role="search">
-                                    <div class="form-group">
-                                        <select class="form-control">
-                                            <option value="nome">Título</option>
-                                            <option value="email">Instrutor</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" placeholder="Pesquisar">
-                                    </div>
-                                    <button type="submit" class="btn btn-default">Filtrar</button>
-                                </form>
+                <nav class="navbar navbar-default">
+                    <div class="container-fluid">
+                        <!-- Collect the nav links, forms, and other content for toggling -->
+                        <div class="navbar-collapse" id="bs-example-navbar-collapse-1">
+                            <ul class="nav navbar-nav">
+                                <li><a href="curso-cadastro" class="">Novo</a></li>
+                                <li><a href="" class=""></a></li>
+                            </ul>
+                            <form class="navbar-form navbar-left " role="search">
+                                <div class="form-group">
+                                    <select class="form-control">
+                                        <option value="nome">Título</option>
+                                        <option value="email">Instrutor</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Pesquisar">
+                                </div>
+                                <button type="submit" class="btn btn-default">Filtrar</button>
+                            </form>
 
-                            </div><!-- /.navbar-collapse -->
-                        </div><!-- /.container-fluid -->
-                    </nav>
+                        </div><!-- /.navbar-collapse -->
+                    </div><!-- /.container-fluid -->
+                </nav>
             </div>
 
             <div class="row">
@@ -62,24 +62,15 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td>Curso de JavaScript Completo</td>
-                                <td>José dos Santos</td>
-                                <td><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></td>
-                                <td><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></td>
-                            </tr>
-                            <tr>
-                                <td>Curso de JavaScript Completo</td>
-                                <td>José dos Santos</td>
-                                <td><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></td>
-                                <td><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></td>
-                            </tr>
-                            <tr>
-                                <td>Curso de JavaScript Completo</td>
-                                <td>José dos Santos</td>
-                                <td><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></td>
-                                <td><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></td>
-                            </tr>
+
+                            @foreach ($cursos as $c)
+                                <tr>
+                                    <td>{{$c->titulo}}</td>
+                                    <td>{{$c->instrutor}}</td>
+                                    <td><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></td>
+                                    <td><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></td>
+                                </tr>
+                            @endforeach
                             </tbody>
                         </table>
                     </div>

@@ -17,7 +17,8 @@ class CreateTableCursos extends Migration
             $table->string('titulo',200)->unique();
             $table->text('descricao',200);
             $table->text('instrutor',200);
-            $table->integer('categoria_id');
+            $table->integer('avaliação');
+            $table->integer('categoria_id')->unsigned();;
             $table->text('palavras_chaves',200);
             $table->foreign('categoria_id')->references('id')->on('categorias');
             $table->timestamps();
@@ -31,6 +32,6 @@ class CreateTableCursos extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cursos');
+        
     }
 }

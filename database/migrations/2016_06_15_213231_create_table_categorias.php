@@ -14,7 +14,7 @@ class CreateTableCategorias extends Migration
     {
         Schema::create('categorias', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('descricao');
+            $table->string('descricao',100);
             $table->timestamps();
         });
     }
@@ -26,6 +26,12 @@ class CreateTableCategorias extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('videos');
+        Schema::dropIfExists('materiais');
+        Schema::dropIfExists('respostas');
+        Schema::dropIfExists('questoes');
+        Schema::dropIfExists('atividades');
+        Schema::dropIfExists('cursos');
         Schema::dropIfExists('categorias');
     }
 }

@@ -12,8 +12,9 @@
         <div class="container espaco-40">
             <div class="row">
                 <div class="col-md-12 ">
-                    <p class="destaque">Detalhes  Curso <span>Engenharia de Software</span></p>
-                    <p class="destaque-sub">Introdução a Engenharia de Software - Caio Ribeiro</p>
+                    <p class="destaque">Detalhes  Curso <span>{{$curso->titulo}}</span></p>
+                    <p class="destaque-sub">{{$curso->descricao}} </p>
+                    <p class="destaque-sub">Instrutor - <span>{{$curso->instrutor}}</span></p>
                 </div>
             </div>
         </div>
@@ -23,16 +24,16 @@
         <div class="container ">
             <div class="row">
                 <nav class="navbar navbar-default">
-                    <div class="container-fluid">
+
                         <!-- Collect the nav links, forms, and other content for toggling -->
                         <div class="navbar-collapse" id="bs-example-navbar-collapse-1">
                             <ul class="nav navbar-nav">
-                                <li><a href="usuario-cadastro" class="">Novo Curso</a></li>
-                                <li><a href="" class="">Editar</a></li>
+                                <li><a href="{{ url('curso-cadastro')  }} " class=""><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;Novo</a></li>
+                                <li><a href="{{ url('curso-editar/'.( $curso->id) )  }}" class=""><span class="glyphicon glyphicon-edit" aria-hidden="true"></span>&nbsp;Editar</a></li>
                             </ul>
 
                         </div><!-- /.navbar-collapse -->
-                    </div><!-- /.container-fluid -->
+
                 </nav>
             </div>
         </div>
@@ -48,7 +49,7 @@
                         <div class="panel-heading ">
                             <h4><span class="glyphicon glyphicon-download" aria-hidden="true"></span> Material Didático
                             </h4>
-                            < <p><a href=""><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Novo</a></p>
+                            <p><a href="{{url('curso-cadastro-material/'.$curso->id)}}"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Novo</a></p>
 
                         </div>
                         <table class="table">
@@ -83,7 +84,7 @@
                     <div class="panel panel-default">
                         <div class="panel-heading ">
                             <h4><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Atividades</h4>
-                            <p><a href=""><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Novo</a></p>
+                            <p><a href="{{url('curso-cadastro-material/'.$curso->id)}}"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Novo</a></p>
                         </div>
                         <table class="table">
                             <thead>

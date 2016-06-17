@@ -14,10 +14,10 @@ class CreateTableQuestoes extends Migration
     {
         Schema::create('questoes', function (Blueprint $table) {
             $table->increments('id');
-            $table->text('enunciado',200);
-            $table->timestamps();
-            $table->integer('atividades_id');
+            $table->text('enunciado',200);            
+            $table->integer('atividades_id')->unsigned();            
             $table->foreign('atividades_id')->references('id')->on('atividades')->onDelete('cascade');
+            $table->timestamps();
         });
     }
 
@@ -28,8 +28,6 @@ class CreateTableQuestoes extends Migration
      */
     public function down()
     {
-        Schema::table('questoes', function (Blueprint $table) {
-            //
-        });
+      
     }
 }

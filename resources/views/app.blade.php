@@ -40,7 +40,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="home">STV</a>
+            <a class="navbar-brand" href="{{url('home')}}">STV</a>
         </div>
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -64,15 +64,15 @@
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">Administração <span
                                 class="caret"></span></a>
                     <ul class="dropdown-menu dropdown-menu-right " aria-labelledby="download">
-                        <li><a href="usuario-lista" target="_top">Usuários</a></li>
+                        <li><a href="{{ url('usuario-lista') }}" target="_top">Usuários</a></li>
                         <li class="divider"></li>
-                        <li><a href="curso-lista" target="_top">Cursos</a></li>
+                        <li><a href="{{ url('curso-lista') }}" target="_top">Cursos</a></li>
 
                     </ul>
                 </li>
 
                 <li class="dropdown">
-                    <a class="" href="meus-cursos" id="download" aria-expanded="false">Meus Cursos
+                    <a class="" href=" {{url('meus-cursos')}}" id="download" aria-expanded="false">Meus Cursos
                         <span class="card"></span></a>
                 </li>
 
@@ -126,7 +126,7 @@
 
 <div class="container espaco-30">
 
-    <img class=" pull-left hidden-xs " src="images/logo.png">
+    <img class=" pull-left hidden-xs " src="{{url('images/logo.png')}}">
 
     <nav id="busca" class=" pull-right">
         <form class="navbar-form navbar-left" role="search">
@@ -145,7 +145,7 @@
 </div>
 
 @yield('container')
-
+@yield('scripts')
 <!-- Rodapé -->
 
 <footer class="site-footer style-2">
@@ -158,7 +158,7 @@
                 <ul>
                     <li id="anpsimages-1" class="widget-container widget_anpsimages">
                         <h3 class="widget-title"></h3>
-                        <img alt="Logo" class="img-rounded" src="images/logo3.png"/>
+                        <img alt="Logo" class="img-rounded" src="{{url('images/logo3.png')}}"/>
                     </li>
                 </ul>
             </div>
@@ -194,7 +194,7 @@
         <p>Desenvolvido por Evaldo Avelar Marques</p>
     </div>
 
-    @yield('scripts')
+
 </footer>
 
 </body>
