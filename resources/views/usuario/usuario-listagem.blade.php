@@ -58,6 +58,7 @@
                                 <th>Nome</th>
                                 <th>Email</th>
                                 <th>Ativo</th>
+                                <th>Relatório</th>
                                 <th>Editar</th>
                                 <th>Excluir</th>
                             </tr>
@@ -67,6 +68,7 @@
                                 <td>Paulo</td>
                                 <td>paulo@gmail.com</td>
                                 <td>Sim</td>
+                                <td><span class="glyphicon glyphicon-object-align-bottom" aria-hidden="true"></span></td>
                                 <td><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></td>
                                 <td><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></td>
                             </tr>
@@ -74,6 +76,7 @@
                                 <td>Marcia</td>
                                 <td>marcia@gmail.com</td>
                                 <td>Sim</td>
+                                <td><span class="glyphicon glyphicon-object-align-bottom" aria-hidden="true"></span></td>
                                 <td><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></td>
                                 <td><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></td>
                             </tr>
@@ -81,6 +84,7 @@
                                 <td>Joana</td>
                                 <td>Jil@gmail.com</td>
                                 <td>Não</td>
+                                <td><span class="glyphicon glyphicon-object-align-bottom" aria-hidden="true"></span></td>
                                 <td><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></td>
                                 <td><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></td>
                             </tr>

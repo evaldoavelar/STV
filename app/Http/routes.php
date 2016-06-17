@@ -31,6 +31,10 @@ Route::get('/meus-cursos', function () {
     return view('cursos/meus-cursos');
 });
 
+Route::get('/cursos-por-categoria', function () {
+    return view('cursos/cursos-por-categoria');
+});
+
 
 Route::get('/categorias', function () {
     return view('cursos/listagem-categorias');
@@ -41,7 +45,11 @@ Route::get('/curso-lista', function () {
 });
 
 Route::get('/curso-detalhes', function () {
-    return view('cursos/curso-detalhes');
+    return view('cursos/curso-usuario-detalhes');
+});
+
+Route::get('/curso-admin-detalhes', function () {
+    return view('cursos/curso-admin-detalhes');
 });
 
 Route::get('/usuario-lista', function () {
