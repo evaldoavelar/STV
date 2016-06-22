@@ -35,8 +35,10 @@
                     </div>
                     <div class="panel-body">
 
-                            <form class="form-horizontal" role="form">
+                            <form id="frmCadastroMaterial" class="form-horizontal" role="form" action="{{url('curso-cadastro-material-salvar')}}"  method="post">
 
+
+                                <input type="hidden" name="_token" value="{{{ csrf_token() }}}"/>
                                 <input type="hidden" name="id" value=" {{$material->id}}"/>
                                 <input type="hidden" name="curso_id" value=" {{$material->curso_id}}"/>
 

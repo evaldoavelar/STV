@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Curso;
+use Illuminate\Support\Facades\Input;
 use App\Material;
+use App\Http\Requests\MaterialRequest;
 
-use App\Http\Requests;
 
 class MaterialController extends Controller
 {

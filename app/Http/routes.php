@@ -33,6 +33,7 @@ Route::group(['middleware' => ['web']], function () {
     /*------------------- Material ------------------------*/
 
     Route::get('/curso-cadastro-material/{curso}','MaterialController@novo')->where('curso', '[0-9]+');
+    Route::post('/curso-cadastro-material-salvar','MaterialController@salvar');
 
     /*------------------- Vídeos ------------------------*/
 });
