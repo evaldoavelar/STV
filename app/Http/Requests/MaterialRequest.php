@@ -21,6 +21,7 @@ class MaterialRequest extends Request
         return [
             'titulo' => 'required|max:200',
             'descricao' => 'required|max:200',
+            'arquivo' => 'required|max:3000'
         ];
     }
 

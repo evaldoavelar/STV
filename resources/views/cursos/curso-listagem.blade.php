@@ -24,7 +24,7 @@
                         <!-- Collect the nav links, forms, and other content for toggling -->
                         <div class="navbar-collapse" id="bs-example-navbar-collapse-1">
                             <ul class="nav navbar-nav">
-                                <li><a href="curso-cadastro" class="">Novo</a></li>
+                                <li><a href="curso-novo" class="">Novo</a></li>
                                 <li><a href="" class=""></a></li>
                             </ul>
                             <form class="navbar-form navbar-left " role="search">

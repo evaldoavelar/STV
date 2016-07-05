@@ -20,7 +20,7 @@ return [
     
     /*Diretorio de upload*/
     
-    'upload_material' => base_path().'/uploads/cursos/material/',
+    'upload_material' => base_path().DIRECTORY_SEPARATOR.'uploads'.DIRECTORY_SEPARATOR.'cursos'.DIRECTORY_SEPARATOR.'material',
     
 
     /*

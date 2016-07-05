@@ -1438,7 +1438,7 @@ td.visible-print,th.visible-print{display:table-cell!important}
 .text-warning,.text-warning:hover{color:#844545}
 .text-info,.text-info:hover{color:#b8abd8}
 .table-responsive>.table{background-color:transparent}
-.table a,table a{color:#fff;text-decoration:underline}
+.table a,table a{text-decoration:underline}
 .table .text-muted,table .text-muted{color:rgba(255,255,255,.6)}
 input,textarea{color:#444}
 legend{color:#fff}

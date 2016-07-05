@@ -24,16 +24,20 @@ Route::get('/home', function () {
 
 Route::group(['middleware' => ['web']], function () {
     /*------------------- Curso ------------------------*/
-    Route::get('/curso-cadastro', 'CursoController@novo');
+    Route::get('/curso-novo', 'CursoController@novo');
     Route::post('/curso-salvar', 'CursoController@salvar');
+    Route::post('/curso-atualizar', 'CursoController@atualizar');
+    Route::get('/curso-excluir', 'CursoController@excluir');
     Route::get('/curso-lista', 'CursoController@listagem');
     Route::get('/curso-admin-detalhes/{id}', 'CursoController@detalhesAdmin')->where('id', '[0-9]+');
     Route::get('/curso-editar/{id}', 'CursoController@editar')->where('id', '[0-9]+');
 
-    /*------------------- Material ------------------------*/
-
-    Route::get('/curso-cadastro-material/{curso}','MaterialController@novo')->where('curso', '[0-9]+');
-    Route::post('/curso-cadastro-material-salvar','MaterialController@salvar');
+    /*------------------- Material ------------------------*/        
+    Route::get('/novo-material/{curso}','MaterialController@novo')->where('curso', '[0-9]+');
+    Route::get('/editar-material/{id}','MaterialController@editar')->where('id', '[0-9]+');
+    Route::get('/excluir-material/{id}','MaterialController@excluir')->where('id', '[0-9]+');
+    Route::post('/material-salvar','MaterialController@salvar');
+    Route::post('/material-atualizar','MaterialController@atualizar');
 
     /*------------------- Vídeos ------------------------*/
 });

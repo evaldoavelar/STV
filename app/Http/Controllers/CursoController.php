@@ -25,20 +25,33 @@ class CursoController extends Controller
             'curso' => $curso);
 
         //retornar a view passando as categorias
-        return view('cursos/curso-cadastro')->with($dados);
+        return view('cursos/curso-novo')->with($dados);
     }
 
     /*Salvar um curso*/
     public function salvar( CursoRequest $request)
     {
+        $curso = new Curso();  
 
-        $curso = new Curso();
+        //popular o model
+        $curso->titulo = Input::get('titulo');
+        $curso->descricao = Input::get('descricao');
+        $curso->instrutor = Input::get('instrutor');
+        $curso->categoria_id = Input::get('categoria_id');
+        $curso->palavras_chaves = Input::get('palavras_chaves');
 
-        //verificar se o model está sendo inserido ou atualizado
-        if (Input::get('id', 0) > 0) {
-            //buscar pelo $id do model no banco de dados
-            $curso = Curso::find(Input::get('id'));
-        }
+        /*salvar o model*/
+        $curso->save();
+
+        /*redirecionar para os detalhes do curso*/
+        return redirect()->action('CursoController@detalhesAdmin', [$curso->id]);
+    }
+
+
+    /*Salvar um curso*/
+    public function atualizar( CursoRequest $request)
+    {       
+        $curso = Curso::find(Input::get('id'));        
 
         //popular o model
         $curso->titulo = Input::get('titulo');
@@ -69,7 +82,23 @@ class CursoController extends Controller
             'curso' => $curso);
 
         //retornar a view passando as categorias
-        return view('cursos/curso-cadastro')->with($dados);
+        return view('cursos/curso-editar')->with($dados);
+
+    }
+
+    /*Excluir o curso */
+    public function excluir($id)
+    {
+        //recurperar o curso
+        $curso = Curso::find($id);
+
+        if($curso == null){
+            return response(view('errors.404'), 404);
+        }
+
+        $curso->delete();
+       
+        return redirect()->action('CursoController@listagem');
 
     }
 
@@ -83,7 +112,8 @@ class CursoController extends Controller
 
     public function listagem()
     {
+        $cursos = Curso::all();
 
-        return view('cursos/curso-admin-detalhes');
+        return view('cursos/curso-listagem')->with('cursos',$cursos);
     }
 }

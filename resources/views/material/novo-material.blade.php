@@ -35,7 +35,7 @@
                     </div>
                     <div class="panel-body">
 
-                            <form id="frmCadastroMaterial" class="form-horizontal" role="form" action="{{url('curso-cadastro-material-salvar')}}"  method="post">
+                            <form id="frmCadastroMaterial" class="form-horizontal" enctype="multipart/form-data" role="form" action="{{url('material-atualizar')}}"  method="post">
 
 
                                 <input type="hidden" name="_token" value="{{{ csrf_token() }}}"/>
