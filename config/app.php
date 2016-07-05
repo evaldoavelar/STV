@@ -2,6 +2,9 @@
 
 return [
 
+    
+    
+    
     /*
     |--------------------------------------------------------------------------
     | Application Environment
@@ -14,6 +17,11 @@ return [
     */
 
     'env' => env('APP_ENV', 'production'),
+    
+    /*Diretorio de upload*/
+    
+    'upload_material' => base_path().'/uploads/cursos/material/',
+    
 
     /*
     |--------------------------------------------------------------------------

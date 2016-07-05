@@ -25,6 +25,14 @@ class MaterialController extends Controller
     public function salvar( MaterialRequest $request)
     {
 
+        $arquivo = Input::get('curso_id').'_'.$request->file('arquivo')->getClientOriginalExtension();
+        $path =  Config::get('app.upload_material');
+
+        //verificar se o arquivo está presente
+        if ( validarArquivo($request)){
+            Input::file('arquivo')->move($path, $arquivo);
+        }
+
         $material = new Material();
 
         //verificar se o model está sendo inserido ou atualizado
@@ -37,12 +45,24 @@ class MaterialController extends Controller
         $material->titulo = Input::get('titulo');
         $material->descricao = Input::get('descricao');
         $material->curso_id = Input::get('curso_id');
-        $material->arquivo = $request->file('arquivo');
+        $material->arquivo = $arquivo;
+
 
         /*salvar o model*/
         $material->save();
 
         /*redirecionar para os detalhes do curso*/
         return redirect()->action('CursoController@detalhesAdmin', [$material->curso_id]);
+    }
+
+    function validarArquivo($request){
+
+        if ( ! $request->isValid('arquivo') ){
+            return "Arquivo não é Válido";
+        }else if ($fileName = $request->file('photo')->getSize() > 50000 ) {
+            return "Arquivo Muito Grande!";
+        }else{
+            return true;
+        }
     }
 }

@@ -64,7 +64,7 @@
                                 <div class="form-group">
                                     <label for="arquivo" class="col-sm-3 control-label">Arquivo</label>
                                     <div class="col-sm-9">
-                                        <input type="file" id="arquivo" name="arquivo">
+                                        <input type="file" id="arquivo" name="arquivo" {{--accept="e.g: .gif, .jpg, .png, .doc, .pdf"--}}>
                                         <p class="help-block">Selecione o arquivo</p>
                                     </div>
                                 </div>
