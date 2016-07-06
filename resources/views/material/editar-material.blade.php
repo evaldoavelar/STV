@@ -89,3 +89,8 @@
         </div>
     </section>
 @stop
+
+@section('scripts')
+    <script src="{{ URL::asset('js/jquery.validate.min.js')}}"></script>
+    <script src="{{ URL::asset('js/valida-material.js')}}"></script>
+@stop

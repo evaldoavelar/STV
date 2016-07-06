@@ -57,8 +57,7 @@
                             <tr>
                                 <th>Título</th>
                                 <th>Instrutor</th>
-                                <th>Editar</th>
-                                <th>Excluir</th>
+                                <th>Vizualizar</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -67,8 +66,7 @@
                                 <tr>
                                     <td>{{$c->titulo}}</td>
                                     <td>{{$c->instrutor}}</td>
-                                    <td><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></td>
-                                    <td><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></td>
+                                    <td><a href="{{ url('/curso-admin-detalhes/'.$c->id)  }}"><span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span></a> </td>
                                 </tr>
                             @endforeach
                             </tbody>

@@ -33,13 +33,20 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/curso-editar/{id}', 'CursoController@editar')->where('id', '[0-9]+');
 
     /*------------------- Material ------------------------*/        
-    Route::get('/novo-material/{curso}','MaterialController@novo')->where('curso', '[0-9]+');
+    Route::get('/novo-material/{curso_id}','MaterialController@novo')->where('curso_id', '[0-9]+');
     Route::get('/editar-material/{id}','MaterialController@editar')->where('id', '[0-9]+');
     Route::get('/excluir-material/{id}','MaterialController@excluir')->where('id', '[0-9]+');
     Route::post('/material-salvar','MaterialController@salvar');
     Route::post('/material-atualizar','MaterialController@atualizar');
+    Route::get('/download-material/{id}','MaterialController@download')->where('id', '[0-9]+');    
 
     /*------------------- Vídeos ------------------------*/
+    Route::get('/novo-video/{curso_id}','VideoController@novo')->where('curso_id', '[0-9]+');
+    Route::get('/editar-video/{id}','VideoController@editar')->where('id', '[0-9]+');
+    Route::get('/excluir-video/{id}','VideoController@excluir')->where('id', '[0-9]+');
+    Route::post('/video-salvar','VideoController@salvar');
+    Route::post('/video-atualizar','VideoController@atualizar');
+    
 });
 
 

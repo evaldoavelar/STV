@@ -65,6 +65,8 @@
                             <thead>
                             <tr>
                                 <th>Título</th>
+                                <th>Descrição</th>
+                                <th>Link</th>
                                 <th>Editar</th>
                                 <th>Excluir</th>
                             </tr>
@@ -75,6 +77,7 @@
                                 <tr>
                                     <td>{{  $material->titulo }}</td>
                                     <td>{{  $material->descricao }}</td>
+                                    <td><a href="{{url('download-material/'.$material->id)}}">Download</a></td>
                                     <td>
                                         <a href="{{url('editar-material/'.$material->id)}}">
                                             <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
@@ -103,35 +106,33 @@
                     <div class="panel panel-default">
                         <div class="panel-heading ">
                             <h4><span class="glyphicon glyphicon-facetime-video" aria-hidden="true"></span> Vídeos</h4>
-                            <p><a href=""><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Novo</a></p>
+                            <p><a href="{{url('novo-video/'.$curso->id)}}"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Novo</a></p>
                         </div>
                         <table class="table">
                             <thead>
                             <tr>
                                 <th>Título</th>
+                                <th>Url</th>
                                 <th>Editar</th>
                                 <th>Excluir</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td> Este curso abordará de forma prática e objetiva
-                                    como devemos proceder para
-                                    especificar
-                                    requisitos através de casos de uso.
-                                </td>
-                                <td><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></td>
-                                <td><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <p>Este curso abordará de forma prática e objetiva
-                                        como devemos proceder para
-                                        especificar
-                                        requisitos através de casos de uso</td>
-                                <td><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></td>
-                                <td><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></td>
-                            </tr>
+                            @foreach( $curso->videos as $video)
+                                <tr>
+                                    <td>{{  $video->titulo }}</td>
+                                    <td><input type="text" value="{{$video->url}}" ></td>
+                                    <td>
+                                        <a href="{{url('editar-video/'.$video->id)}}">
+                                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="{{url('excluir-video/'.$video->id)}}">
+                                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                        </a>
+                                </tr>
+                            @endforeach
                             </tbody>
                         </table>
                     </div>

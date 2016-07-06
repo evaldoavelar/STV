@@ -4,12 +4,12 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Material extends Model
+class Video extends Model
 {
-    protected $table = 'materiais';
+    protected $table = 'videos';
 
     //campos que seram recuperados no request
-    protected $fillable = array('titulo','descricao','curso_id', 'arquivo');
+    protected $fillable = array('titulo','descricao','curso_id', 'url');
 
     public function curso()
     {

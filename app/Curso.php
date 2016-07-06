@@ -15,4 +15,9 @@ class Curso extends Model
     {
         return $this->hasMany('App\Material', 'curso_id', 'id');
     }
+
+    public function videos()
+    {
+        return $this->hasMany('App\Video', 'curso_id', 'id');
+    }
 }

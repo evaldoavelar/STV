@@ -51,7 +51,9 @@ class CursoController extends Controller
     /*Salvar um curso*/
     public function atualizar( CursoRequest $request)
     {       
-        $curso = Curso::find(Input::get('id'));        
+        $curso = Curso::find(Input::get('id'));
+
+        if (is_null($curso)) abort(404);
 
         //popular o model
         $curso->titulo = Input::get('titulo');
@@ -73,6 +75,8 @@ class CursoController extends Controller
         //recurperar o curso
         $curso = Curso::find($id);
 
+        if (is_null($curso)) abort(404);
+
         //recuperar as categorias do banco de dados
         $categorias = Categoria::all();
 
@@ -92,9 +96,8 @@ class CursoController extends Controller
         //recurperar o curso
         $curso = Curso::find($id);
 
-        if($curso == null){
-            return response(view('errors.404'), 404);
-        }
+        if (is_null($curso)) abort(404);
+
 
         $curso->delete();
        
@@ -107,9 +110,12 @@ class CursoController extends Controller
     {
         $curso = Curso::find($id);
 
+        if (is_null($curso)) abort(404);
+
         return view('cursos/curso-admin-detalhes')->with('curso', $curso);
     }
 
+    /*Listar todos os cursos Cadastrados*/
     public function listagem()
     {
         $cursos = Curso::all();

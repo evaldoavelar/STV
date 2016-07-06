@@ -35,18 +35,17 @@
                     </div>
                     <div class="panel-body">
 
-                            <form id="frmCadastroMaterial" class="form-horizontal" enctype="multipart/form-data" role="form" action="{{url('material-atualizar')}}"  method="post">
+                            <form id="frmCadastroMaterial" class="form-horizontal" enctype="multipart/form-data" role="form" action="{{url('material-salvar')}}"  method="post">
 
 
-                                <input type="hidden" name="_token" value="{{{ csrf_token() }}}"/>
-                                <input type="hidden" name="id" value=" {{$material->id}}"/>
-                                <input type="hidden" name="curso_id" value=" {{$material->curso_id}}"/>
+                                <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
+                                <input type="hidden" name="curso_id" value="{{$material->curso_id ? $material->curso_id : old('curso_id')}} "/>
 
                                 <div class="form-group">
                                     <label for="titulo" class="col-sm-3 control-label">Título</label>
                                     <div class="col-sm-9">
                                         <input type="text" class="form-control" id="titulo" name="titulo"
-                                               placeholder="Título" value="{{$material->titulo}}">
+                                               placeholder="Título" value="{{$material->titulo ? $material->titulo : old('titulo')}}"  >
                                         <p class="help-block">Título do Material</p>
                                     </div>
                                 </div>
@@ -55,7 +54,7 @@
                                     <label for="descricao" class="col-sm-3 control-label">Descrição</label>
                                     <div class="col-sm-9">
                                         <textarea class="form-control" id="descricao" name="descricao"
-                                               placeholder="Descrição">{{$material->descricao}}</textarea>
+                                               placeholder="Descrição">{{$material->descricao ? $material->descricao : old('descricao')}}</textarea>
                                         <p class="help-block">Descrição do Material</p>
                                     </div>
                                 </div>
@@ -87,4 +86,9 @@
             </div>
         </div>
     </section>
+@stop
+
+@section('scripts')
+    <script src="{{ URL::asset('js/jquery.validate.min.js')}}"></script>
+    <script src="{{ URL::asset('js/valida-material.js')}}"></script>
 @stop
