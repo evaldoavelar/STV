@@ -33,7 +33,7 @@
                                                                                        aria-hidden="true"></span>&nbsp;Novo</a>
                             </li>
                             <li>
-                                <a href="{{ url('curso-editar/'.( $curso->id) )  }}" class=""><span
+                                <a href="{{ url('curso-editar', $curso->id)   }}" class=""><span
                                             class="glyphicon glyphicon-edit" aria-hidden="true"></span>&nbsp;Editar</a>
                             </li>
 
@@ -56,7 +56,7 @@
                         <div class="panel-heading ">
                             <h4><span class="glyphicon glyphicon-download" aria-hidden="true"></span> Material Didático
                             </h4>
-                            <p><a href="{{url('novo-material/'.$curso->id)}}"><span class="glyphicon glyphicon-plus"
+                            <p><a href="{{url('novo-material',$curso->id)}}"><span class="glyphicon glyphicon-plus"
                                                                                     aria-hidden="true"></span> Novo</a>
                             </p>
 
@@ -77,14 +77,14 @@
                                 <tr>
                                     <td>{{  $material->titulo }}</td>
                                     <td>{{  $material->descricao }}</td>
-                                    <td><a href="{{url('download-material/'.$material->id)}}">Download</a></td>
+                                    <td><a href="{{url('download-material',$material->id)}}">Download</a></td>
                                     <td>
-                                        <a href="{{url('editar-material/'.$material->id)}}">
+                                        <a href="{{url('editar-material',$material->id)}}">
                                             <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                                         </a>
                                     </td>
                                     <td>
-                                        <a href="{{url('excluir-material/'.$material->id)}}">
+                                        <a href="{{url('excluir-material',$material->id)}}">
                                             <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                                         </a>
                                 </tr>
@@ -106,7 +106,7 @@
                     <div class="panel panel-default">
                         <div class="panel-heading ">
                             <h4><span class="glyphicon glyphicon-facetime-video" aria-hidden="true"></span> Vídeos</h4>
-                            <p><a href="{{url('novo-video/'.$curso->id)}}"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Novo</a></p>
+                            <p><a href="{{url('novo-video',$curso->id)}}"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Novo</a></p>
                         </div>
                         <table class="table">
                             <thead>
@@ -123,12 +123,12 @@
                                     <td>{{  $video->titulo }}</td>
                                     <td><input type="text" value="{{$video->url}}" ></td>
                                     <td>
-                                        <a href="{{url('editar-video/'.$video->id)}}">
+                                        <a href="{{url('editar-video',$video->id)}}">
                                             <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                                         </a>
                                     </td>
                                     <td>
-                                        <a href="{{url('excluir-video/'.$video->id)}}">
+                                        <a href="{{url('excluir-video',$video->id)}}">
                                             <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                                         </a>
                                 </tr>
@@ -148,7 +148,7 @@
                     <div class="panel panel-default">
                         <div class="panel-heading ">
                             <h4><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Atividades</h4>
-                            <p><a href="{{url('curso-cadastro-material/'.$curso->id)}}"><span
+                            <p><a href="{{url('curso-cadastro-material',$curso->id)}}"><span
                                             class="glyphicon glyphicon-plus" aria-hidden="true"></span> Novo</a></p>
                         </div>
                         <table class="table">

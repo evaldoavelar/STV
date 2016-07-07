@@ -66,7 +66,7 @@
                                 <tr>
                                     <td>{{$c->titulo}}</td>
                                     <td>{{$c->instrutor}}</td>
-                                    <td><a href="{{ url('/curso-admin-detalhes/'.$c->id)  }}"><span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span></a> </td>
+                                    <td><a href="{{ url('/curso-admin-detalhes',$c->id)  }}"><span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span></a> </td>
                                 </tr>
                             @endforeach
                             </tbody>

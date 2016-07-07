@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use File;
 use App\Curso;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
@@ -75,6 +76,11 @@ class MaterialController extends Controller
 
 
     /*Salvar um Material*/
+    /*
+     * Dar permissao no diretório
+     * chown -R www-data:www-data /var/www/html/branches/STV/
+     * chmod -R g+rw /var/www/html/branches/STV/
+     * */
     public function salvar(MaterialRequest $request)
     {    //https://developer.mozilla.org/en/docs/Using_files_from_web_applications
 
@@ -88,6 +94,7 @@ class MaterialController extends Controller
         $path = DIRECTORY_SEPARATOR . $curso_id . DIRECTORY_SEPARATOR . uniqid() . DIRECTORY_SEPARATOR;
         $fullPath = config('app.upload_material') . $path;
 
+        File::makeDirectory($fullPath);
         $request->file('arquivo')->move($fullPath, $arquivo);
 
         $material = new Material();

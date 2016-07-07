@@ -118,7 +118,7 @@ class CursoController extends Controller
     /*Listar todos os cursos Cadastrados*/
     public function listagem()
     {
-        $cursos = Curso::all();
+        $cursos = Curso::all()->orderBy('titulo','desc')->get();
 
         return view('cursos/curso-listagem')->with('cursos',$cursos);
     }
