@@ -6,8 +6,12 @@
 
 @section('container')
 
-    @include('cursos.partial.curso-tabs',array( "indice" => "atividade"  ))
 
+    <div class="container">
+        <ul class="nav nav-tabs">
+            <li role="presentation" class="active"><a href="">Atividades</a></li>
+        </ul>
+    </div>
 
 
     <div class="container">
