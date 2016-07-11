@@ -43,14 +43,6 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="foto" class="col-sm-3 control-label">Foto</label>
-                                <div class="col-sm-9">
-                                    <input type="file" id="foto" name="foto">
-                                    <p class="help-block">Selecione uma Foto</p>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
                                 <div class="col-sm-offset-3 col-sm-9">
                                     <div class="checkbox">
                                         <label>
@@ -58,6 +50,17 @@
                                         </label>
                                     </div>
                                     <p class="help-block">Define se o usuário estará ativo ou não</p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-sm-offset-3 col-sm-9">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" name="admin"> Administrador
+                                        </label>
+                                    </div>
+                                    <p class="help-block">Define se o usuário é Administrador ou não</p>
                                 </div>
                             </div>
 

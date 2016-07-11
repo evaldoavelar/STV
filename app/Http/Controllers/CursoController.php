@@ -14,6 +14,11 @@ use App\Http\Requests;
 class CursoController extends Controller
 {
 
+    function __construct()
+    {
+        $this->middleware('autorizacaoUsuarios');
+    }
+
     /*Novo Curso*/
     public function novo()
     {
@@ -116,7 +121,7 @@ class CursoController extends Controller
     }
 
     /*Listar todos os cursos Cadastrados*/
-    public function listagem()
+    public function lista()
     {
         $cursos = Curso::orderBy('titulo','asc')->get();
 

@@ -18,17 +18,25 @@ Route::get('/', 'teste@index');
 
 Route::get('/teste', 'teste@index');
 
-Route::get('/home', function () {
-    return view('home/home');
-});
+
 
 Route::group(['middleware' => ['web']], function () {
+
+    Route::get('/home', function () {
+        return view('home/home');
+    });
+
+    Route::controllers([
+        'auth' => 'Auth\AuthController',
+        'password' => 'Auth\PasswordController',
+    ]);
+
     /*------------------- Curso ------------------------*/
     Route::get('/curso-novo', 'CursoController@novo');
     Route::post('/curso-salvar', 'CursoController@salvar');
     Route::post('/curso-atualizar', 'CursoController@atualizar');
     Route::get('/curso-excluir', 'CursoController@excluir');
-    Route::get('/curso-lista', 'CursoController@listagem');
+    Route::get('/curso-lista', 'CursoController@lista');
     Route::get('/curso-admin-detalhes/{id}', 'CursoController@detalhesAdmin')->where('id', '[0-9]+');
     Route::get('/curso-editar/{id}', 'CursoController@editar')->where('id', '[0-9]+');
 
@@ -48,6 +56,8 @@ Route::group(['middleware' => ['web']], function () {
     Route::post('/video-atualizar','VideoController@atualizar');
     
 });
+
+
 
 
 Route::get('/curso-video', function () {
@@ -88,8 +98,6 @@ Route::get('/curso-cadastro-video', function () {
 });
 
 
-
-
 Route::get('/curso-cadastro-atividade', function () {
     return view('cursos/curso-cadastro-atividade');
 });
@@ -113,6 +121,7 @@ Route::post('/atividade/salvar', 'AtividadeController@salvar');
 |
 */
 
-Route::group(['middleware' => ['web']], function () {
-    //
+Route::group(['middleware' => 'web'], function () {
+    Route::auth();
+    Route::get('/home', 'HomeController@index');
 });

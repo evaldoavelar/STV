@@ -29,6 +29,8 @@ class AuthController extends Controller
      * @var string
      */
     protected $redirectTo = '/';
+    protected $redirectPath = '/';
+    protected $redirectAfterLogout = '/home';
 
     /**
      * Create a new authentication controller instance.
@@ -52,6 +54,8 @@ class AuthController extends Controller
             'name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|min:6|confirmed',
+            'ativo' => 'required',
+            'admin' => 'required',
         ]);
     }
 
@@ -66,6 +70,8 @@ class AuthController extends Controller
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
+            'ativo' => $data['ativo'],
+            'admin' => $data['admin'],
             'password' => bcrypt($data['password']),
         ]);
     }
