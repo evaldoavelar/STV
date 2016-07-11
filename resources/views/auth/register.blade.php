@@ -33,7 +33,7 @@
                             <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                                 <label class="col-sm-3 control-label">E-Mail</label>
 
-                                <div class="col-md-9">
+                                <div class="col-sm-9">
                                     <input type="email" class="form-control" name="email" value="{{ old('email') }}">
                                     <p class="help-block">Email do Funcionário</p>
                                     @if ($errors->has('email'))
@@ -77,7 +77,7 @@
                                 <label class="col-sm-3 control-label"></label>
 
                                 <div class="col-sm-9">
-                                    <input type="checkbox" name="ativo" value="{{ old('ativo') }}">Ativo
+                                        <input type="checkbox" name="ativo" {{ old('ativo') ? 'checked' : '' }}>Ativo
                                     @if ($errors->has('ativo'))
                                         <span class="help-block">
                                         <strong>{{ $errors->first('ativo') }}</strong>

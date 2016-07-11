@@ -31,6 +31,7 @@ class CreateTableCategorias extends Migration
         Schema::dropIfExists('respostas');
         Schema::dropIfExists('questoes');
         Schema::dropIfExists('atividades');
+        Schema::dropIfExists('unidades');
         Schema::dropIfExists('cursos');
         Schema::dropIfExists('categorias');
     }
