@@ -16,7 +16,7 @@ class CursoController extends Controller
 
     function __construct()
     {
-        $this->middleware('autorizacaoUsuarios');
+        $this->middleware('autorizacaoAdmin');
     }
 
     /*Novo Curso*/

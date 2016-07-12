@@ -1,6 +1,10 @@
-@extends('layouts.app')
+@extends('app')
 
-@section('content')
+@section('title')
+    Recuperar Senha
+@stop
+
+@section('container')
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">

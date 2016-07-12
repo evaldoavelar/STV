@@ -11,6 +11,9 @@
     <link href="{{ URL::asset('css/theme.min.css')}}" rel="stylesheet" type="text/css" media="all"/>
     <link href="{{ URL::asset('css/style.css')}}" rel="stylesheet" type="text/css" media="all"/>
 
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700" rel='stylesheet' type='text/css'>
+
     <!--scripts-->
     <script type="application/x-javascript"> addEventListener("load", function () {
             setTimeout(hideURLbar, 0);
@@ -93,27 +96,38 @@
                                             </p>
                                         </div>
                                         <div class="col-lg-8">
-                                             <p class="text-left"><strong>Usuário</strong></p>
-                                            <p class="text-left small">correoElectronico@email.com</p>
-                                            <p class="text-left">
-                                                <a href="#" class="btn btn-info btn-block btn-sm">Perfil</a>
-                                            </p>
+                                            @if( Auth::check())
+                                                <p class="text-left"><strong>{{Auth::user()->name }}</strong></p>
+                                                <p class="text-left small">{{Auth::user()->email }}</p>
+                                                <p class="text-left">
+                                                    <a href="{{url('/password/reset')}}" class="">Alterar Senha</a>
+                                                </p>
+
+                                            @else
+                                                <p class="text-left"><strong>Faça o Login abaixo</strong></p>
+                                                <p class="text-left">
+                                                    <a href="{{url('/login')}}" class="fa fa-btn fa-sign-in btn btn-info btn-block btn-sm">Login</a>
+                                                </p>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
                             </li>
-                            <li class="divider"></li>
-                            <li>
-                                <div class="navbar-login navbar-login-session">
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <p>
-                                                <a href="#" class="btn btn-danger btn-block">Sair</a>
-                                            </p>
+                            @if(Auth::check())
+                                <li class="divider"></li>
+                                <li>
+                                    <div class="navbar-login navbar-login-session">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <p>
+                                                    <a href="{{url('/logout')}}"
+                                                       class="btn btn-danger btn-block">Sair</a>
+                                                </p>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </li>
+                                </li>
+                            @endif
                         </ul>
                     </li>
                 </ul>
@@ -146,7 +160,7 @@
 
 @yield('container')
 @yield('scripts')
-<!-- Rodapé -->
+        <!-- Rodapé -->
 
 <footer class="site-footer style-2">
     <div class="vc_empty_space" style="height: 30px"><span

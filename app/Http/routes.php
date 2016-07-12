@@ -11,25 +11,18 @@
 |
 */
 
-Route::get('/1', function () {
-    return view('welcome');
-});
-Route::get('/', 'teste@index');
-
-Route::get('/teste', 'teste@index');
-
-
-
 Route::group(['middleware' => ['web']], function () {
+
+    Route::auth();
+
+    /*------------------- Curso ------------------------*/
+    Route::get('/', function () {
+        return view('home/home');
+    });
 
     Route::get('/home', function () {
         return view('home/home');
     });
-
-    Route::controllers([
-        'auth' => 'Auth\AuthController',
-        'password' => 'Auth\PasswordController',
-    ]);
 
     /*------------------- Curso ------------------------*/
     Route::get('/curso-novo', 'CursoController@novo');
@@ -120,8 +113,15 @@ Route::post('/atividade/salvar', 'AtividadeController@salvar');
 | kernel and includes session state, CSRF protection, and more.
 |
 */
-
+/*
 Route::group(['middleware' => 'web'], function () {
     Route::auth();
     Route::get('/home', 'HomeController@index');
+
+    Route::controllers([
+        'auth' => 'Auth\AuthController',
+        'password' => 'Auth\PasswordController',
+    ]);
 });
+
+ */

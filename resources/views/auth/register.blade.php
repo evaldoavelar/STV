@@ -77,7 +77,7 @@
                                 <label class="col-sm-3 control-label"></label>
 
                                 <div class="col-sm-9">
-                                        <input type="checkbox" name="ativo" {{ old('ativo') ? 'checked' : '' }}>Ativo
+                                    <input type="checkbox" name="ativo" {{ old('ativo') ? 'true' : 'false' }} value="{{ old('ativo') ? old('ativo') : 'true'}}">Ativo
                                     @if ($errors->has('ativo'))
                                         <span class="help-block">
                                         <strong>{{ $errors->first('ativo') }}</strong>
@@ -90,7 +90,7 @@
                                 <label class="col-sm-3 control-label"></label>
 
                                 <div class="col-sm-9">
-                                    <input type="checkbox" name="ativo" value="{{ old('admin') }}">Adminstrador
+                                    <input type="checkbox" name="admin" value="{{ old('admin') ? old('admin') : 'true'}}">Adminstrador
                                     @if ($errors->has('admin'))
                                         <span class="help-block">
                                         <strong>{{ $errors->first('admin') }}</strong>
@@ -99,13 +99,12 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
-                                <div class="col-md-6 ">
-                                    <button type="submit" class="btn btn-default">
-                                        <i class="fa fa-btn fa-user"></i>Cadastrar
-                                    </button>
-                                </div>
-                            </div>
+
+                            <button type="submit" class="btn btn-default">
+                                <i class="fa fa-btn fa-user"></i>Cadastrar
+                            </button>
+
+
                         </form>
                     </div>
                 </div>
