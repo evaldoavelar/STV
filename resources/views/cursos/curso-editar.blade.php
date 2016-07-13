@@ -46,6 +46,11 @@
                                     <input type="text" class="form-control" id="titulo" name="titulo"
                                            placeholder="Título" maxlength="200" value="{{$curso->titulo}}">
                                     <p class="help-block">Título do Curso</p>
+                                    @if ($errors->has('titulo'))
+                                        <span class="help-block">
+                                        <strong>{{ $errors->first('titulo') }}</strong>
+                                    </span>
+                                    @endif
                                 </div>
                             </div>
 

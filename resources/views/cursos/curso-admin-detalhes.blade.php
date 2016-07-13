@@ -56,7 +56,7 @@
                         Matématica</a>
                     </h4>
                     <p>
-                        <a href="{{url('novo-material',$curso->id)}}">
+                        <a href="{{url('unidade-novo',$curso->id)}}">
                             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Novo</a>
                     </p>
                 </div>

@@ -21,7 +21,7 @@ class AutorizacaoAdminMiddleware
        
 
         //se o usuario não está logado, redireciona para login
-        if (!$request->is('auth/login') && \Auth::guest()) {
+        if (!$request->is('login') && \Auth::guest()) {
 
             // return redirect('/auth/login');
 
@@ -29,15 +29,11 @@ class AutorizacaoAdminMiddleware
             //protected $redirectPath = '/';
             //no AuthController para redirecionar para  apágina de origem
             return redirect()->guest('/login');
-        }elseif ( ! \Auth::user()->admin){
+        }elseif ( (\Auth::check()) && (! \Auth::user()->admin)){
             abort(403,'Usuário não tem perfil de Administrador');
         }
 
-
-
         // print_r($request);
-
-
         return $next($request);
     }
 }

@@ -15,8 +15,12 @@ Route::group(['middleware' => ['web']], function () {
 
     /*------------------- Auth ------------------------*/
     Route::auth();
+    Route::get('/usuario-lista', 'Auth\AuthController@lista');
+    Route::get('/usuario-editar/{id}', 'Auth\AuthController@edit')->where('id', '[0-9]+');
+    Route::get('/usuario-excluir/{id}', 'Auth\AuthController@delete')->where('id', '[0-9]+');
+    Route::post('/usuario-salvar', 'Auth\AuthController@salvar');
 
-    /*------------------- Curso ------------------------*/
+    /*------------------- Home ------------------------*/
     Route::get('/', function () {
         return view('home/home');
     });
@@ -24,6 +28,8 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/home', function () {
         return view('home/home');
     });
+
+
 
     /*------------------- Curso ------------------------*/
     Route::get('/curso-novo', 'CursoController@novo');
@@ -33,6 +39,13 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/curso-lista', 'CursoController@lista');
     Route::get('/curso-admin-detalhes/{id}', 'CursoController@detalhesAdmin')->where('id', '[0-9]+');
     Route::get('/curso-editar/{id}', 'CursoController@editar')->where('id', '[0-9]+');
+
+    /*------------------- Unidade ------------------------*/
+    Route::get('/unidade-novo/{curso_id}','UnidadeController@novo')->where('curso_id', '[0-9]+');
+    Route::post('/unidade-salvar', 'UnidadeController@salvar');
+    Route::post('/unidade-atualizar', 'UnidadeController@atualizar');
+    Route::get('/unidade-excluir', 'UnidadeController@excluir');
+    Route::get('/unidade-editar/{id}', 'UnidadeController@editar')->where('id', '[0-9]+');
 
     /*------------------- Material ------------------------*/        
     Route::get('/novo-material/{curso_id}','MaterialController@novo')->where('curso_id', '[0-9]+');
@@ -78,9 +91,6 @@ Route::get('/curso-detalhes', function () {
 });
 
 
-Route::get('/usuario-lista', function () {
-    return view('usuario/usuario-listagem');
-});
 
 Route::get('/usuario-cadastro', function () {
     return view('usuario/usuario-cadastro');

@@ -13,14 +13,15 @@
                         <h1>Cadastro de Usuário</h1>
                     </div>
                     <div class="panel-body">
-                        <form class="form-horizontal" role="form" method="POST" action="{{ url('/register') }}">
+                        <form class="form-horizontal" role="form" method="POST" action="{{ url('/usuario-salvar') }}">
                             {!! csrf_field() !!}
 
+                            <input type="hidden" name="id" value="{{$usuario->id}}">
                             <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                                 <label for="name" class="col-sm-3 control-label">Nome</label>
                                 <div class="col-sm-9">
                                     <input type="text" placeholder="Nome" class="form-control" name="name"
-                                           value="{{ old('name') }}">
+                                           value="{{ $usuario->name ? $usuario->name : old('name')  }}">
                                     <p class="help-block">Nome do Funcionário</p>
                                     @if ($errors->has('name'))
                                         <span class="help-block">
@@ -34,7 +35,8 @@
                                 <label class="col-sm-3 control-label">E-Mail</label>
 
                                 <div class="col-sm-9">
-                                    <input type="email" class="form-control" name="email" value="{{ old('email') }}">
+                                    <input type="email" class="form-control" name="email"
+                                           value="{{ $usuario->email ? $usuario->email : old('email')  }}">
                                     <p class="help-block">Email do Funcionário</p>
                                     @if ($errors->has('email'))
                                         <span class="help-block">
@@ -77,7 +79,14 @@
                                 <label class="col-sm-3 control-label"></label>
 
                                 <div class="col-sm-9">
-                                    <input type="checkbox" name="ativo" {{ old('ativo') ? 'true' : 'false' }} value="{{ old('ativo') ? old('ativo') : 'true'}}">Ativo
+                                    <input type="checkbox" name="ativo"
+                                           value="true"
+                                    @if(isset($usuario))
+                                        {{  $usuario->ativo ? 'checked' : ''  }}
+                                            @else
+                                        {{  old('ativo') ? 'checked' : ''  }}
+                                            @endif
+                                    >Ativo
                                     @if ($errors->has('ativo'))
                                         <span class="help-block">
                                         <strong>{{ $errors->first('ativo') }}</strong>
@@ -90,7 +99,14 @@
                                 <label class="col-sm-3 control-label"></label>
 
                                 <div class="col-sm-9">
-                                    <input type="checkbox" name="admin" value="{{ old('admin') ? old('admin') : 'true'}}">Adminstrador
+                                    <input type="checkbox" name="admin"
+                                           value="true"
+                                    @if(isset($usuario))
+                                        {{  $usuario->admin ? 'checked' : ''  }}
+                                            @else
+                                        {{  old('admin') ? 'checked' : ''  }}
+                                            @endif
+                                    >Adminstrador
                                     @if ($errors->has('admin'))
                                         <span class="help-block">
                                         <strong>{{ $errors->first('admin') }}</strong>
@@ -101,7 +117,7 @@
 
 
                             <button type="submit" class="btn btn-default">
-                                <i class="fa fa-btn fa-user"></i>Cadastrar
+                                <i class="fa fa-btn fa-user"></i>Salvar
                             </button>
 
 
