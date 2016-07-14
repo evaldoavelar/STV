@@ -30,12 +30,17 @@
                             <form class="navbar-form navbar-left " role="search" get="{{url('/usuario-lista')}}">
                                 <div class="form-group">
                                     <select class="form-control" name="campo">
-                                        <option value="name">Nome</option>
-                                        <option value="email">Email</option>
+                                        <option {{ isset($campo)  ? ( $campo == 'name' ? 'selected' : '') : '' }} value="name">
+                                            Nome
+                                        </option>
+                                        <option {{ isset($campo)  ? ( $campo == 'email' ? 'selected' : '') : '' }} value="email">
+                                            Email
+                                        </option>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" name="valor" placeholder="Pesquisar" value="{{old('valor')}}">
+                                    <input type="text" class="form-control" name="valor" placeholder="Pesquisar"
+                                           value="{{ isset($valor)  ? $valor : '' }}">
                                 </div>
                                 <button type="submit" class="btn btn-default">Filtrar</button>
                             </form>
@@ -44,6 +49,8 @@
                     </div><!-- /.container-fluid -->
                 </nav>
             </div>
+
+            @if(!empty($usuarios))
 
             <div class="row">
                 <div class="panel panel-default">
@@ -71,16 +78,24 @@
                                     <td>{{$usuario->email}}</td>
                                     <td>{{$usuario->ativo ? 'Sim' : 'Não'}}</td>
                                     <td>{{$usuario->admin ? 'Sim' : 'Não'}}</td>
-                                    <td><a href="{{url('/usuario-relatorio',$usuario->id)}}"> <span class="glyphicon glyphicon-object-align-bottom" aria-hidden="true"></span></a>                                    </td>
-                                    <td><a href="{{url('/usuario-editar',$usuario->id)}}"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a></td>
-                                    <td><a href="{{url('/usuario-excluir',$usuario->id)}}"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></td>
+                                    <td><a href="{{url('/usuario-relatorio',$usuario->id)}}"> <span
+                                                    class="glyphicon glyphicon-object-align-bottom"
+                                                    aria-hidden="true"></span></a></td>
+                                    <td><a href="{{url('/usuario-editar',$usuario->id)}}"><span
+                                                    class="glyphicon glyphicon-edit" aria-hidden="true"></span></a></td>
+                                    <td><a href="{{url('/usuario-excluir',$usuario->id)}}"><span
+                                                    class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                                    </td>
                                 </tr>
+
                             @endforeach
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
+
+            @endif
         </div>
     </section>
 @stop

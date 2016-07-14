@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use App\Library\Util;
 use Validator;
 use DB;
 use App\Http\Controllers\Controller;
@@ -60,6 +61,12 @@ class AuthController extends Controller
         ]);
     }
 
+    /**
+     * Get a validator for an incoming registration request on update.
+     *
+     * @param  array $data
+     * @return \Illuminate\Contracts\Validation\Validator
+     */
     protected function validatorPost(array $data)
     {
         return Validator::make($data, [
@@ -87,6 +94,12 @@ class AuthController extends Controller
     }
 
 
+    /**
+     *  SObrescrever o Metodo Padrão de Registrar Usuario
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws \Illuminate\Foundation\Validation\ValidationException
+     */
     public function register(Request $request)
     {
         $validator = $this->validator($request->all());
@@ -102,6 +115,13 @@ class AuthController extends Controller
         return redirect('/usuario-lista');
     }
 
+
+    /**
+     *  Atualizar Usuario
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws \Illuminate\Foundation\Validation\ValidationException
+     */
     public function salvar(Request $request)
     {
         $validator = $this->validatorPost($request->all());
@@ -129,22 +149,32 @@ class AuthController extends Controller
         return redirect('/usuario-lista');
     }
 
+
+    /**
+     * Listar Usuário
+     */
     public function lista(Request $request)
     {
+        //Recuperar os parametros da requisição
         $data = $request->all();
 
+        //verifcar se está usando o filtro
+        if ( Util::checkIsNullAndEmpty($data,'campo') && Util::checkIsNullAndEmpty($data,'valor')  ){
+            //filtrar os usuários
+            $usuarios = User::where($data['campo'], "LIKE", $data['valor'] . '%')->get();
 
-        if ( (isset($data['campo']) && isset($data['valor']) ) && ( ($data['campo'] != "") && ($data['valor'] != "") ) ){
-            $usuarios = User::where('name',"ILIKE",'Maria');
-            dd(DB::getQueryLog());
-        }else{
-            $usuarios = User::all();
+            //retornar a consulta e os campos do filtro para a view
+            return view('auth/list')->with(['usuarios' => $usuarios, 'valor' => $data['valor'], 'campo' => $data['campo']]);
+            // dd(DB::getQueryLog());
+        } else {
+            return view('auth/list')->with(['usuarios' => array()]);
         }
 
-        //return view('auth.list')->with($usuarios);
-        return view('auth/list')->with('usuarios', $usuarios);
     }
 
+    /**
+     * Editar Usuário
+     */
     public function edit($id)
     {
         $usuario = User::find($id);
@@ -154,6 +184,10 @@ class AuthController extends Controller
         return view('auth/edit')->with('usuario', $usuario);
     }
 
+
+    /**
+     * Exlcuir Usuário
+     */
     public function delete($id)
     {
         $usuario = User::find($id);
