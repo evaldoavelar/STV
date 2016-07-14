@@ -1,7 +1,7 @@
 jQuery(document).ready(function ($) {
 
     // validate the comment form when it is submitted
-    $("#frmCadastroVideo").validate({// initialize the plugin
+    $("#frmCadastroUnidade").validate({// initialize the plugin
         rules: {
             descricao: {
                 required: true

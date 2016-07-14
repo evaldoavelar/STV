@@ -30,12 +30,12 @@
                             <form class="navbar-form navbar-left " role="search" get="{{url('/usuario-lista')}}">
                                 <div class="form-group">
                                     <select class="form-control" name="campo">
-                                        <option value="nome">Nome</option>
+                                        <option value="name">Nome</option>
                                         <option value="email">Email</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" name="valor" placeholder="Pesquisar">
+                                    <input type="text" class="form-control" name="valor" placeholder="Pesquisar" value="{{old('valor')}}">
                                 </div>
                                 <button type="submit" class="btn btn-default">Filtrar</button>
                             </form>

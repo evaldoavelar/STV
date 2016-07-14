@@ -30,8 +30,6 @@ Route::group(['middleware' => ['web']], function () {
         return view('home/home');
     });
 
-
-
     /*------------------- Curso ------------------------*/
     Route::get('/curso-novo', 'CursoController@novo');
     Route::post('/curso-salvar', 'CursoController@salvar');
@@ -58,8 +56,8 @@ Route::group(['middleware' => ['web']], function () {
 
     /*------------------- Vídeos ------------------------*/
     Route::get('/video-novo/{curso_id}','VideoController@novo')->where('curso_id', '[0-9]+');
-    Route::get('/editar-video/{id}','VideoController@editar')->where('id', '[0-9]+');
-    Route::get('/excluir-video/{id}','VideoController@excluir')->where('id', '[0-9]+');
+    Route::get('/video-editar/{id}','VideoController@editar')->where('id', '[0-9]+');
+    Route::get('/video-excluir/{id}','VideoController@excluir')->where('id', '[0-9]+');
     Route::post('/video-salvar','VideoController@salvar');
     Route::post('/video-atualizar','VideoController@atualizar');
     

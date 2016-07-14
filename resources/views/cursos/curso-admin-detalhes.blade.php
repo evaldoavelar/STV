@@ -137,13 +137,13 @@
                                             <td>{{  $video->titulo }}</td>
                                             <td><input type="text" value="{{$video->url}}"></td>
                                             <td>
-                                                <a href="{{url('editar-video',$video->id)}}">
+                                                <a href="{{url('video-editar',$video->id)}}">
                                                             <span class="glyphicon glyphicon-edit"
                                                                   aria-hidden="true"></span>
                                                 </a>
                                             </td>
                                             <td>
-                                                <a href="{{url('excluir-video',$video->id)}}">
+                                                <a href="{{url('video-excluir',$video->id)}}">
                                                             <span class="glyphicon glyphicon-trash"
                                                                   aria-hidden="true"></span>
                                                 </a>
@@ -290,13 +290,13 @@
                                         <td>{{  $video->titulo }}</td>
                                         <td><input type="text" value="{{$video->url}}"></td>
                                         <td>
-                                            <a href="{{url('editar-video',$video->id)}}">
+                                            <a href="{{url('video-editar',$video->id)}}">
                                                             <span class="glyphicon glyphicon-edit"
                                                                   aria-hidden="true"></span>
                                             </a>
                                         </td>
                                         <td>
-                                            <a href="{{url('excluir-video',$video->id)}}">
+                                            <a href="{{url('video-excluir',$video->id)}}">
                                                             <span class="glyphicon glyphicon-trash"
                                                                   aria-hidden="true"></span>
                                             </a>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\User;
 use Validator;
+use DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
@@ -130,10 +131,15 @@ class AuthController extends Controller
 
     public function lista(Request $request)
     {
+        $data = $request->all();
 
-        
-        
-        $usuarios = User::all();
+
+        if ( (isset($data['campo']) && isset($data['valor']) ) && ( ($data['campo'] != "") && ($data['valor'] != "") ) ){
+            $usuarios = User::where('name',"ILIKE",'Maria');
+            dd(DB::getQueryLog());
+        }else{
+            $usuarios = User::all();
+        }
 
         //return view('auth.list')->with($usuarios);
         return view('auth/list')->with('usuarios', $usuarios);

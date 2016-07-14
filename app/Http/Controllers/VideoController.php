@@ -51,7 +51,7 @@ class VideoController extends Controller
         }
 
         //retornar a view passando as categorias
-        return view('video.editar-video')->with('video', $video);
+        return view('video.video-editar')->with('video', $video);
     }
 
 
