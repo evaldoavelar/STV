@@ -38,7 +38,7 @@ class VideoController extends Controller
         $video = new Video(['curso_id' => $curso_id]);        
 
         //retornar a view passando o video
-        return view('video.novo-video')->with('video', $video);
+        return view('video.video-novo')->with('video', $video);
     }
 
     /*Editar Video*/

@@ -40,14 +40,14 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-      //  $this->middleware($this->guestMiddleware(), ['except' => 'logout']);
-        $this->middleware('autorizacaoAdmin',['except' => ['logout','login']]);
+        //  $this->middleware($this->guestMiddleware(), ['except' => 'logout']);
+        $this->middleware('autorizacaoAdmin', ['except' => ['logout', 'login']]);
     }
 
     /**
      * Get a validator for an incoming registration request.
      *
-     * @param  array  $data
+     * @param  array $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
     protected function validator(array $data)
@@ -64,14 +64,14 @@ class AuthController extends Controller
         return Validator::make($data, [
             'name' => 'required|max:255',
             'email' => 'required|email|max:255',
-            'password' => 'required|min:6|confirmed',
+            'password' => 'min:6|confirmed',
         ]);
     }
 
-        /**
+    /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array  $data
+     * @param  array $data
      * @return User
      */
     protected function create(array $data)
@@ -79,13 +79,13 @@ class AuthController extends Controller
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
-            'ativo' =>isset( $data['ativo']) ? true : false,
-            'admin' =>isset( $data['admin']) ? true : false,
+            'ativo' => isset($data['ativo']) ? true : false,
+            'admin' => isset($data['admin']) ? true : false,
             'password' => bcrypt($data['password']),
         ]);
     }
 
-   
+
     public function register(Request $request)
     {
         $validator = $this->validator($request->all());
@@ -105,8 +105,7 @@ class AuthController extends Controller
     {
         $validator = $this->validatorPost($request->all());
 
-        if ($validator->fails())
-        {
+        if ($validator->fails()) {
             $this->throwValidationException(
                 $request, $validator
             );
@@ -119,24 +118,29 @@ class AuthController extends Controller
 
         $usuario->name = $data['name'];
         $usuario->email = $data['email'];
-        $usuario->ativo =isset( $data['ativo']) ? true : false;
-        $usuario->admin =isset( $data['admin']) ? true : false;
-        $usuario->password = bcrypt($data['password']);
+        $usuario->ativo = isset($data['ativo']) ? true : false;
+        $usuario->admin = isset($data['admin']) ? true : false;
+        if (isset($data['password']) && trim($data['password']) != "")
+            $usuario->password = bcrypt($data['password']);
 
         $usuario->save();
 
         return redirect('/usuario-lista');
     }
 
-    public  function lista(){
+    public function lista(Request $request)
+    {
+
+        
         
         $usuarios = User::all();
-        
+
         //return view('auth.list')->with($usuarios);
-        return view('auth/list')->with('usuarios',$usuarios);
+        return view('auth/list')->with('usuarios', $usuarios);
     }
-    
-    public  function edit($id){
+
+    public function edit($id)
+    {
         $usuario = User::find($id);
 
         if (is_null($usuario)) abort(404);
@@ -144,7 +148,8 @@ class AuthController extends Controller
         return view('auth/edit')->with('usuario', $usuario);
     }
 
-    public  function delete($id){
+    public function delete($id)
+    {
         $usuario = User::find($id);
 
         if (is_null($usuario)) abort(404);

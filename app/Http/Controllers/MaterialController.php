@@ -42,7 +42,7 @@ class MaterialController extends Controller
         $material = new Material(['curso_id' => $curso_id]);
 
         //retornar a view passando o material
-        return view('material.novo-material')->with('material', $material);
+        return view('material.material-novo')->with('material', $material);
     }
 
     /*Editar Material*/
@@ -55,7 +55,7 @@ class MaterialController extends Controller
         }
 
         //retornar a view passando as categorias
-        return view('material.editar-material')->with('material', $material);
+        return view('material.material-editar')->with('material', $material);
     }
 
 

@@ -68,7 +68,7 @@
                                     <h4><span class="glyphicon glyphicon-download" aria-hidden="true"></span>
                                         Material Didático
                                     </h4>
-                                    <p><a href="{{url('novo-material',$curso->id)}}"><span
+                                    <p><a href="{{url('material-novo',$curso->id)}}"><span
                                                     class="glyphicon glyphicon-plus"
                                                     aria-hidden="true"></span> Novo</a>
                                     </p>
@@ -92,16 +92,16 @@
                                             <td>{{  $material->titulo }}</td>
                                             <td>{{  $material->descricao }}</td>
                                             <td>
-                                                <a href="{{url('download-material',$material->id)}}">Download</a>
+                                                <a href="{{url('material-download',$material->id)}}">Download</a>
                                             </td>
                                             <td>
-                                                <a href="{{url('editar-material',$material->id)}}">
+                                                <a href="{{url('material-editar',$material->id)}}">
                                                             <span class="glyphicon glyphicon-edit"
                                                                   aria-hidden="true"></span>
                                                 </a>
                                             </td>
                                             <td>
-                                                <a href="{{url('excluir-material',$material->id)}}">
+                                                <a href="{{url('material-excluir',$material->id)}}">
                                                             <span class="glyphicon glyphicon-trash"
                                                                   aria-hidden="true"></span>
                                                 </a>
@@ -118,7 +118,7 @@
                                 <div class="panel-heading ">
                                     <h4><span class="glyphicon glyphicon-facetime-video"
                                               aria-hidden="true"></span> Vídeos</h4>
-                                    <p><a href="{{url('novo-video',$curso->id)}}"><span
+                                    <p><a href="{{url('video-novo',$curso->id)}}"><span
                                                     class="glyphicon glyphicon-plus"
                                                     aria-hidden="true"></span> Novo</a></p>
                                 </div>
@@ -209,7 +209,7 @@
                             Matématica na vida Moderna</a>
                     </h4>
                     <p>
-                        <a href="{{url('novo-material',$curso->id)}}">
+                        <a href="{{url('material-novo',$curso->id)}}">
                             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Novo</a>
                     </p>
                 </div>
@@ -221,7 +221,7 @@
                                 <h4><span class="glyphicon glyphicon-download" aria-hidden="true"></span>
                                     Material Didático
                                 </h4>
-                                <p><a href="{{url('novo-material',$curso->id)}}"><span
+                                <p><a href="{{url('material-novo',$curso->id)}}"><span
                                                 class="glyphicon glyphicon-plus"
                                                 aria-hidden="true"></span> Novo</a>
                                 </p>
@@ -245,16 +245,16 @@
                                         <td>{{  $material->titulo }}</td>
                                         <td>{{  $material->descricao }}</td>
                                         <td>
-                                            <a href="{{url('download-material',$material->id)}}">Download</a>
+                                            <a href="{{url('material-download',$material->id)}}">Download</a>
                                         </td>
                                         <td>
-                                            <a href="{{url('editar-material',$material->id)}}">
+                                            <a href="{{url('material-editar',$material->id)}}">
                                                             <span class="glyphicon glyphicon-edit"
                                                                   aria-hidden="true"></span>
                                             </a>
                                         </td>
                                         <td>
-                                            <a href="{{url('excluir-material',$material->id)}}">
+                                            <a href="{{url('material-excluir',$material->id)}}">
                                                             <span class="glyphicon glyphicon-trash"
                                                                   aria-hidden="true"></span>
                                             </a>
@@ -271,7 +271,7 @@
                             <div class="panel-heading ">
                                 <h4><span class="glyphicon glyphicon-facetime-video"
                                           aria-hidden="true"></span> Vídeos</h4>
-                                <p><a href="{{url('novo-video',$curso->id)}}"><span
+                                <p><a href="{{url('video-novo',$curso->id)}}"><span
                                                 class="glyphicon glyphicon-plus"
                                                 aria-hidden="true"></span> Novo</a></p>
                             </div>

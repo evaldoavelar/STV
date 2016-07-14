@@ -27,15 +27,15 @@
                                 <li><a href="{{url('/register')}}" class="">Novo</a></li>
                                 <li><a href="" class=""></a></li>
                             </ul>
-                            <form class="navbar-form navbar-left " role="search">
+                            <form class="navbar-form navbar-left " role="search" get="{{url('/usuario-lista')}}">
                                 <div class="form-group">
-                                    <select class="form-control">
+                                    <select class="form-control" name="campo">
                                         <option value="nome">Nome</option>
                                         <option value="email">Email</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Pesquisar">
+                                    <input type="text" class="form-control" name="valor" placeholder="Pesquisar">
                                 </div>
                                 <button type="submit" class="btn btn-default">Filtrar</button>
                             </form>
