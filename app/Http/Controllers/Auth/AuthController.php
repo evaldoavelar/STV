@@ -167,7 +167,8 @@ class AuthController extends Controller
             return view('auth/list')->with(['usuarios' => $usuarios, 'valor' => $data['valor'], 'campo' => $data['campo']]);
             // dd(DB::getQueryLog());
         } else {
-            return view('auth/list')->with(['usuarios' => array()]);
+            $usuarios = User::all();
+            return view('auth/list')->with(['usuarios' => $usuarios]);
         }
 
     }

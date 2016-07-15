@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Input;
 use App\Categoria;
 use App\Curso;
-use Request;
+use App\Library\Util;
+use Illuminate\Http\Request;
 use App\Http\Requests\CursoRequest;
 
 
@@ -111,20 +112,33 @@ class CursoController extends Controller
     }
 
     /*Exibir os detalhe do curso para o admin*/
-    public function detalhesAdmin($id)
+    public function detalhesAdmin($id,$unidade = 0)
     {
         $curso = Curso::find($id);
 
         if (is_null($curso)) abort(404);
 
-        return view('cursos/curso-admin-detalhes')->with('curso', $curso);
+        return view('cursos/curso-admin-detalhes')->with(['curso' => $curso,'unidade_expande'=>$unidade]);
     }
 
     /*Listar todos os cursos Cadastrados*/
-    public function lista()
-    {
-        $cursos = Curso::orderBy('titulo','asc')->get();
+    public function lista(Request $request)   {
 
-        return view('cursos/curso-listagem')->with('cursos',$cursos);
+        //Recuperar os parametros da requisição
+        $data = $request->all();
+
+        //verifcar se está usando o filtro
+        if ( Util::checkIsNullAndEmpty($data,'campo') && Util::checkIsNullAndEmpty($data,'valor')  ){
+            //filtrar os usuários
+            $usuarios = Curso::where($data['campo'], "LIKE", $data['valor'] . '%')->get();
+
+            //retornar a consulta e os campos do filtro para a view
+            return view('cursos/curso-listagem')->with(['cursos' => $usuarios, 'valor' => $data['valor'], 'campo' => $data['campo']]);
+            // dd(DB::getQueryLog());
+        } else {
+            $cursos = Curso::orderBy('titulo','asc')->get();
+            return view('cursos/curso-listagem')->with('cursos',$cursos);
+        }
+
     }
 }

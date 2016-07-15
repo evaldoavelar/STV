@@ -21,7 +21,7 @@
 
     <section>
         <div class="container ">
-            <div class="row">
+            <div class="">
                 <nav class="navbar navbar-default">
 
                     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -46,29 +46,45 @@
     </section>
 
 
-    <section name="unidade">
-        <div class="container espaco-20">
-            <div class="panel panel-default">
-                <div class="panel-heading ">
-                    <h4>
-                        <a data-toggle="collapse" href="#unidade-1" aria-expanded="false" aria-controls="unidade-1">
-                        <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Unidade 1 - Estudo da
-                        Matématica</a>
-                    </h4>
-                    <p>
-                        <a href="{{url('unidade-novo',$curso->id)}}">
-                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Novo</a>
-                    </p>
-                </div>
-                <div id="unidade-1" class="panel-body collapse">
+    @forelse( $curso->unidades()->get() as $unidade)
 
-                    <section name="material">
+        <section name="unidade">
+            <div class="container espaco-20">
+                <div class="panel panel-default">
+                    <div class="panel-heading ">
+                        <h4>
+                            <a data-toggle="collapse" href="#unidade-{{$unidade->id}}"
+                               {{$unidade_expande == $unidade->id ?'aria-expanded="true" ' :'aria-expanded="false"' }}
+                               aria-controls="unidade-{{$unidade->id}}"
+                               class="{{ $unidade_expande == $unidade->id ?'collapsed ' :'' }}"
+                            >
+                                <span class="pdd glyphicon glyphicon-list-alt"
+                                      aria-hidden="true"></span> {{$unidade->descricao}}</a>
+
+                            <span class="right fa fa-caret-square-o-down"
+                                  aria-hidden="true"></span>
+                        </h4>
+                        <p>
+                            <a href="{{url('unidade-novo',$unidade->id)}}">
+                                <span class="pdd glyphicon glyphicon-plus" aria-hidden="true"></span> Novo</a>
+                            <a href="{{url('unidade-editar',$unidade->id)}}">
+                                <span class="pdd glyphicon glyphicon-edit" aria-hidden="true"></span>Editar</a>
+                            <a href="{{url('unidade-excluir',$unidade->id)}}">
+                                <span class="pdd glyphicon glyphicon-trash" aria-hidden="true"></span>Excluir</a>
+
+                        </p>
+                    </div>
+                    <div id="unidade-{{$unidade->id}}"
+                         class="panel-body {{ $unidade_expande == $unidade->id ?'collapse in ' :'collapse' }}"
+                            {{$unidade_expande == $unidade->id ?'aria-expanded="true" ' :'' }}>
+
+                        <section name="material">
                             <div class="panel panel-default">
                                 <div class="panel-heading ">
                                     <h4><span class="glyphicon glyphicon-download" aria-hidden="true"></span>
                                         Material Didático
                                     </h4>
-                                    <p><a href="{{url('material-novo',$curso->id)}}"><span
+                                    <p><a href="{{url('material-novo',$unidade->id)}}"><span
                                                     class="glyphicon glyphicon-plus"
                                                     aria-hidden="true"></span> Novo</a>
                                     </p>
@@ -87,7 +103,7 @@
                                     </thead>
                                     <tbody>
 
-                                    @foreach( $curso->materiais as $material)
+                                    @foreach( $unidade->materiais as $material)
                                         <tr>
                                             <td>{{  $material->titulo }}</td>
                                             <td>{{  $material->descricao }}</td>
@@ -109,16 +125,16 @@
                                     @endforeach
                                     </tbody>
                                 </table>
-                        </div>
-                    </section>
+                            </div>
+                        </section>
 
 
-                    <section name="video">
+                        <section name="video">
                             <div class="panel panel-default">
                                 <div class="panel-heading ">
                                     <h4><span class="glyphicon glyphicon-facetime-video"
                                               aria-hidden="true"></span> Vídeos</h4>
-                                    <p><a href="{{url('video-novo',$curso->id)}}"><span
+                                    <p><a href="{{url('video-novo',$unidade->id)}}"><span
                                                     class="glyphicon glyphicon-plus"
                                                     aria-hidden="true"></span> Novo</a></p>
                                 </div>
@@ -132,7 +148,7 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach( $curso->videos as $video)
+                                    @foreach( $unidade->videos as $video)
                                         <tr>
                                             <td>{{  $video->titulo }}</td>
                                             <td><input type="text" value="{{$video->url}}"></td>
@@ -153,14 +169,14 @@
                                     </tbody>
                                 </table>
                             </div>
-                    </section>
+                        </section>
 
-                    <section name="atividades">
+                        <section name="atividades">
                             <div class="panel panel-default">
                                 <div class="panel-heading ">
                                     <h4><span class="glyphicon glyphicon-book" aria-hidden="true"></span>
                                         Atividades</h4>
-                                    <p><a href="{{url('curso-cadastro-material',$curso->id)}}"><span
+                                    <p><a href="{{url('curso-cadastro-material',$unidade->id)}}"><span
                                                     class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                                             Novo</a></p>
                                 </div>
@@ -191,164 +207,46 @@
                                 </table>
                             </div>
 
-                    </section>
+                        </section>
 
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
+    @empty
+        <section name="unidade">
+            <div class="container espaco-20">
+                <div class="panel panel-default">
+                    <div class="panel-heading ">
 
-    <section name="unidade">
-        <div class="container espaco-20">
-            <div class="panel panel-default">
-                <div class="panel-heading ">
-                    <h4>
-                        <a data-toggle="collapse" href="#unidade-2" aria-expanded="false" aria-controls="unidade-2">
-                            <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Unidade 2 - Estudo da
-                            Matématica na vida Moderna</a>
-                    </h4>
-                    <p>
-                        <a href="{{url('material-novo',$curso->id)}}">
-                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Novo</a>
-                    </p>
-                </div>
-                <div id="unidade-2" class="panel-body collapse">
-
-                    <section name="material">
-                        <div class="panel panel-default">
-                            <div class="panel-heading ">
-                                <h4><span class="glyphicon glyphicon-download" aria-hidden="true"></span>
-                                    Material Didático
-                                </h4>
-                                <p><a href="{{url('material-novo',$curso->id)}}"><span
-                                                class="glyphicon glyphicon-plus"
-                                                aria-hidden="true"></span> Novo</a>
-                                </p>
-
-
-                            </div>
-                            <table class="table ">
-                                <thead>
-                                <tr>
-                                    <th>Título</th>
-                                    <th>Descrição</th>
-                                    <th>Link</th>
-                                    <th>Editar</th>
-                                    <th>Excluir</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-
-                                @foreach( $curso->materiais as $material)
-                                    <tr>
-                                        <td>{{  $material->titulo }}</td>
-                                        <td>{{  $material->descricao }}</td>
-                                        <td>
-                                            <a href="{{url('material-download',$material->id)}}">Download</a>
-                                        </td>
-                                        <td>
-                                            <a href="{{url('material-editar',$material->id)}}">
-                                                            <span class="glyphicon glyphicon-edit"
-                                                                  aria-hidden="true"></span>
-                                            </a>
-                                        </td>
-                                        <td>
-                                            <a href="{{url('material-excluir',$material->id)}}">
-                                                            <span class="glyphicon glyphicon-trash"
-                                                                  aria-hidden="true"></span>
-                                            </a>
-                                    </tr>
-                                @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                    </section>
-
-
-                    <section name="video">
-                        <div class="panel panel-default">
-                            <div class="panel-heading ">
-                                <h4><span class="glyphicon glyphicon-facetime-video"
-                                          aria-hidden="true"></span> Vídeos</h4>
-                                <p><a href="{{url('video-novo',$curso->id)}}"><span
-                                                class="glyphicon glyphicon-plus"
-                                                aria-hidden="true"></span> Novo</a></p>
-                            </div>
-                            <table class="table">
-                                <thead>
-                                <tr>
-                                    <th>Título</th>
-                                    <th>Url</th>
-                                    <th>Editar</th>
-                                    <th>Excluir</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                @foreach( $curso->videos as $video)
-                                    <tr>
-                                        <td>{{  $video->titulo }}</td>
-                                        <td><input type="text" value="{{$video->url}}"></td>
-                                        <td>
-                                            <a href="{{url('video-editar',$video->id)}}">
-                                                            <span class="glyphicon glyphicon-edit"
-                                                                  aria-hidden="true"></span>
-                                            </a>
-                                        </td>
-                                        <td>
-                                            <a href="{{url('video-excluir',$video->id)}}">
-                                                            <span class="glyphicon glyphicon-trash"
-                                                                  aria-hidden="true"></span>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                    </section>
-
-                    <section name="atividades">
-                        <div class="panel panel-default">
-                            <div class="panel-heading ">
-                                <h4><span class="glyphicon glyphicon-book" aria-hidden="true"></span>
-                                    Atividades</h4>
-                                <p><a href="{{url('curso-cadastro-material',$curso->id)}}"><span
-                                                class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                                        Novo</a></p>
-                            </div>
-                            <table class="table">
-                                <thead>
-                                <tr>
-                                    <th>Título</th>
-                                    <th>Editar</th>
-                                    <th>Excluir</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td>Atividade 1</td>
-                                    <td><span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                                    </td>
-                                    <td><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Atividade 2</td>
-                                    <td><span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                                    </td>
-                                    <td><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-
-                    </section>
-
+                        <h4>
+                            <a href="{{url('unidade-novo',$curso->id)}}">
+                                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Adicione uma
+                                Unidade</a>
+                        </h4>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+
+    @endforelse
+
+
+@stop
+
+@section('scripts')
+
+    <script>
+        $(document).ready(function () {
+
+            $(window).load(function () {
+                //Posicionar a página sobre a unidade que está sendo manipulada
+                $('html, body').animate({scrollTop: $('#unidade-{{ $unidade_expande }}').offset().top - 100}, 1000);
+
+            });
+        });
+
+    </script>
 
 @stop

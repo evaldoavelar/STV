@@ -39,7 +39,7 @@
                               action="{{url('video-salvar')}}" method="post">
 
                             <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
-                            <input type="hidden" name="curso_id" value="{{$video->curso_id ? $video->curso_id : old('curso_id')}} "/>
+                            <input type="hidden" name="unidade_id" value="{{$video->unidade_id ? $video->unidade_id : old('unidade_id')}} "/>
 
                             <div class="form-group">
                                 <label for="titulo" class="col-sm-3 control-label">Título</label>

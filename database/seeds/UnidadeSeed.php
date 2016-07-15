@@ -23,7 +23,7 @@ class UnidadeSeed extends Seeder
 
         DB::insert(' INSERT INTO unidades (id,descricao, curso_id) VALUES (?,?,?)',
             array(
-                3,'Unidade 2 - Avançado', 1
+                3,'Unidade 3 - Avançado', 1
             ));
     }
 }

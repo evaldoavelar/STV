@@ -41,14 +41,14 @@
 
                             <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
                             <input type="hidden" name="curso_id"
-                                   value="{{$unidade->curso_id ? $unidade->curso_id : old('curso_id')}} "/>
+                                   value="{{$unidade->curso_id ? $unidade->curso_id : old('curso_id')}}"/>
 
                             <div class="form-group">
                                 <label for="descricao" class="col-sm-3 control-label">Descrição</label>
                                 <div class="col-sm-9">
                                         <textarea class="form-control" id="descricao" name="descricao"
                                                   placeholder="Descrição">{{$unidade->descricao ? $unidade->descricao : old('descricao')}}</textarea>
-                                    <p class="help-block">Descrição do Material</p>
+                                    <p class="help-block">Descrição da Unidade</p>
                                     @if ($errors->has('name'))
                                         <span class="help-block">
                                         <strong>{{ $errors->first('name') }}</strong>

@@ -14,8 +14,14 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
     font-family: "Cabin", Arial, sans-serif !important;;
 }
 
-.fa-btn {
-    margin-right: 6px;
+.fa {
+    padding-right: 6px;
+    padding-left: 6px;
+}
+
+.pdd {
+    padding-right: 6px;
+    padding-left: 6px;
 }
 
 .navbar-default {

@@ -39,7 +39,7 @@
 
 
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
-                                <input type="hidden" name="curso_id" value="{{$material->curso_id ? $material->curso_id : old('curso_id')}} "/>
+                                <input type="hidden" name="unidade_id" value="{{$material->unidade_id ? $material->unidade_id : old('unidade_id')}}"/>
 
                                 <div class="form-group">
                                     <label for="titulo" class="col-sm-3 control-label">Título</label>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Unidade;
 use File;
 use App\Curso;
 use Illuminate\Http\Request;
@@ -31,15 +32,15 @@ class MaterialController extends Controller
     }
 
     /*Novo Material*/
-    public function novo($curso_id)
+    public function novo($unidade_id)
     {
-        $curso = Curso::find($curso_id);
+        $unidade = Unidade::find($unidade_id);
 
-        if (is_null( $curso)) {
+        if (is_null( $unidade)) {
             return abort(404);
         }
 
-        $material = new Material(['curso_id' => $curso_id]);
+        $material = new Material(['unidade_id' => $unidade_id]);
 
         //retornar a view passando o material
         return view('material.material-novo')->with('material', $material);
@@ -71,7 +72,7 @@ class MaterialController extends Controller
         $material->delete();
 
         //retornar a view passando as categorias
-        return redirect()->action('CursoController@detalhesAdmin', [$material->curso_id]);
+        return redirect()->action('CursoController@detalhesAdmin', [$material->unidade_id]);
     }
 
 
@@ -88,10 +89,10 @@ class MaterialController extends Controller
         if ($this->validaTitulo($request->input('titulo'), -1))
             return redirect()->back()->withErrors(['Título já usado por outro Material'])->withInput();
 
-        $curso_id = trim($request->input('curso_id'));
+        $unidade_id = trim($request->input('unidade_id'));
 
         $arquivo = $request->file('arquivo')->getClientOriginalName();
-        $path = DIRECTORY_SEPARATOR . $curso_id . DIRECTORY_SEPARATOR . uniqid() . DIRECTORY_SEPARATOR;
+        $path = DIRECTORY_SEPARATOR . $unidade_id . DIRECTORY_SEPARATOR . uniqid() . DIRECTORY_SEPARATOR;
         $fullPath = config('app.upload_material') . $path;
 
         File::makeDirectory($fullPath);
@@ -101,14 +102,17 @@ class MaterialController extends Controller
         //popular o model
         $material->titulo = $request->input('titulo');
         $material->descricao = $request->input('descricao');
-        $material->curso_id = $curso_id;
+        $material->unidade_id = $unidade_id;
         $material->arquivo = $path . $arquivo;
 
         /*salvar o model*/
         $material->save();
 
+        //recuperar a unidade do Material
+        $unidade = Unidade::find($material->unidade_id );
+
         /*redirecionar para os detalhes do curso*/
-        return redirect()->action('CursoController@detalhesAdmin', [$material->curso_id]);
+        return redirect()->action('CursoController@detalhesAdmin', [$unidade->curso_id,$unidade->id] );
 
     }
 
@@ -121,13 +125,13 @@ class MaterialController extends Controller
         if ($this->validaTitulo($request->input('titulo'), $request->input('id')))
             return redirect()->back()->withErrors(['Título já usado por outro Material'])->withInput();
 
-        $curso_id = trim($request->input('curso_id'));
+        $unidade_id = trim($request->input('unidade_id'));
         $arquivo = $request->input('arquivo');
 
         //se está enviando um novo arquivo, faz o upload
         if ($request->hasFile('novoarquivo')) {
             $arquivo = $request->file('novoarquivo')->getClientOriginalName();
-            $path = DIRECTORY_SEPARATOR . $curso_id . DIRECTORY_SEPARATOR . uniqid() . DIRECTORY_SEPARATOR;
+            $path = DIRECTORY_SEPARATOR . $unidade_id . DIRECTORY_SEPARATOR . uniqid() . DIRECTORY_SEPARATOR;
             $fullPath = config('app.upload_material') . $path;
 
             $request->file('novoarquivo')->move($fullPath, $arquivo);
@@ -138,14 +142,17 @@ class MaterialController extends Controller
         //popular o model
         $material->titulo = $request->input('titulo');
         $material->descricao = $request->input('descricao');
-        $material->curso_id = $curso_id;
+      //  $material->unidade_id = $unidade_id;
         $material->arquivo = $arquivo;
 
         /*salvar o model*/
         $material->save();
 
+        //recuperar a unidade do Material
+        $unidade = Unidade::find($material->unidade_id );
+
         /*redirecionar para os detalhes do curso*/
-        return redirect()->action('CursoController@detalhesAdmin', [$material->curso_id]);
+        return redirect()->action('CursoController@detalhesAdmin', [$unidade->curso_id,$unidade->id] );
 
     }
 

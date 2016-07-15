@@ -27,15 +27,20 @@
                                 <li><a href="curso-novo" class="">Novo</a></li>
                                 <li><a href="" class=""></a></li>
                             </ul>
-                            <form class="navbar-form navbar-left " role="search">
+                            <form class="navbar-form navbar-left " role="search" get="{{url('/curso-lista')}}">
                                 <div class="form-group">
-                                    <select class="form-control">
-                                        <option value="nome">Título</option>
-                                        <option value="email">Instrutor</option>
+                                    <select class="form-control" name="campo">
+                                        <option {{ isset($campo)  ? ( $campo == 'titulo' ? 'selected' : '') : '' }} value="titulo">
+                                            Título
+                                        </option>
+                                        <option {{ isset($campo)  ? ( $campo == 'instrutor' ? 'selected' : '') : '' }} value="instrutor">
+                                            Instrutor
+                                        </option>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Pesquisar">
+                                    <input type="text" class="form-control" name="valor" placeholder="Pesquisar"
+                                           value="{{ isset($valor)  ? $valor : '' }}">
                                 </div>
                                 <button type="submit" class="btn btn-default">Filtrar</button>
                             </form>

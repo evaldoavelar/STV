@@ -37,13 +37,14 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/curso-excluir', 'CursoController@excluir');
     Route::get('/curso-lista', 'CursoController@lista');
     Route::get('/curso-admin-detalhes/{id}', 'CursoController@detalhesAdmin')->where('id', '[0-9]+');
+    Route::get('/curso-admin-detalhes/{id}/{unidade}', 'CursoController@detalhesAdmin')->where('id', '[0-9]+');
     Route::get('/curso-editar/{id}', 'CursoController@editar')->where('id', '[0-9]+');
 
     /*------------------- Unidade ------------------------*/
     Route::get('/unidade-novo/{curso_id}','UnidadeController@novo')->where('curso_id', '[0-9]+');
     Route::post('/unidade-salvar', 'UnidadeController@salvar');
     Route::post('/unidade-atualizar', 'UnidadeController@atualizar');
-    Route::get('/unidade-excluir', 'UnidadeController@excluir');
+    Route::get('/unidade-excluir/{id}', 'UnidadeController@excluir')->where('id', '[0-9]+');
     Route::get('/unidade-editar/{id}', 'UnidadeController@editar')->where('id', '[0-9]+');
 
     /*------------------- Material ------------------------*/        
@@ -60,6 +61,21 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/video-excluir/{id}','VideoController@excluir')->where('id', '[0-9]+');
     Route::post('/video-salvar','VideoController@salvar');
     Route::post('/video-atualizar','VideoController@atualizar');
+
+    /*Rotas Atividade */
+    Route::get('/atividade-resposta/{valor}','AtividadeController@novaResposta')->where('valor', '[0-9]+');;
+    Route::post('/atividade/salvar', 'AtividadeController@salvar');
+
+    Route::get('/atividade-novo', function () {
+        return view('atividade/atividade-novo');
+    });
+
+    Route::get('/atividade-novo/{unidade_id}','AtividadeController@novo')->where('unidade_id', '[0-9]+');
+
+    Route::get('/atividade-questao', function () {
+        return view('atividade/partial/atividade-questao');
+    });
+
     
 });
 
@@ -91,27 +107,13 @@ Route::get('/curso-detalhes', function () {
 
 
 
-Route::get('/usuario-cadastro', function () {
-    return view('usuario/usuario-cadastro');
-});
-
-
 Route::get('/curso-cadastro-video', function () {
     return view('cursos/curso-cadastro-video');
 });
 
 
-Route::get('/curso-cadastro-atividade', function () {
-    return view('cursos/curso-cadastro-atividade');
-});
 
-Route::get('/atividade-questao', function () {
-    return view('cursos/partial/atividade-questao');
-});
 
-/*Rotas Atividade */
-Route::get('/atividade-resposta/{valor}','AtividadeController@novaResposta')->where('valor', '[0-9]+');;
-Route::post('/atividade/salvar', 'AtividadeController@salvar');
 
 /*
 |--------------------------------------------------------------------------

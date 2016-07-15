@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
 use App\Http\Requests\UnidadeRequest;
 use App\Http\Requests;
 use App\Unidade;
@@ -15,15 +16,12 @@ class UnidadeController extends Controller
     }
 
     /*Novo Unidade*/
-    public function novo()
-    {
-        
-        $unidade = new Unidade();
-        $dados = array(           
-            'unidade' => $unidade);
-
+    public function novo($curso_id)
+    {        
+        $unidade = new Unidade(['curso_id' =>$curso_id ]);
+      
         //retornar a view passando as categorias
-        return view('unidade/novo-unidade')->with($dados);
+        return view('unidade/unidade-novo')->with( 'unidade' , $unidade);
     }
 
     /*Salvar um Unidade*/
@@ -32,17 +30,14 @@ class UnidadeController extends Controller
         $unidade = new Unidade();
 
         //popular o model
-        $unidade->titulo = Input::get('titulo');
         $unidade->descricao = Input::get('descricao');
-        $unidade->instrutor = Input::get('instrutor');
-        $unidade->categoria_id = Input::get('categoria_id');
-        $unidade->palavras_chaves = Input::get('palavras_chaves');
+        $unidade->curso_id = Input::get('curso_id');
 
         /*salvar o model*/
         $unidade->save();
 
         /*redirecionar para os detalhes do Unidade*/
-        return redirect()->action('CursoController@detalhesAdmin', [$unidade->curso_id]);
+        return redirect()->action('CursoController@detalhesAdmin', [$unidade->curso_id,$unidade->id] );
     }
 
 
@@ -54,17 +49,14 @@ class UnidadeController extends Controller
         if (is_null($unidade)) abort(404);
 
         //popular o model
-        $unidade->titulo = Input::get('titulo');
+
         $unidade->descricao = Input::get('descricao');
-        $unidade->instrutor = Input::get('instrutor');
-        $unidade->categoria_id = Input::get('categoria_id');
-        $unidade->palavras_chaves = Input::get('palavras_chaves');
 
         /*salvar o model*/
         $unidade->save();
 
         /*redirecionar para os detalhes do Unidade*/
-        return redirect()->action('CursoController@detalhesAdmin', [$unidade->id]);
+        return redirect()->action('CursoController@detalhesAdmin', [$unidade->curso_id,$unidade->id] );
     }
 
     /*Editar o unidade */
@@ -74,15 +66,9 @@ class UnidadeController extends Controller
         $unidade = Unidade::find($id);
 
         if (is_null($unidade)) abort(404);
-
-        //recuperar as categorias do banco de dados
-        $categorias = Categoria::all();
-
-
-        $dados = array('unidade' => $unidade);
-
+        
         //retornar a view 
-        return view('unidade/unidade-editar')->with($dados);
+        return view('unidade/unidade-editar')->with('unidade' , $unidade);
 
     }
 
@@ -97,7 +83,7 @@ class UnidadeController extends Controller
 
         $unidade->delete();
 
-        return redirect()->action('CursoController@listagem');
+        return redirect()->action('CursoController@detalhesAdmin', [$unidade->curso_id,0] );
 
     }
 }

@@ -16,8 +16,8 @@ class CreateTableAtividades extends Migration
             $table->increments('id');
             $table->string('titulo',200)->unique();
             $table->string('descricao',200);            
-            $table->integer('curso_id')->unsigned();
-            $table->foreign('curso_id')->references('id')->on('cursos')->onDelete('cascade');
+            $table->integer('unidade_id')->unsigned();
+            $table->foreign('unidade_id')->references('id')->on('unidades')->onDelete('cascade');
             $table->timestamps();
         });
     }

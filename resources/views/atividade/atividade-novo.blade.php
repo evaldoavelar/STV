@@ -24,9 +24,12 @@
                 </div>
                 <div class="panel-body">
 
-                    @if( ! isset( $novo ))
+
 
                         <form class="form-horizontal" role="form" action="{{url('atividade/salvar')}}" method="post">
+
+                            <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
+                            <input type="hidden" name="id" value="{{$atividade->id ? $atividade->id : old('id')}}"/>
 
                             <div class="form-group">
                                 <label for="titulo" class="col-sm-3 control-label">Título</label>
@@ -50,7 +53,6 @@
 
                             </div>
 
-
                             <div class="form-group ">
                                 <div class="col-sm-3 "></div>
                                 <div class="col-sm-9">
@@ -64,41 +66,7 @@
                             <button type="submit" class="btn btn-default ">Salvar Atividade</button>
                         </form>
 
-                    @else
 
-                        <div class="container">
-
-                            <p><a href="" class="btn btn-default">Novo</a></p>
-                            <table class="table">
-                                <thead>
-                                <tr>
-                                    <th>Título</th>
-                                    <th></th>
-                                    <th></th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td>Slides de Apoio Arquivo
-                                    </td>
-                                    <td><span class="glyphicon glyphicon-edit"></span></td>
-                                    <td><span class="glyphicon glyphicon-trash"></span></td>
-                                </tr>
-                                <tr>
-                                    <td>Especificações de Requisitos de Exemplo Arquivo</td>
-                                    <td><span class="glyphicon glyphicon-edit"></span></td>
-                                    <td><span class="glyphicon glyphicon-trash"></span></td>
-                                </tr>
-                                <tr>
-                                    <td>Complementar - Relacionamento Entre Casos de Uso Arquivo</td>
-                                    <td><span class="glyphicon glyphicon-edit"></span></td>
-                                    <td><span class="glyphicon glyphicon-trash"></span></td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-
-                    @endif
                 </div>
             </div>
         </div>

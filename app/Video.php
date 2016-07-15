@@ -9,10 +9,10 @@ class Video extends Model
     protected $table = 'videos';
 
     //campos que seram recuperados no request
-    protected $fillable = array('titulo','descricao','curso_id', 'url');
+    protected $fillable = array('titulo','descricao','unidade_id', 'url');
 
     public function curso()
     {
-        return $this->hasMany('App\Curso', 'curso_id', 'id');
+        return $this->hasMany('App\Curso', 'unidade_id', 'id');
     }
 }

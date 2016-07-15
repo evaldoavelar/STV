@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use Illuminate\Support\Facades\Input;
-use App\Curso;
+use App\unidade;
 use App\Video;
 use App\Http\Requests\VideoRequest;
 
@@ -27,15 +27,15 @@ class VideoController extends Controller
 
 
     /*Novo video*/
-    public function novo($curso_id)
+    public function novo($unidade_id)
     {
-        $curso = Curso::find($curso_id);
+        $unidade = Unidade::find($unidade_id);
 
-        if (is_null( $curso)) {
+        if (is_null( $unidade)) {
             return abort(404);
         }
 
-        $video = new Video(['curso_id' => $curso_id]);        
+        $video = new Video(['unidade_id' => $unidade_id]);        
 
         //retornar a view passando o video
         return view('video.video-novo')->with('video', $video);
@@ -66,8 +66,13 @@ class VideoController extends Controller
 
         $video->delete();
 
-        //retornar a view passando as categorias
-        return redirect()->action('CursoController@detalhesAdmin', [$video->curso_id]);
+        //recuperar a unidade do video
+        $unidade = Unidade::find($video->unidade_id );
+
+        /*redirecionar para os detalhes do curso*/
+        return redirect()->action('CursoController@detalhesAdmin', [$unidade->curso_id,$unidade->id] );
+
+
     }
 
 
@@ -83,15 +88,17 @@ class VideoController extends Controller
         //popular o model
         $video->titulo = $request->input('titulo');
         $video->descricao = $request->input('descricao');
-        $video->curso_id = trim($request->input('curso_id'));;
+        $video->unidade_id = trim($request->input('unidade_id'));;
         $video->url = $request->input('url');
 
         /*salvar o model*/
         $video->save();
 
-        /*redirecionar para os detalhes do curso*/
-        return redirect()->action('CursoController@detalhesAdmin', [$video->curso_id]);
+            //recuperar a unidade do video
+        $unidade = Unidade::find($video->unidade_id );
 
+        /*redirecionar para os detalhes do curso*/
+        return redirect()->action('CursoController@detalhesAdmin', [$unidade->curso_id,$unidade->id] );
     }
 
     /*Atualizar um Video*/
@@ -105,14 +112,17 @@ class VideoController extends Controller
 
         $video->titulo = $request->input('titulo');
         $video->descricao = $request->input('descricao');
-        $video->curso_id = trim($request->input('curso_id'));;
+        $video->unidade_id = trim($request->input('unidade_id'));;
         $video->url = $request->input('url');
 
         /*salvar o model*/
         $video->save();
 
+        //recuperar a unidade do video
+        $unidade = Unidade::find($video->unidade_id );
+
         /*redirecionar para os detalhes do curso*/
-        return redirect()->action('CursoController@detalhesAdmin', [$video->curso_id]);
+        return redirect()->action('CursoController@detalhesAdmin', [$unidade->curso_id,$unidade->id] );
 
     }
 

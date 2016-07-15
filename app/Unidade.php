@@ -14,7 +14,7 @@ class Unidade extends Model
 
     public function curso()
     {
-        return $this->hasMany('App\Curso', 'curso_id', 'id');
+        return $this->hasMany('App\Curso', 'curso_id', 'id')->get();
     }
 
     public function materiais()
@@ -25,5 +25,10 @@ class Unidade extends Model
     public function videos()
     {
         return $this->hasMany('App\Video', 'unidade_id', 'id');
+    }
+
+    public function atividades()
+    {
+        return $this->hasMany('App\Atividade', 'unidade_id', 'id');
     }
 }
