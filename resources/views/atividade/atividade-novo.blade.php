@@ -34,7 +34,8 @@
                 @endif
                 <div class="panel-body">
 
-                    <form id="frmAtividade" class="form-horizontal" role="form" action="{{url('atividade/salvar')}}" method="post">
+                    <form id="frmAtividade" class="form-horizontal" role="form" action="{{url('atividade/salvar')}}"
+                          method="post">
 
                         <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
                         <input type="hidden" name="id" value="{{$atividade->id ? $atividade->id : old('id')}}"/>
@@ -90,8 +91,8 @@
         $(function () {
 
             //numero de elementos
-            var idResposta =0;
-            var idQuestao =0;
+            var idResposta = 0;
+            var idQuestao = 0;
 
             $("#btnNovaQuestao").click(function (event) {
 
@@ -113,8 +114,8 @@
                         configurarExcluirResposta('.resposta-excluir');
 
                         //adicionar respostas
-                        for(i=0;i<4;i++){
-                            AdicionarResposta( $("#questao-"+idQuestao).find('.respostas'), idQuestao);
+                        for (i = 0; i < 4; i++) {
+                            AdicionarResposta($("#questao-" + idQuestao).find('.respostas'), idQuestao);
                         }
                     },
                     error: function (event) {
@@ -200,14 +201,41 @@
 
             }
 
+            $('#frmAtividade').submit(function (event) {
+                var erros = 0;
+                var semCorreta = 0;
 
-            $('#frmAtividade').submit(function(event){
-                $.each($('#questoes'), function (i, value) {
-                   // .find('.respostas')
-                    console.log( i + " " + value);
+                //validar respostas
+                $.each($('.respostas'), function (i, value) {
+                    //verificar se as repostas estão preenchidas
+                    $.each($(value).find('textarea'), function (i, item) {
+                        if (item.value.trim() === '') {
+                            item.parentElement.parentNode.classList.add('has-error');
+                            erros++;
+                            console.log(item);
+                        } else {
+                            item.parentElement.parentNode.classList.remove('has-error');
+                        }
+                    });
+
+                    value.classList.remove('has-error');
+
+                    //verficar se as questões tem a respotas correta selecionada
+                   if( $(value).find('input[type=radio]:checked').size() === 0 ){
+                       value.classList.add('has-error');
+                       semCorreta++;
+                   }
                 });
 
-                return false;
+                if (erros > 0){
+                    alert('Informe os campos em destaque');
+                    return false;
+                } else if  (semCorreta > 0){
+                    alert('Marque a respota correta de todas as questões');
+                    return false;
+                }
+
+                return true;
             });
 
 
