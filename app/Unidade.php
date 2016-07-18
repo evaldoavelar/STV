@@ -31,4 +31,6 @@ class Unidade extends Model
     {
         return $this->hasMany('App\Atividade', 'unidade_id', 'id');
     }
+
+
 }

@@ -14,6 +14,7 @@
     </div>
 
 
+
     <div class="container">
 
         <div class="row">
@@ -22,49 +23,58 @@
                 <div class="panel-heading">
                     <h1>Atividades do Curso</h1>
                 </div>
+                @if (count($errors) > 0)
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
                 <div class="panel-body">
 
+                    <form id="frmAtividade" class="form-horizontal" role="form" action="{{url('atividade/salvar')}}" method="post">
 
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
+                        <input type="hidden" name="id" value="{{$atividade->id ? $atividade->id : old('id')}}"/>
+                        <input type="hidden" name="unidade_id"
+                               value="{{$atividade->unidade_id ? $atividade->unidade_id : old('unidade_id')}}"/>
 
-                        <form class="form-horizontal" role="form" action="{{url('atividade/salvar')}}" method="post">
-
-                            <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
-                            <input type="hidden" name="id" value="{{$atividade->id ? $atividade->id : old('id')}}"/>
-
-                            <div class="form-group">
-                                <label for="titulo" class="col-sm-3 control-label">Título</label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="titulo" name="titulo"
-                                           placeholder="Título">
-                                    <p class="help-block">Título do Material</p>
-                                </div>
+                        <div class="form-group">
+                            <label for="titulo" class="col-sm-3 control-label">Título</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="titulo" name="titulo"
+                                       placeholder="Título" value="{{old('titulo')}}">
+                                <p class="help-block">Título do Material</p>
                             </div>
+                        </div>
 
-                            <div class="form-group">
-                                <label for="descricao" class="col-sm-3 control-label">Descrição</label>
-                                <div class="col-sm-9">
+                        <div class="form-group">
+                            <label for="descricao" class="col-sm-3 control-label">Descrição</label>
+                            <div class="col-sm-9">
                                         <textarea class="form-control" id="descricao" name="descricao"
-                                                  placeholder="Descrição"></textarea>
-                                    <p class="help-block">Descrição do Material</p>
+                                                  placeholder="Descrição">{{old('descricao')}}</textarea>
+                                <p class="help-block">Descrição do Material</p>
+                            </div>
+                        </div>
+
+                        <div id="questoes">
+
+                        </div>
+
+                        <div class="form-group ">
+                            <div class="col-sm-3 "></div>
+                            <div class="col-sm-9">
+                                <div class=" btn-group btn-group-sm " role="group" aria-label="...">
+                                    <button id="btnNovaQuestao" type="button" class="btn btn-primary">Nova Questão
+                                    </button>
                                 </div>
                             </div>
+                        </div>
 
-                            <div id="questoes">
-
-                            </div>
-
-                            <div class="form-group ">
-                                <div class="col-sm-3 "></div>
-                                <div class="col-sm-9">
-                                    <div class=" btn-group btn-group-sm " role="group" aria-label="...">
-                                        <button id="btnNovaQuestao" type="button" class="btn btn-primary">Nova Questão
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <button type="submit" class="btn btn-default ">Salvar Atividade</button>
-                        </form>
+                        <button type="submit" id="btnSalvar" class="btn btn-default ">Salvar Atividade</button>
+                    </form>
 
 
                 </div>
@@ -79,20 +89,33 @@
     <script>
         $(function () {
 
+            //numero de elementos
+            var idResposta =0;
+            var idQuestao =0;
+
             $("#btnNovaQuestao").click(function (event) {
+
+
+                idQuestao++;
+
                 $.ajax({
-                    url: "{{ url('/atividade-questao') }}",
+                    url: "{{ url('/atividade-questao') }}/" + idQuestao,
                     success: function (result) {
                         console.log("Requisição Ajax completada com sucesso");
                         console.log("Adicionando resultado");
 
                         $("#questoes").append(result);
 
-                        configurarAdicionarQuestao('.questao-adicionar');
+                        configurarAdicionarQuestao('.questao-adicionar', idQuestao);
 
                         configurarExcluirQuestao('.questao-excluir');
 
                         configurarExcluirResposta('.resposta-excluir');
+
+                        //adicionar respostas
+                        for(i=0;i<4;i++){
+                            AdicionarResposta( $("#questao-"+idQuestao).find('.respostas'), idQuestao);
+                        }
                     },
                     error: function (event) {
                         console.log("Erro na Requisição Ajax ");
@@ -100,7 +123,7 @@
                 });
             });
 
-            function configurarAdicionarQuestao(classe) {
+            function configurarAdicionarQuestao(classe, id) {
                 console.log("Configurar o click do botão de adicionar resposta");
                 $.each($(classe), function (i, value) {
 
@@ -110,7 +133,7 @@
                     //adicionar o novo click
                     $(value).click(function () {
                         var root = this.parentNode.parentNode.parentNode.parentNode;
-                        AdicionarResposta($(root).find('.respostas'));
+                        AdicionarResposta($(root).find('.respostas'), id);
                     });
                 });
             }
@@ -127,8 +150,8 @@
                     //adicionar o novo click
                     $(value).click(function () {
                         var root = this.parentNode.parentNode.parentNode;
-                        if (root.childElementCount === 1) {
-                            alert('A questão deve ter ao menos uma resposta!');
+                        if (root.childElementCount === 2) {
+                            alert('A questão deve ter ao menos duas respostas!');
                         } else {
                             if (confirm('Excluir a resposta?')) {
                                 //auto remover
@@ -158,13 +181,12 @@
                 });
             }
 
-            function AdicionarResposta(div) {
+            function AdicionarResposta(div, id) {
 
-                //obter o numero de elementos
-                var count = div.children().size() ;
+                idResposta++;
 
                 $.ajax({
-                    url: "{{ url('/atividade-resposta') }}/"+count,
+                    url: "{{ url('/atividade-resposta') }}/" + id + "/" + idResposta,
                     success: function (result) {
                         console.log("Requisição Ajax completada com sucesso");
                         console.log("Adicionando resultado");
@@ -178,6 +200,18 @@
 
             }
 
+
+            $('#frmAtividade').submit(function(event){
+                $.each($('#questoes'), function (i, value) {
+                   // .find('.respostas')
+                    console.log( i + " " + value);
+                });
+
+                return false;
+            });
+
+
+            $("#btnNovaQuestao").click();
 
         })
         ;

@@ -11,7 +11,8 @@
     <link href="{{ URL::asset('css/theme.min.css')}}" rel="stylesheet" type="text/css" media="all"/>
     <link href="{{ URL::asset('css/style.css')}}" rel="stylesheet" type="text/css" media="all"/>
 
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel='stylesheet' type='text/css'>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel='stylesheet'
+          type='text/css'>
     <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700" rel='stylesheet' type='text/css'>
 
     <!--scripts-->
@@ -52,32 +53,33 @@
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">Cursos<span
                                 class="caret"></span></a>
                     <ul class="dropdown-menu dropdown-menu-right " aria-labelledby="download">
-                        <li><a href="categorias/1" target="_top">Matémática</a></li>
-                        <li class="divider"></li>
-                        <li><a href="categorias/1" target="_top">Portugês</a></li>
-                        <li class="divider"></li>
-                        <li><a href="categorias/1" target="_top">História</a></li>
-                        <li class="divider"></li>
-                        <li><a href="categorias" target="_top">Todas</a></li>
+                        @foreach(\App\Categoria::all() as $cat)
+                            <li><a href="{{url('\zcategorias',$cat->id)}}" target="_top">{{$cat->descricao}}</a></li>
+                        @endforeach
 
                     </ul>
                 </li>
 
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">Administração <span
-                                class="caret"></span></a>
-                    <ul class="dropdown-menu dropdown-menu-right " aria-labelledby="download">
-                        <li><a href="{{ url('usuario-lista') }}" target="_top">Usuários</a></li>
-                        <li class="divider"></li>
-                        <li><a href="{{ url('curso-lista') }}" target="_top">Cursos</a></li>
+                @if(Auth::check() &&  Auth::user()->admin)
 
-                    </ul>
-                </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">Administração
+                            <span
+                                    class="caret"></span></a>
+                        <ul class="dropdown-menu dropdown-menu-right " aria-labelledby="download">
+                            <li><a href="{{ url('usuario-lista') }}" target="_top">Usuários</a></li>
+                            <li class="divider"></li>
+                            <li><a href="{{ url('curso-lista') }}" target="_top">Cursos</a></li>
 
-                <li class="dropdown">
-                    <a class="" href=" {{url('meus-cursos')}}" id="download" aria-expanded="false">Meus Cursos
-                        <span class="card"></span></a>
-                </li>
+                        </ul>
+                    </li>
+
+                @elseif( Auth::check() &&  ! Auth::user()->admin)
+                    <li class="dropdown">
+                        <a class="" href=" {{url('meus-cursos')}}" id="download" aria-expanded="false">Meus Cursos
+                            <span class="card"></span></a>
+                    </li>
+                @endif
 
                 <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown">
@@ -106,7 +108,8 @@
                                             @else
                                                 <p class="text-left"><strong>Faça o Login abaixo</strong></p>
                                                 <p class="text-left">
-                                                    <a href="{{url('/login')}}" class="fa fa-btn fa-sign-in btn btn-info btn-block btn-sm">Login</a>
+                                                    <a href="{{url('/login')}}"
+                                                       class="fa fa-btn fa-sign-in btn btn-info btn-block btn-sm">Login</a>
                                                 </p>
                                             @endif
                                         </div>
@@ -147,7 +150,7 @@
 
             <div class="input-group">
                 <input type="text" class="form-control pesquisa" placeholder="Pesquisar...">
-                          <span class="input-group-btn">
+                <span class="input-group-btn">
                             <button class="btn btn-default" type="button">
                                 <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                             </button>
@@ -160,7 +163,7 @@
 
 @yield('container')
 @yield('scripts')
-        <!-- Rodapé -->
+<!-- Rodapé -->
 
 <footer class="site-footer style-2">
     <div class="vc_empty_space" style="height: 30px"><span

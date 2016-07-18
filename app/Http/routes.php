@@ -63,7 +63,8 @@ Route::group(['middleware' => ['web']], function () {
     Route::post('/video-atualizar','VideoController@atualizar');
 
     /*Rotas Atividade */
-    Route::get('/atividade-resposta/{valor}','AtividadeController@novaResposta')->where('valor', '[0-9]+');;
+    Route::get('/atividade-questao/{indice}','AtividadeController@novaQuestao')->where('indice', '[0-9]+');
+    Route::get('/atividade-resposta/{indice}/{valor}','AtividadeController@novaResposta')->where('valor', '[0-9]+');
     Route::post('/atividade/salvar', 'AtividadeController@salvar');
 
     Route::get('/atividade-novo', function () {
@@ -72,9 +73,7 @@ Route::group(['middleware' => ['web']], function () {
 
     Route::get('/atividade-novo/{unidade_id}','AtividadeController@novo')->where('unidade_id', '[0-9]+');
 
-    Route::get('/atividade-questao', function () {
-        return view('atividade/partial/atividade-questao');
-    });
+
 
     
 });

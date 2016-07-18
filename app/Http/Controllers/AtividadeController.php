@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\DB;
@@ -9,13 +10,15 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\View;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Support\Facades\Auth;
-use app\Http\Requests\AtividadeRequest;
+use App\Http\Requests\AtividadeRequest;
 use App\Unidade;
 use App\Atividade;
-
+use App\Questao;
+use App\Resposta;
 
 
 use App\Http\Requests;
+use Mockery\CountValidator\Exception;
 
 class AtividadeController extends Controller
 {
@@ -24,7 +27,7 @@ class AtividadeController extends Controller
     {
         $unidade = Unidade::find($unidade_id);
 
-        if (is_null( $unidade)) {
+        if (is_null($unidade)) {
             return abort(404);
         }
 
@@ -34,15 +37,77 @@ class AtividadeController extends Controller
         return view('atividade.atividade-novo')->with('atividade', $atividade);
     }
 
-    public function salvar(Request $request )
+
+    /*
+     * Salvar a atividade
+     * */
+    public function salvar(AtividadeRequest $request)
     {
-        dd( $request->all());
-        return view("teste");
+        $dados = ($request->all());
+
+       // dd($dados);
+        try {
+
+            DB::beginTransaction();
+
+            //criar a atividade
+            $atividade = new Atividade();
+            $atividade->titulo = trim($dados['titulo']);
+            $atividade->descricao = trim($dados['descricao']);
+            $atividade->unidade_id = trim($dados['unidade_id']);
+            $atividade->save();
+
+
+            //pecorrer as questões
+            foreach ($dados['questao'] as $i => $q) {
+
+                //criar a questão
+                $questao = new Questao();
+                $questao->enunciado = trim($q['enunciado']);
+                $questao->atividade_id = $atividade->id;
+                $questao->save();
+
+                //pecorrer as respostas
+                foreach ($q['resposta'] as $j => $rd) {
+
+                    //criar as respostas
+                    $resposta = new Resposta();
+                    $resposta->questao_id = $questao->id;
+                    $resposta->enunciado =  trim($rd);
+                    $resposta->correta = isset($q['correta']) && ($q['correta'] == $j);
+                    $resposta->save();
+                }
+            }
+
+            DB::commit();
+
+        } catch (Exception $e) {
+            DB::rollBack();
+            return  redirect()->back()->withErrors(['msg', 'Não foi possível Salvar as questões!!! Contate o suporte.']);
+        }
+
+        //recuperar a unidade do Material
+        $unidade = Unidade::find($atividade->unidade_id);
+
+        /*redirecionar para os detalhes do curso*/
+        return redirect()->action('CursoController@detalhesAdmin', [$unidade->curso_id, $unidade->id]);
     }
 
-    public function novaResposta($valor)
-    {
 
-        return view("atividade/partial/atividade-resposta", ["valor" => $valor]);
+    /*
+     * Devolver uma questão a requisição
+     * */
+    public function novaQuestao($indice)
+    {
+        return view("atividade/partial/atividade-questao", ["indice" => $indice]);
+    }
+
+
+    /*
+     * Devolver uma resposta a requisição
+     * */
+    public function novaResposta($indice, $valor)
+    {
+        return view("atividade/partial/atividade-resposta", ["indice" => $indice, "valor" => $valor]);
     }
 }

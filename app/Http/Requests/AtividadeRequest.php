@@ -18,7 +18,9 @@ class AtividadeRequest extends Request
 
     public function messages() {
         return [
-            'required' => 'O Campo :attribute é obrigatório',
+            'questao.*.correta'=> 'A reposta correta não foi selecionada para a questão',
+            'questao.*.enunciado'=> 'O enunciado da questão não foi informado',
+            'questao.*.resposta.*'=> 'O enunciado da questão não foi informado',
         ];
     }
 
@@ -29,10 +31,16 @@ class AtividadeRequest extends Request
      */
     public function rules()
     {
-        return [
-
+        $rules = [
             'titulo' => 'required|min:3|max:255',
             'descricao' => 'required|min:3|max:255',
+            'questao.*.correta'=> 'required',
+            'questao.*.enunciado'=> 'required',
+            'questao.*.resposta.*'=> 'required',
+
         ];
+
+        return $rules;
     }
 }
+

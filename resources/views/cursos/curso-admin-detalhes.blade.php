@@ -35,6 +35,11 @@
                                 <a href="{{ url('curso-editar', $curso->id)   }}" class=""><span
                                             class="glyphicon glyphicon-edit" aria-hidden="true"></span>&nbsp;Editar</a>
                             </li>
+                            <li>
+                                <a href="{{ url('curso-excluir', $curso->id)   }}" class=""><span
+                                            class="glyphicon glyphicon-trash"
+                                            aria-hidden="true"></span>&nbsp;Excluir</a>
+                            </li>
 
                         </ul>
 
@@ -176,7 +181,7 @@
                                 <div class="panel-heading ">
                                     <h4><span class="glyphicon glyphicon-book" aria-hidden="true"></span>
                                         Atividades</h4>
-                                    <p><a href="{{url('curso-cadastro-material',$unidade->id)}}"><span
+                                    <p><a href="{{url('/atividade-novo',$unidade->id)}}"><span
                                                     class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                                             Novo</a></p>
                                 </div>
@@ -189,20 +194,23 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <td>Atividade 1</td>
-                                        <td><span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                                        </td>
-                                        <td><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Atividade 2</td>
-                                        <td><span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                                        </td>
-                                        <td><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                                        </td>
-                                    </tr>
+                                    @foreach( $unidade->atividades as $atividade)
+                                        <tr>
+                                            <td>{{  $atividade->titulo }}</td>
+                                            <td>
+                                                <a href="{{url('atividade-editar',$atividade->id)}}">
+                                                            <span class="glyphicon glyphicon-edit"
+                                                                  aria-hidden="true"></span>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a href="{{url('atividade-excluir',$atividade->id)}}">
+                                                            <span class="glyphicon glyphicon-trash"
+                                                                  aria-hidden="true"></span>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                     </tbody>
                                 </table>
                             </div>

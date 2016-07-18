@@ -1,5 +1,5 @@
 {{-- Enunciado da pergunta --}}
-<div class="questao">
+<div class="questao" id="questao-{{$indice}}">
     <div class="form-group">
         <div class="col-sm-3 "></div>
         <div class="col-sm-9">
@@ -13,16 +13,16 @@
     <div class="form-group">
         <label for="titulo" class="col-sm-3 control-label">Enunciado</label>
         <div class="col-sm-9">
-            <textarea class="form-control" id="pergunta1" name="questao[]['enunciado']" placeholder="Enuciado da Questão"></textarea>
+            <textarea class="form-control" id="pergunta1" name="questao[{{$indice}}][enunciado]" placeholder="Enunciado da Questão">{{old('questao.*.enunciado')}}</textarea>
             <p class="help-block">Respostas</p>
         </div>
     </div>
 
     <div class="respostas">
         {{-- inserir 4 respostas iniciais para a atividade--}}
-        @for ($i = 0; $i < 4; $i++)
-            @include('atividade.partial.atividade-resposta',array( "valor" => $i  ))
-        @endfor
+        {{--  @for ($i = 0; $i < 4; $i++)
+             @include('atividade.partial.atividade-resposta',array( "valor" => $i,'indice' => $indice  ))
+         @endfor--}}
     </div>
 
     {{-- Botão de adicionar novas respostas--}}

@@ -16,6 +16,9 @@ class Atividade extends Model
         return $this->hasMany('App\Unidade', 'id','unidade_id')->get();
     }
 
-    
+    public function questoes()
+    {
+        return $this->hasMany('App\Questao', 'unidade_id', 'id')->get();
+    }
 
 }
