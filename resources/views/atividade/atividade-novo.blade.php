@@ -90,12 +90,11 @@
     <script>
         $(function () {
 
-            //numero de elementos
+            //id dos elementos
             var idResposta = 0;
             var idQuestao = 0;
 
             $("#btnNovaQuestao").click(function (event) {
-
 
                 idQuestao++;
 
