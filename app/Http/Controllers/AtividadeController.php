@@ -93,6 +93,21 @@ class AtividadeController extends Controller
         return redirect()->action('CursoController@detalhesAdmin', [$unidade->curso_id, $unidade->id]);
     }
 
+    /*
+       * Editar a atividade
+       * */
+    public function editar($id)
+    {
+        $atividade = Atividade::find($id);
+
+        if (is_null( $atividade)) {
+            return abort(404);
+        }
+
+        //retornar a view passando as categorias
+        return view('atividade.atividade-editar')->with('atividade', $atividade);
+    }
+
 
     /*
      * Devolver uma questão a requisição

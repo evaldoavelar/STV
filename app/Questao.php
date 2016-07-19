@@ -10,6 +10,6 @@ class Questao extends Model
 
     public function respostas()
     {
-        return $this->hasMany('App\Questao', 'questao_id', 'id');
+        return $this->hasMany('App\Resposta', 'questao_id', 'id');
     }
 }

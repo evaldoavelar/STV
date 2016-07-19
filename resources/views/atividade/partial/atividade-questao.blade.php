@@ -13,7 +13,9 @@
     <div class="form-group">
         <label for="titulo" class="col-sm-3 control-label">Enunciado</label>
         <div class="col-sm-9">
-            <textarea class="form-control" id="pergunta1" name="questao[{{$indice}}][enunciado]" placeholder="Enunciado da Questão">{{old('questao.*.enunciado')}}</textarea>
+            <textarea class="form-control" id="pergunta1" name="questao[{{$indice}}][enunciado]"
+                      rows="5"
+                      placeholder="Enunciado da Questão">{{old('questao.*.enunciado')}}</textarea>
             <p class="help-block">Respostas</p>
         </div>
     </div>
