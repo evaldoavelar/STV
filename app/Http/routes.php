@@ -66,6 +66,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/atividade-questao/{indice}','AtividadeController@novaQuestao')->where('indice', '[0-9]+');
     Route::get('/atividade-resposta/{indice}/{valor}','AtividadeController@novaResposta')->where('valor', '[0-9]+');
     Route::post('/atividade/salvar', 'AtividadeController@salvar');
+    Route::post('/atividade/atualizar', 'AtividadeController@atualizar');
     Route::get('/atividade-novo/{unidade_id}','AtividadeController@novo')->where('unidade_id', '[0-9]+');
     Route::get('/atividade-editar/{id}','AtividadeController@editar')->where('id', '[0-9]+');
     Route::get('/atividade-excluir/{id}','AtividadeController@excluir')->where('id', '[0-9]+');

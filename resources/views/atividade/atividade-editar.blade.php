@@ -34,19 +34,17 @@
                 @endif
                 <div class="panel-body">
 
-                    <form id="frmAtividade" class="form-horizontal" role="form" action="{{url('atividade/salvar')}}"
+                    <form id="frmAtividade" class="form-horizontal" role="form" action="{{url('atividade/atualizar')}}"
                           method="post">
 
                         <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
                         <input type="hidden" name="id" value="{{$atividade->id ? $atividade->id : old('id')}}"/>
-                        <input type="hidden" name="unidade_id"
-                               value="{{$atividade->unidade_id ? $atividade->unidade_id : old('unidade_id')}}"/>
 
                         <div class="form-group">
                             <label for="titulo" class="col-sm-3 control-label">Título</label>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" id="titulo" name="titulo"
-                                       placeholder="Título" value="{{old('titulo')}}">
+                                       placeholder="Título" value="{{$atividade->titulo ? $atividade->titulo : old('titulo')}}">
                                 <p class="help-block">Título do Material</p>
                             </div>
                         </div>
@@ -55,7 +53,7 @@
                             <label for="descricao" class="col-sm-3 control-label">Descrição</label>
                             <div class="col-sm-9">
                                         <textarea class="form-control" id="descricao" name="descricao"
-                                                  placeholder="Descrição">{{old('descricao')}}</textarea>
+                                                  placeholder="Descrição">{{$atividade->descricao ? $atividade->descricao : old('descricao')}}</textarea>
                                 <p class="help-block">Descrição do Material</p>
                             </div>
                         </div>
@@ -63,7 +61,7 @@
                         <div id="questoes">
                             @foreach( $atividade->questoes as $indice => $questao)
                                 {{-- Enunciado da pergunta --}}
-                                <div class="questao" id="questao-{{$indice}}">
+                                <div class="questao" id="questao-{{$questao->id}}">
                                     <div class="form-group">
                                         <div class="col-sm-3 "></div>
                                         <div class="col-sm-9">
@@ -80,7 +78,8 @@
                                         <label for="titulo" class="col-sm-3 control-label">Enunciado</label>
                                         <div class="col-sm-9">
                                             <textarea class="form-control"
-                                                      name="questao[{{$indice}}][enunciado]" rows="5"
+                                                      name="questao[{{$questao->id}}][enunciado]]"
+                                                      rows="5"
                                                       placeholder="Enunciado da Questão">{{ isset($questao)? $questao->enunciado: old('questao.*.enunciado')}}</textarea>
                                             <p class="help-block">Respostas</p>
                                         </div>
@@ -92,13 +91,13 @@
                                             <div class="form-group">
                                                 <div class="col-xs-1 col-sm-3"></div>
                                                 <div class="col-xs-1 col-sm-1">
-                                                    <input type="radio" name="questao[{{$indice}}][correta]"
+                                                    <input type="radio" name="questao[{{$questao->id}}][correta]"
                                                            class="pull-right"
                                                            value="{{$resposta->id}}" {{$resposta->correta == true ? 'checked' : ''}}>
                                                 </div>
                                                 <div class="col-xs-7 col-sm-7">
                                                     <textarea type="text" class="form-control" id="resposta" rows="3"
-                                                              name="questao[{{$indice}}][resposta][{{$resposta->id}}]"
+                                                              name="questao[{{$questao->id}}][resposta][{{$resposta->id}}]"
                                                               placeholder="Resposta">{{$resposta->enunciado}}</textarea>
                                                 </div>
                                                 <div class="col-xs-1 col-sm-1">

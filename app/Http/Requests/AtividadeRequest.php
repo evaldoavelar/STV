@@ -19,7 +19,7 @@ class AtividadeRequest extends Request
     public function messages() {
         return [
             'questao.*.correta'=> 'A reposta correta não foi selecionada para a questão',
-            'questao.*.enunciado'=> 'O enunciado da questão não foi informado',
+            'questao.*.enunciado.*'=> 'O enunciado da questão não foi informado',
             'questao.*.resposta.*'=> 'O enunciado da questão não foi informado',
         ];
     }
@@ -35,7 +35,7 @@ class AtividadeRequest extends Request
             'titulo' => 'required|min:3|max:255',
             'descricao' => 'required|min:3|max:255',
             'questao.*.correta'=> 'required',
-            'questao.*.enunciado'=> 'required',
+            'questao.*.enunciado.*'=> 'required',
             'questao.*.resposta.*'=> 'required',
 
         ];

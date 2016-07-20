@@ -93,6 +93,64 @@ class AtividadeController extends Controller
         return redirect()->action('CursoController@detalhesAdmin', [$unidade->curso_id, $unidade->id]);
     }
 
+
+    /*
+     * Atualizar a atividade
+     * */
+    public function atualizar(AtividadeRequest $request)
+    {
+        $dados = ($request->all());
+
+        // dd($dados);
+        try {
+
+            DB::beginTransaction();
+
+            //criar a atividade
+            $atividade = Atividade::find($dados['id']);
+
+            if (is_null($atividade)) {
+                return abort(404,"Unidade não localizada");
+            }
+
+            $atividade->titulo = trim($dados['titulo']);
+            $atividade->descricao = trim($dados['descricao']);
+            $atividade->save();
+
+
+            //pecorrer as questões
+            foreach ($dados['questao'] as $i => $q) {
+
+                //criar a questão
+                $questao = Questao::find($i);
+                $questao->enunciado = trim($q['enunciado']);
+                $questao->save();
+
+                //pecorrer as respostas
+                foreach ($q['resposta'] as $j => $rd) {
+
+                    //criar as respostas
+                    $resposta = Resposta::find($j);
+                    $resposta->enunciado =  trim($rd);
+                    $resposta->correta = isset($q['correta']) && ($q['correta'] == $j);
+                    $resposta->save();
+                }
+            }
+
+            DB::commit();
+
+        } catch (Exception $e) {
+            DB::rollBack();
+            return  redirect()->back()->withErrors(['msg', 'Não foi possível Salvar as questões!!! Contate o suporte.']);
+        }
+
+        //recuperar a unidade do Material
+        $unidade = Unidade::find($atividade->unidade_id);
+
+        /*redirecionar para os detalhes do curso*/
+        return redirect()->action('CursoController@detalhesAdmin', [$unidade->curso_id, $unidade->id]);
+    }
+
     /*
        * Editar a atividade
        * */
