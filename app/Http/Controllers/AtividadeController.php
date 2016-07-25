@@ -123,6 +123,9 @@ class AtividadeController extends Controller
 
                 //criar a questão
                 $questao = Questao::find($i);
+
+                if (is_null($questao)) {
+
                 $questao->enunciado = trim($q['enunciado']);
                 $questao->save();
 
