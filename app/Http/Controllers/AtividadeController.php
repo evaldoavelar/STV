@@ -97,7 +97,7 @@ class AtividadeController extends Controller
     /*
      * Atualizar a atividade
      * */
-    public function atualizar(AtividadeRequest $request)
+    public function atualizar(Request $request)
     {
         $dados = ($request->all());
 
@@ -125,6 +125,9 @@ class AtividadeController extends Controller
                 $questao = Questao::find($i);
 
                 if (is_null($questao)) {
+                    $questao = new Questao();
+                    $questao->atividade_id = $atividade->id;
+                }
 
                 $questao->enunciado = trim($q['enunciado']);
                 $questao->save();
@@ -134,6 +137,11 @@ class AtividadeController extends Controller
 
                     //criar as respostas
                     $resposta = Resposta::find($j);
+
+                    if (is_null($resposta)) {
+                        $resposta = new Resposta(['questao_id' => $questao->id]);
+                    }
+
                     $resposta->enunciado =  trim($rd);
                     $resposta->correta = isset($q['correta']) && ($q['correta'] == $j);
                     $resposta->save();
