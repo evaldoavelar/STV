@@ -23,6 +23,12 @@ use Mockery\CountValidator\Exception;
 class AtividadeController extends Controller
 {
 
+
+    function __construct()
+    {
+        $this->middleware('autorizacaoAdmin');
+    }
+
     public function novo($unidade_id)
     {
         $unidade = Unidade::find($unidade_id);
@@ -41,7 +47,7 @@ class AtividadeController extends Controller
     /*
      * Salvar a atividade
      * */
-    public function salvar(AtividadeRequest $request)
+    public function salvar(Request $request)
     {
         $dados = ($request->all());
 
@@ -63,7 +69,7 @@ class AtividadeController extends Controller
 
                 //criar a questão
                 $questao = new Questao();
-                $questao->enunciado = trim($q['enunciado']);
+                $questao->enunciado = ($q['enunciado']);
                 $questao->atividade_id = $atividade->id;
                 $questao->save();
 
@@ -73,7 +79,7 @@ class AtividadeController extends Controller
                     //criar as respostas
                     $resposta = new Resposta();
                     $resposta->questao_id = $questao->id;
-                    $resposta->enunciado = trim($rd);
+                    $resposta->enunciado = ($rd['enunciado']);
                     $resposta->correta = isset($q['correta']) && ($q['correta'] == $j);
                     $resposta->save();
                 }
@@ -201,6 +207,27 @@ class AtividadeController extends Controller
     /*
        * Editar a atividade
        * */
+    public function excluir($id)
+    {
+        $atividade = Atividade::find($id);
+
+        if (is_null($atividade)) {
+            return abort(404,"Atividade não encontrada");
+        }
+
+        //recuperar a unidade do Material
+        $unidade = Unidade::find($atividade->unidade_id);
+
+
+        $atividade->delete();
+
+        /*redirecionar para os detalhes do curso*/
+        return redirect()->action('CursoController@detalhesAdmin', [$unidade->curso_id, $unidade->id]);
+    }
+
+    /*
+      * Editar a atividade
+      * */
     public function editar($id)
     {
         $atividade = Atividade::find($id);

@@ -54,11 +54,14 @@
                                 class="caret"></span></a>
                     <ul class="dropdown-menu dropdown-menu-right " aria-labelledby="download">
                         @foreach(\App\Categoria::all() as $cat)
-                            <li><a href="{{url('\zcategorias',$cat->id)}}" target="_top">{{$cat->descricao}}</a></li>
+                            <li><a href="{{url('categorias',$cat->id)}}" target="_top">{{$cat->descricao}}</a></li>
                         @endforeach
 
                     </ul>
                 </li>
+
+
+
 
                 @if(Auth::check() &&  Auth::user()->admin)
 
@@ -74,7 +77,7 @@
                         </ul>
                     </li>
 
-                @elseif( Auth::check() &&  ! Auth::user()->admin)
+                @elseif( Auth::check() &&  !Auth::user()->admin)
                     <li class="dropdown">
                         <a class="" href=" {{url('meus-cursos')}}" id="download" aria-expanded="false">Meus Cursos
                             <span class="card"></span></a>

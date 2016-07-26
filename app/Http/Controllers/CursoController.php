@@ -17,7 +17,11 @@ class CursoController extends Controller
 
     function __construct()
     {
-        $this->middleware('autorizacaoAdmin');
+        //ligar os filtros para os metodos de administrador
+        $this->middleware('autorizacaoAdmin', ['except' => ['meusCursos']]);
+
+        //ligar os filtros para os metodos de  usuário
+        $this->middleware('autorizacaoUsuarios')->only('meusCursos');
     }
 
     /*Novo Curso*/
@@ -35,9 +39,9 @@ class CursoController extends Controller
     }
 
     /*Salvar um curso*/
-    public function salvar( CursoRequest $request)
+    public function salvar(CursoRequest $request)
     {
-        $curso = new Curso();  
+        $curso = new Curso();
 
         //popular o model
         $curso->titulo = Input::get('titulo');
@@ -50,13 +54,13 @@ class CursoController extends Controller
         $curso->save();
 
         /*redirecionar para os detalhes do curso*/
-        return redirect()->action('CursoController@detalhesAdmin', [$curso->id]);
+        return redirect()->action('CursoController@detalhesAdmin', [$curso->id, 0]);
     }
 
 
     /*Salvar um curso*/
-    public function atualizar( CursoRequest $request)
-    {       
+    public function atualizar(CursoRequest $request)
+    {
         $curso = Curso::find(Input::get('id'));
 
         if (is_null($curso)) abort(404);
@@ -72,7 +76,7 @@ class CursoController extends Controller
         $curso->save();
 
         /*redirecionar para os detalhes do curso*/
-        return redirect()->action('CursoController@detalhesAdmin', [$curso->id]);
+        return redirect()->action('CursoController@detalhesAdmin', [$curso->id, 0]);
     }
 
     /*Editar o curso */
@@ -106,29 +110,30 @@ class CursoController extends Controller
 
 
         $curso->delete();
-       
+
         return redirect()->action('CursoController@listagem');
 
     }
 
     /*Exibir os detalhe do curso para o admin*/
-    public function detalhesAdmin($id,$unidade = 0)
+    public function detalhesAdmin($id, $unidade = 0)
     {
         $curso = Curso::find($id);
 
         if (is_null($curso)) abort(404);
 
-        return view('cursos/curso-admin-detalhes')->with(['curso' => $curso,'unidade_expande'=>$unidade]);
+        return view('cursos/curso-admin-detalhes')->with(['curso' => $curso, 'unidade_expande' => $unidade]);
     }
 
     /*Listar todos os cursos Cadastrados*/
-    public function lista(Request $request)   {
+    public function lista(Request $request)
+    {
 
         //Recuperar os parametros da requisição
         $data = $request->all();
 
         //verifcar se está usando o filtro
-        if ( Util::checkIsNullAndEmpty($data,'campo') && Util::checkIsNullAndEmpty($data,'valor')  ){
+        if (Util::checkIsNullAndEmpty($data, 'campo') && Util::checkIsNullAndEmpty($data, 'valor')) {
             //filtrar os usuários
             $usuarios = Curso::where($data['campo'], "LIKE", $data['valor'] . '%')->get();
 
@@ -136,9 +141,16 @@ class CursoController extends Controller
             return view('cursos/curso-listagem')->with(['cursos' => $usuarios, 'valor' => $data['valor'], 'campo' => $data['campo']]);
             // dd(DB::getQueryLog());
         } else {
-            $cursos = Curso::orderBy('titulo','asc')->get();
-            return view('cursos/curso-listagem')->with('cursos',$cursos);
+            $cursos = Curso::orderBy('titulo', 'asc')->get();
+            return view('cursos/curso-listagem')->with('cursos', $cursos);
         }
 
     }
+
+
+    public function meusCursos()
+    {
+        return view('cursos/meus-cursos');
+    }
+
 }

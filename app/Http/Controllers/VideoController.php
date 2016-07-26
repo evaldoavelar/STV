@@ -5,12 +5,17 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use Illuminate\Support\Facades\Input;
-use App\unidade;
+use App\Unidade;
 use App\Video;
 use App\Http\Requests\VideoRequest;
 
 class VideoController extends Controller
 {
+
+    function __construct()
+    {
+        $this->middleware('autorizacaoAdmin');
+    }
 
 
     /*Verificar Título duplicado RN02*/

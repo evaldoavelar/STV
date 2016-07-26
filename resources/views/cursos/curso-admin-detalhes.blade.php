@@ -55,30 +55,34 @@
 
         <section name="unidade">
             <div class="container espaco-20">
-                <div class="panel panel-default">
-                    <div class="panel-heading ">
-                        <h4>
-                            <a data-toggle="collapse" href="#unidade-{{$unidade->id}}"
-                               {{$unidade_expande == $unidade->id ?'aria-expanded="true" ' :'aria-expanded="false"' }}
-                               aria-controls="unidade-{{$unidade->id}}"
-                               class="{{ $unidade_expande == $unidade->id ?'collapsed ' :'' }}"
-                            >
+                <div class="panel panel-default" title="Clique para expandir">
+
+                    <a data-toggle="collapse" href="#unidade-{{$unidade->id}}"
+                       {{$unidade_expande == $unidade->id ?'aria-expanded="true" ' :'aria-expanded="false"' }}
+                       aria-controls="unidade-{{$unidade->id}}"
+                       class="{{ $unidade_expande == $unidade->id ?'collapsed ' :'' }}"
+                    >
+
+                        <div class="panel-heading ">
+                            <h4 >
+
                                 <span class="pdd glyphicon glyphicon-list-alt"
-                                      aria-hidden="true"></span> {{$unidade->descricao}}</a>
+                                      aria-hidden="true"></span> {{$unidade->descricao}}
 
-                            <span class="right fa fa-caret-square-o-down"
-                                  aria-hidden="true"></span>
-                        </h4>
-                        <p>
-                            <a href="{{url('unidade-novo',$unidade->id)}}">
-                                <span class="pdd glyphicon glyphicon-plus" aria-hidden="true"></span> Novo</a>
-                            <a href="{{url('unidade-editar',$unidade->id)}}">
-                                <span class="pdd glyphicon glyphicon-edit" aria-hidden="true"></span>Editar</a>
-                            <a href="{{url('unidade-excluir',$unidade->id)}}">
-                                <span class="pdd glyphicon glyphicon-trash" aria-hidden="true"></span>Excluir</a>
+                                <span class="right fa fa-caret-square-o-down"
+                                      aria-hidden="true"></span>
+                            </h4>
+                            <div>
+                                <a href="{{url('unidade-novo',$curso->id)}}">
+                                    <span class="pdd glyphicon glyphicon-plus" aria-hidden="true"></span> Novo</a>
+                                <a href="{{url('unidade-editar',$unidade->id)}}">
+                                    <span class="pdd glyphicon glyphicon-edit" aria-hidden="true"></span>Editar</a>
+                                <a href="{{url('unidade-excluir',$unidade->id)}}">
+                                    <span class="pdd glyphicon glyphicon-trash" aria-hidden="true"></span>Excluir</a>
 
-                        </p>
-                    </div>
+                            </div>
+                        </div>
+                    </a>
                     <div id="unidade-{{$unidade->id}}"
                          class="panel-body {{ $unidade_expande == $unidade->id ?'collapse in ' :'collapse' }}"
                             {{$unidade_expande == $unidade->id ?'aria-expanded="true" ' :'' }}>
@@ -253,6 +257,14 @@
                 $('html, body').animate({scrollTop: $('#unidade-{{ $unidade_expande }}').offset().top - 100}, 1000);
 
             });
+
+
+            $(".glyphicon-trash").click(function (event) {
+
+                if (confirm("Deseja Excluir?") === false)
+                    event.preventDefault();
+            });
+
         });
 
     </script>

@@ -14,6 +14,12 @@ use App\Http\Requests\MaterialRequest;
 class MaterialController extends Controller
 {
 
+
+    function __construct()
+    {
+        $this->middleware('autorizacaoAdmin');
+    }
+
     /*Verificar Título duplicado RN02*/
     private function validaTitulo($titulo, $id)
     {
@@ -95,7 +101,7 @@ class MaterialController extends Controller
         $path = DIRECTORY_SEPARATOR . $unidade_id . DIRECTORY_SEPARATOR . uniqid() . DIRECTORY_SEPARATOR;
         $fullPath = config('app.upload_material') . $path;
 
-        File::makeDirectory($fullPath);
+        File::makeDirectory($fullPath,0775,true);
         $request->file('arquivo')->move($fullPath, $arquivo);
 
         $material = new Material();

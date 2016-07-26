@@ -37,8 +37,12 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/curso-excluir', 'CursoController@excluir');
     Route::get('/curso-lista', 'CursoController@lista');
     Route::get('/curso-admin-detalhes/{id}', 'CursoController@detalhesAdmin')->where('id', '[0-9]+');
-    Route::get('/curso-admin-detalhes/{id}/{unidade}', 'CursoController@detalhesAdmin')->where('id', '[0-9]+');
+    Route::get('/curso-admin-detalhes/{id}/{unidade}', 'CursoController@detalhesAdmin')->where(['id' => '[0-9]+','unidade' => '[0-9]+']);
     Route::get('/curso-editar/{id}', 'CursoController@editar')->where('id', '[0-9]+');
+
+    Route::get('/meus-cursos', 'CursoController@meusCursos');
+
+
 
     /*------------------- Unidade ------------------------*/
     Route::get('/unidade-novo/{curso_id}','UnidadeController@novo')->where('curso_id', '[0-9]+');
@@ -80,9 +84,6 @@ Route::get('/curso-video', function () {
     return view('cursos/curso-video');
 });
 
-Route::get('/meus-cursos', function () {
-    return view('cursos/meus-cursos');
-});
 
 Route::get('/cursos-por-categoria', function () {
     return view('cursos/cursos-por-categoria');
