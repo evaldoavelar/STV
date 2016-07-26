@@ -13,6 +13,7 @@
     <div class="form-group">
         <label for="titulo" class="col-sm-3 control-label">Enunciado</label>
         <div class="col-sm-9">
+            <input type="hidden" name="questao[{{$indice}}][status]" value="N">
             <textarea class="form-control" id="pergunta1" name="questao[{{$indice}}][enunciado]"
                       rows="5"
                       placeholder="Enunciado da Questão">{{old('questao.*.enunciado')}}</textarea>

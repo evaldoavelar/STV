@@ -45,7 +45,7 @@ class AtividadeController extends Controller
     {
         $dados = ($request->all());
 
-       // dd($dados);
+        // dd($dados);
         try {
 
             DB::beginTransaction();
@@ -73,7 +73,7 @@ class AtividadeController extends Controller
                     //criar as respostas
                     $resposta = new Resposta();
                     $resposta->questao_id = $questao->id;
-                    $resposta->enunciado =  trim($rd);
+                    $resposta->enunciado = trim($rd);
                     $resposta->correta = isset($q['correta']) && ($q['correta'] == $j);
                     $resposta->save();
                 }
@@ -83,7 +83,7 @@ class AtividadeController extends Controller
 
         } catch (Exception $e) {
             DB::rollBack();
-            return  redirect()->back()->withErrors(['msg', 'Não foi possível Salvar as questões!!! Contate o suporte.']);
+            return redirect()->back()->withErrors(['msg', 'Não foi possível Salvar as questões!!! Contate o suporte.']);
         }
 
         //recuperar a unidade do Material
@@ -110,7 +110,7 @@ class AtividadeController extends Controller
             $atividade = Atividade::find($dados['id']);
 
             if (is_null($atividade)) {
-                return abort(404,"Unidade não localizada");
+                return abort(404, "Unidade não localizada");
             }
 
             $atividade->titulo = trim($dados['titulo']);
@@ -121,30 +121,66 @@ class AtividadeController extends Controller
             //pecorrer as questões
             foreach ($dados['questao'] as $i => $q) {
 
-                //criar a questão
-                $questao = Questao::find($i);
+                $questao = null;
 
-                if (is_null($questao)) {
-                    $questao = new Questao();
-                    $questao->atividade_id = $atividade->id;
-                }
-
-                $questao->enunciado = trim($q['enunciado']);
-                $questao->save();
-
-                //pecorrer as respostas
-                foreach ($q['resposta'] as $j => $rd) {
-
-                    //criar as respostas
-                    $resposta = Resposta::find($j);
-
-                    if (is_null($resposta)) {
-                        $resposta = new Resposta(['questao_id' => $questao->id]);
+                switch ($q['status']) {
+                    case 'N':{ //novo
+                        $questao = new Questao();
+                        $questao->atividade_id = $atividade->id;
+                        $questao->enunciado = trim($q['enunciado']);
+                        $questao->save();
+                        break;
+                    }
+                    case 'E': //edição
+                        $questao = Questao::find($i);
+                        $questao->enunciado = trim($q['enunciado']);
+                        $questao->save();
+                        break;
+                    case 'X': { // exclusão
+                        $questao = Questao::find($i);
+                        if (is_null($questao)) {
+                            return abort(404, "Questao não localizada");
+                        }
+                        $questao->delete();
+                        break;
                     }
 
-                    $resposta->enunciado =  trim($rd);
-                    $resposta->correta = isset($q['correta']) && ($q['correta'] == $j);
-                    $resposta->save();
+                    default:
+                        return abort(404, "Questao não localizada");
+                }
+
+                //a questão foi excluida, não precisa pecorre  as respostas
+                if( $q['status'] != 'X' ) {
+
+                    //pecorrer as respostas
+                    foreach ($q['resposta'] as $j => $rd) {
+
+                        //criar as respostas
+
+                        switch ($rd['status']) {
+                            case 'N': { //nova
+                                $resposta = new Resposta();
+                                $resposta->questao_id = $questao->id;
+                                $resposta->enunciado = trim($rd['enunciado']);
+                                $resposta->correta = isset($q['correta']) && ($q['correta'] == $j);
+                                $resposta->save();
+                                break;
+                            }
+                            case 'E': //edição
+                                $resposta = Resposta::find($j);
+                                $resposta->enunciado = trim($rd['enunciado']);
+                                $resposta->correta = isset($q['correta']) && ($q['correta'] == $j);
+                                $resposta->save();
+                                break;
+                            case 'X': { //exclusão
+                                $resposta = Resposta::find($j);
+                                if (!is_null($resposta)) {
+                                    $resposta->delete();
+                                }
+                                break;
+                            }
+                        }
+                    }
                 }
             }
 
@@ -152,7 +188,7 @@ class AtividadeController extends Controller
 
         } catch (Exception $e) {
             DB::rollBack();
-            return  redirect()->back()->withErrors(['msg', 'Não foi possível Salvar as questões!!! Contate o suporte.']);
+            return redirect()->back()->withErrors(['msg', 'Não foi possível Salvar as questões!!! Contate o suporte.']);
         }
 
         //recuperar a unidade do Material
@@ -169,7 +205,7 @@ class AtividadeController extends Controller
     {
         $atividade = Atividade::find($id);
 
-        if (is_null( $atividade)) {
+        if (is_null($atividade)) {
             return abort(404);
         }
 

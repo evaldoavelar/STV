@@ -53,7 +53,10 @@
                         <div class="form-group">
                             <label for="descricao" class="col-sm-3 control-label">Descrição</label>
                             <div class="col-sm-9">
-                                        <textarea class="form-control" id="descricao" name="descricao"
+                                        <textarea class="form-control"
+                                                  id="descricao"
+                                                  name="descricao"
+                                                  rows="5"
                                                   placeholder="Descrição">{{$atividade->descricao ? $atividade->descricao : old('descricao')}}</textarea>
                                 <p class="help-block">Descrição do Material</p>
                             </div>
@@ -62,7 +65,7 @@
                         <div id="questoes">
                             @foreach( $atividade->questoes as $indice => $questao)
                                 {{-- Enunciado da pergunta --}}
-                                <div class="questao" id="questao-{{$questao->id}}">
+                                <div class="questao" id="questao-{{$questao->id}}" data-questaoId="{{$questao->id}}">
                                     <div class="form-group">
                                         <div class="col-sm-3 "></div>
                                         <div class="col-sm-9">
@@ -78,6 +81,7 @@
                                     <div class="form-group">
                                         <label for="titulo" class="col-sm-3 control-label">Enunciado</label>
                                         <div class="col-sm-9">
+                                            <input type="hidden" name="questao[{{$questao->id}}][status]" value="E">
                                             <textarea class="form-control"
                                                       name="questao[{{$questao->id}}][enunciado]]"
                                                       rows="5"
@@ -86,10 +90,10 @@
                                         </div>
                                     </div>
 
-                                    <div class="respostas">
+                                    <div class="respostas" >
                                         @foreach( $questao->respostas as $resposta)
                                             {{-- resposta da atividade --}}
-                                            <div class="form-group">
+                                            <div class="form-group" id="resposta-{{$resposta->id}}" >
                                                 <div class="col-xs-1 col-sm-3"></div>
                                                 <div class="col-xs-1 col-sm-1">
                                                     <input type="radio" name="questao[{{$questao->id}}][correta]"
@@ -97,8 +101,9 @@
                                                            value="{{$resposta->id}}" {{$resposta->correta == true ? 'checked' : ''}}>
                                                 </div>
                                                 <div class="col-xs-7 col-sm-7">
+                                                    <input type="hidden" name="questao[{{$questao->id}}][resposta][{{$resposta->id}}][status]" value="E">
                                                     <textarea type="text" class="form-control" id="resposta" rows="3"
-                                                              name="questao[{{$questao->id}}][resposta][{{$resposta->id}}]"
+                                                              name="questao[{{$questao->id}}][resposta][{{$resposta->id}}][enunciado]"
                                                               placeholder="Resposta">{{$resposta->enunciado}}</textarea>
                                                 </div>
                                                 <div class="col-xs-1 col-sm-1">
@@ -158,11 +163,19 @@
             var idQuestao =  0;
 
 
+            $.each($('.questao'), function (i, value) {
 
+                configurarAdicionarQuestao('.questao-adicionar',value.dataset.questaoid);
+
+                configurarExcluirQuestao('.questao-excluir');
+
+                configurarExcluirResposta('.resposta-excluir');
+            });
 
             $("#btnNovaQuestao").click(function (event) {
 
-                while ( $('questoes-'+idQuestao).size() > 0 )idQuestao++;
+                idQuestao++;
+                while ( $('questao-'+idQuestao).size() > 0 )idQuestao++;
 
                 $.ajax({
                     url: "{{ url('/atividade-questao') }}/" + idQuestao,
@@ -221,7 +234,8 @@
                         } else {
                             if (confirm('Excluir a resposta?')) {
                                 //auto remover
-                                $(this.parentNode.parentNode).remove();
+                                $(this.parentNode.parentNode).find('input[type=hidden]')[0].value = 'X'
+                                $(this.parentNode.parentNode).hide();
                             }
                         }
                     });
@@ -240,7 +254,9 @@
                     $(value).click(function () {
                         if (confirm('Excluir a Questão?')) {
                             //auto remover
-                            $(this.parentNode.parentNode).closest('.questao').remove();
+                            $e =         $(this.parentNode.parentNode).closest('.questao');
+                            $e.find('input[type=hidden]')[0].value = 'X'
+                            $e.hide();
                         }
                     });
 
@@ -249,7 +265,8 @@
 
             function AdicionarResposta(div, id) {
 
-                while ( $('questoes-'+idResposta).size() > 0 )idResposta++;
+                idResposta++;
+                while ( $('#resposta-'+idResposta).size() > 0 )idResposta++;
 
                 $.ajax({
                     url: "{{ url('/atividade-resposta') }}/" + id + "/" + idResposta,
@@ -302,11 +319,7 @@
 
                 return true;
             });
+        });
 
-
-
-
-        })
-        ;
     </script>
 @stop
