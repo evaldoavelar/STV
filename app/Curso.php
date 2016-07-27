@@ -16,6 +16,16 @@ class Curso extends Model
         return $this->hasMany('App\Unidade', 'curso_id', 'id');
     }
 
+    public function categoria()
+    {
+        return $this->hasOne('App\Categoria', 'categoria_id', 'id');
+    }
+
+    public function inscritos()
+    {
+        return $this->hasMany('App\Inscrito', 'curso_id', 'id');
+    }
+
 /*    public function curso()
     {
         return $this->hasMany('App\Curso', 'curso_id', 'id');

@@ -10,7 +10,7 @@
         <div class="container ">
             <div class="row-fluid">
                 <div class="col-md-12 ">
-                    <p class="destaque">Cursos Categoria <span>WEB</span></p>
+                    <p class="destaque">Cursos Categoria <span>{{$categoria->descricao}}</span></p>
                 </div>
             </div>
         </div>
@@ -24,161 +24,70 @@
                 <div class="col-md-12 ">
                     <div class="panel panel-default">
                         <div class="panel-body">
-                            <div class="row-fluid">
-                                <div class="row contador">
-                                    <div class="col-lg-9 ">
-                                        <h2>Curso de JavaScript Completo</h2>
-                                        <p><span class="badge ">1</span> Em nosso curso de Javascript veremos todos os
-                                            conceitos dessa linguagem de programação desde os conceitos básicos até os
-                                            mais avançados, para que o aluno tenho uma formação completa de Javascript..
-                                        </p>
-                                        <p class="pull-left"><strong>Autor</strong> : José dos Santos</p>
-                                    </div>
-                                    <div class="col-lg-3 avaliacao avaliacao-direita">
-                                        <div class="col-md-12" title="Clique para avaliar o Curso ">
-                                            <h2> Avaliação</h2>
-                                            <p>
-                                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
-                                                <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
+
+                            @forelse($cursos as $i => $curso)
+
+                                <div class="row-fluid">
+                                    <div class="row contador">
+                                        <div class="col-lg-9 ">
+                                            <h2>{{$curso->titulo}}</h2>
+                                            <p><span class="badge ">{{$i+1}}</span> {{$curso->descricao}}
                                             </p>
+                                            <p class="pull-left"><strong>Instrutor</strong> : {{$curso->instrutor}}</p>
                                         </div>
-                                        <div class="col-md-12 ">
-                                            <a class="btn btn-group-lg btn-danger">Inscrever</a>
+                                        <div class="col-lg-3 avaliacao avaliacao-direita">
+                                            <div class="col-md-12" title="Clique para avaliar o Curso ">
+                                                <h2> Avaliação</h2>
+                                                <p>
+                                                    @for($j = 1; $j<=5;$j++)
+                                                        @if($j <= $curso->avaliação)
+                                                            <span class="glyphicon glyphicon-star"
+                                                                  aria-hidden="true"></span>
+                                                        @else
+                                                            <span class="glyphicon glyphicon-star-empty"
+                                                                  aria-hidden="true"></span>
+                                                        @endif
+                                                    @endfor
+                                                </p>
+                                            </div>
+                                            <div class="col-md-12 ">
+                                                @if(Auth::check())
+                                                    @if( $curso->inscritos()->where('user_id',Auth::user()->id)->get()->count() > 0)
+                                                        <button class="btn btn-group-lg btn-primary" disabled>Inscrito
+                                                        </button>
+                                                    @else
+                                                        <button class="btn btn-group-lg btn-danger inscrever"
+                                                                data-userID="{{Auth::user()->id}}"
+                                                                data-cursoId="{{$curso->id}}">Inscrever
+                                                        </button>
+                                                    @endif
+                                                @else
+                                                    <a href="{{url('/login')}}" class="btn btn-group-lg btn-primary">
+                                                        Faça Login para se Inscrever
+                                                    </a>
+                                                @endif
+                                            </div>
                                         </div>
+
+                                        <div class="row-fluid ">
+                                            <div class="col-lg-12 ">
+
+                                                <p>
+                                                    <a class="pull-right" href="{{url('curso-detalhes',$curso->id)}}">Acessar&nbsp;&nbsp;<span
+                                                                class="glyphicon glyphicon  glyphicon-chevron-right"
+                                                                aria-hidden="true"></span> </a>
+                                                </p>
+                                            </div>
+                                        </div>
+
                                     </div>
-
-                                    <div class="row-fluid ">
-                                        <div class="col-lg-12 ">
-
-                                            <p>
-                                                <a class="pull-right" href="curso-detalhes">Acessar&nbsp;&nbsp;<span
-                                                            class="glyphicon glyphicon  glyphicon-chevron-right"
-                                                            aria-hidden="true"></span> </a>
-                                            </p>
-                                        </div>
-                                    </div>
-
                                 </div>
 
-                                <div class="row contador">
-                                    <div class="col-lg-9 ">
-                                        <h2>Curso de JavaScript Completo</h2>
-                                        <p><span class="badge ">1</span> Em nosso curso de Javascript veremos todos os
-                                            conceitos dessa linguagem de programação desde os conceitos básicos até os
-                                            mais avançados, para que o aluno tenho uma formação completa de Javascript..
-                                        </p>
-                                        <p class="pull-left"><strong>Autor</strong> : José dos Santos</p>
-                                    </div>
-                                    <div class="col-lg-3 avaliacao avaliacao-direita">
-                                        <div title="Clique para avaliar o Curso ">
-                                            <h2> Avaliação</h2>
-                                            <p>
-                                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
-                                                <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
-                                            </p>
-                                        </div>
-                                        <div class="col-md-12 ">
-                                            <a class="btn btn-group-lg btn-danger">Inscrever</a>
-                                        </div>
-                                    </div>
+                            @empty
 
-                                    <div class="row-fluid ">
-                                        <div class="col-lg-12 ">
+                                <h3>Ainda não existem cursos nessa Categoria :( </h3>
 
-                                            <p>
-                                                <a class="pull-right" href="curso-detalhes">Acessar&nbsp;&nbsp;<span
-                                                            class="glyphicon glyphicon  glyphicon-chevron-right"
-                                                            aria-hidden="true"></span> </a>
-                                            </p>
-                                        </div>
-                                    </div>
-
-                                </div>
-
-                                <div class="row contador">
-                                    <div class="col-lg-9 ">
-                                        <h2>Curso de JavaScript Completo</h2>
-                                        <p><span class="badge ">1</span> Em nosso curso de Javascript veremos todos os
-                                            conceitos dessa linguagem de programação desde os conceitos básicos até os
-                                            mais avançados, para que o aluno tenho uma formação completa de Javascript..
-                                        </p>
-                                        <p class="pull-left"><strong>Autor</strong> : José dos Santos</p>
-                                    </div>
-                                    <div class="col-lg-3 avaliacao avaliacao-direita">
-                                        <div title="Clique para avaliar o Curso ">
-                                            <h2> Avaliação</h2>
-                                            <p>
-                                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
-                                                <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
-                                            </p>
-                                        </div>
-                                        <div class="col-md-12 ">
-                                            <a class="btn btn-group-lg btn-danger">Inscrever</a>
-                                        </div>
-                                    </div>
-
-                                    <div class="row-fluid ">
-                                        <div class="col-lg-12 ">
-
-                                            <p>
-                                                <a class="pull-right" href="curso-detalhes">Acessar&nbsp;&nbsp;<span
-                                                            class="glyphicon glyphicon  glyphicon-chevron-right"
-                                                            aria-hidden="true"></span> </a>
-                                            </p>
-                                        </div>
-                                    </div>
-
-                                </div>
-
-
-                                <div class="row contador">
-                                    <div class="col-lg-9 ">
-                                        <h2>Curso de JavaScript Completo</h2>
-                                        <p><span class="badge ">1</span> Em nosso curso de Javascript veremos todos os
-                                            conceitos dessa linguagem de programação desde os conceitos básicos até os
-                                            mais avançados, para que o aluno tenho uma formação completa de Javascript..
-                                        </p>
-                                        <p class="pull-left"><strong>Autor</strong> : José dos Santos</p>
-                                    </div>
-                                    <div class="col-lg-3 avaliacao avaliacao-direita">
-                                        <div title="Clique para avaliar o Curso ">
-                                            <h2> Avaliação</h2>
-                                            <p>
-                                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
-                                                <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
-                                            </p>
-                                        </div>
-                                        <div class="col-md-12 ">
-                                            <a class="btn btn-group-lg btn-danger">Inscrever</a>
-                                        </div>
-                                    </div>
-
-                                    <div class="row-fluid ">
-                                        <div class="col-lg-12 ">
-
-                                            <p>
-                                                <a class="pull-right" href="curso-detalhes">Acessar&nbsp;&nbsp;<span
-                                                            class="glyphicon glyphicon  glyphicon-chevron-right"
-                                                            aria-hidden="true"></span> </a>
-                                            </p>
-                                        </div>
-                                    </div>
-
-                                </div>
-
-
+                            @endforelse
                         </div>
                     </div>
                 </div>
@@ -188,3 +97,55 @@
 
 
 @stop
+
+<meta name="_token" content="{!! csrf_token() !!}"/>
+
+@section('scripts')
+
+    <script>
+        $(function () {
+            $('.inscrever').click(function (e) {
+                var btn = $(this)[0]
+                btn.disabled = true;
+
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                    }
+                })
+
+                e.preventDefault();
+
+
+                var formData = {
+                    user_id: btn.dataset.userid,
+                    curso_id: btn.dataset.cursoid,
+                }
+
+                console.log(formData);
+
+                $.ajax({
+
+                    type: "POST",
+                    url: '{{Url('inscrever-curso')}}',
+                    data: formData,
+                    dataType: 'json',
+                    success: function (data) {
+                        console.log(data);
+                        if (data.inscrito) {
+                            btn.textContent = 'Inscrito';
+                        } else {
+                            btn.disabled = false;
+                            alert(data.msg);
+                        }
+                    },
+                    error: function (data) {
+                        console.log('Error:', data);
+                        btn.disabled = false;
+                        alert('Não foi possivel realizar a inscrição');
+                    }
+                });
+            })
+        });
+    </script>
+@stop    

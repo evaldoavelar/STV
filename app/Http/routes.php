@@ -41,6 +41,8 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/curso-editar/{id}', 'CursoController@editar')->where('id', '[0-9]+');
 
     Route::get('/meus-cursos', 'CursoController@meusCursos');
+    Route::get('/cursos-por-categoria/{categoria_id}', 'CursoController@cursoPorCategoria')->where('categoria_id', '[0-9]+');
+    Route::post('/inscrever-curso', 'CursoController@inscreverCurso');
 
 
 
@@ -84,10 +86,6 @@ Route::get('/curso-video', function () {
     return view('cursos/curso-video');
 });
 
-
-Route::get('/cursos-por-categoria', function () {
-    return view('cursos/cursos-por-categoria');
-});
 
 
 Route::get('/categorias', function () {

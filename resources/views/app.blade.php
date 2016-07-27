@@ -54,7 +54,7 @@
                                 class="caret"></span></a>
                     <ul class="dropdown-menu dropdown-menu-right " aria-labelledby="download">
                         @foreach(\App\Categoria::all() as $cat)
-                            <li><a href="{{url('categorias',$cat->id)}}" target="_top">{{$cat->descricao}}</a></li>
+                            <li><a href="{{url('cursos-por-categoria',$cat->id)}}" target="_top">{{$cat->descricao}}</a></li>
                         @endforeach
 
                     </ul>

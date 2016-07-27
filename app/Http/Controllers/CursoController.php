@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Input;
 use App\Categoria;
 use App\Curso;
+use App\Inscrito;
 use App\Library\Util;
 use Illuminate\Http\Request;
 use App\Http\Requests\CursoRequest;
@@ -18,7 +19,7 @@ class CursoController extends Controller
     function __construct()
     {
         //ligar os filtros para os metodos de administrador
-        $this->middleware('autorizacaoAdmin', ['except' => ['meusCursos']]);
+        $this->middleware('autorizacaoAdmin', ['except' => ['meusCursos', 'cursoPorCategoria','inscreverCurso']]);
 
         //ligar os filtros para os metodos de  usuário
         $this->middleware('autorizacaoUsuarios')->only('meusCursos');
@@ -145,6 +146,45 @@ class CursoController extends Controller
             return view('cursos/curso-listagem')->with('cursos', $cursos);
         }
 
+    }
+
+    /*Listar todos os cursos por categorias*/
+    public function cursoPorCategoria($categoria_id)
+    {
+        $categoria = Categoria::find($categoria_id);
+        if (is_null($categoria)) abort(404, 'Categoria não encontrada');
+
+        //filtrar os curso por categorias
+        $cursos = Curso::where('categoria_id', $categoria_id)->get();
+
+        //retornar a consulta para a view
+        return view('cursos/cursos-por-categoria')->with(['cursos' => $cursos, 'categoria' => $categoria]);
+    }
+
+    /*Inscrever o usuário no curso*/
+    public function inscreverCurso(Request $request)
+    {
+        $dados = $request->all();
+        $curso_id = $dados['curso_id'];
+        $user_id = $dados['user_id'];
+
+        $curso = Curso::find($curso_id);
+        if (is_null($curso)) abort(404, 'Curso não encontrado');
+
+        $user = Curso::find($user_id);
+        if (is_null($user)) abort(404, 'Usuario não encontrado');
+
+        $inscrito = Curso::find($curso_id)->inscritos()->where('user_id',$user_id);
+
+        if ($inscrito->get()->count() > 0)
+            return response()->json(['inscrito' => false,'msg' => 'Usuário já inscrito no curso']);
+
+        $inscrito = new Inscrito();
+        $inscrito->curso_id = $curso_id;
+        $inscrito->user_id = $user_id;
+        $inscrito->save();
+
+        return response()->json(['inscrito' => true]);
     }
 
 
