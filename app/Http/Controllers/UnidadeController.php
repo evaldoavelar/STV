@@ -12,7 +12,11 @@ class UnidadeController extends Controller
 {
     function __construct()
     {
-        $this->middleware('autorizacaoAdmin');
+        //ligar os filtros para os metodos de administrador
+        $this->middleware('autorizacaoAdmin', ['except' => ['detalhe']]);
+       
+        //ligar os filtros para os metodos de  usuário
+        $this->middleware('autorizacaoUsuarios')->only('detalhe');
     }
 
     /*Novo Unidade*/
@@ -86,4 +90,20 @@ class UnidadeController extends Controller
         return redirect()->action('CursoController@detalhesAdmin', [$unidade->curso_id,0] );
 
     }
+    
+    /*detalhe da unidade */
+    public function detalhe($id)
+    {
+        //recurperar o Unidade
+        $unidade = Unidade::find($id);
+
+        if (is_null($unidade)) abort(404);
+
+        //retornar a view 
+        return view('unidade/unidade-detalhe')->with('unidade' , $unidade);
+
+    }
+
+
+    
 }

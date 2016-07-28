@@ -14,7 +14,11 @@ class VideoController extends Controller
 
     function __construct()
     {
-        $this->middleware('autorizacaoAdmin');
+        //ligar os filtros para os metodos de administrador
+        $this->middleware('autorizacaoAdmin', ['except' => ['detalhe']]);
+
+        //ligar os filtros para os metodos de  usuário
+        $this->middleware('autorizacaoUsuarios')->only('detalhe');
     }
 
 
@@ -131,9 +135,18 @@ class VideoController extends Controller
 
     }
 
-    /*Download do arquivo do Video*/
-    public function show($id)
+    /*detalhe do video */
+    public function detalhe($id)
     {
+        //recurperar o Video
+        $video = Video::find($id);
+
+        if (is_null( $video)) {
+            return abort(404);
+        }
+
+        //retornar a view 
+        return view('video/video-detalhe')->with('video' , $video);
 
     }
 }

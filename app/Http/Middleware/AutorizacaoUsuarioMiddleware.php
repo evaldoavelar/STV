@@ -18,7 +18,7 @@ class AutorizacaoUsuarioMiddleware
         //1 adicionar o nome dessa classe dentro da classe kernel no diretorio app/http  no atributo middleware e $routeMiddleware
         //no construtor do controller,  dizer quais metodos serao filtrados.
 
-        echo 'Autorizando';
+        //echo 'Autorizando';
 
         //se o usuario não está logado, redireciona para login
         if (!$request->is('auth/login') && \Auth::guest()) {

@@ -19,7 +19,7 @@ class CursoController extends Controller
     function __construct()
     {
         //ligar os filtros para os metodos de administrador
-        $this->middleware('autorizacaoAdmin', ['except' => ['meusCursos', 'cursoPorCategoria','inscreverCurso']]);
+        $this->middleware('autorizacaoAdmin', ['except' => ['meusCursos', 'cursoPorCategoria','inscreverCurso','detalhesUsuario']]);
 
         //ligar os filtros para os metodos de  usuário
         $this->middleware('autorizacaoUsuarios')->only('meusCursos');
@@ -187,6 +187,15 @@ class CursoController extends Controller
         return response()->json(['inscrito' => true]);
     }
 
+
+    /*Detalhes do curso para o usuário*/
+    public function detalhesUsuario($curso_id)
+    {
+        $curso = Curso::find($curso_id);
+        if (is_null($curso)) abort(404, 'Curso não encontrado');
+
+        return view('cursos/curso-usuario-detalhes')->with(['curso'=>$curso]);
+    }
 
     public function meusCursos()
     {

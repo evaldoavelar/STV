@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use DB;
 
 class Curso extends Model
 {
@@ -26,13 +27,68 @@ class Curso extends Model
         return $this->hasMany('App\Inscrito', 'curso_id', 'id');
     }
 
-/*    public function curso()
+    /*    public function curso()
+        {
+            return $this->hasMany('App\Curso', 'curso_id', 'id');
+        }
+
+        public function videos()
+        {
+            return $this->hasMany('App\Video', 'curso_id', 'id');
+        }*/
+
+    public function totalVideos()
     {
-        return $this->hasMany('App\Curso', 'curso_id', 'id');
+
+        $videos = DB::table('videos')
+            ->join('unidades', 'unidades.id', '=', 'videos.unidade_id')
+            ->join('cursos', function ($join) {
+                $join->on('cursos.id', '=', 'unidades.curso_id')
+                    ->where('cursos.id', '=', $this->id);
+            })
+            ->count();
+
+        return $videos;
     }
 
-    public function videos()
+    public function totalAtividades()
     {
-        return $this->hasMany('App\Video', 'curso_id', 'id');
-    }*/
+
+        $videos = DB::table('atividades')
+            ->join('unidades', 'unidades.id', '=', 'atividades.unidade_id')
+            ->join('cursos', function ($join) {
+                $join->on('cursos.id', '=', 'unidades.curso_id')
+                    ->where('cursos.id', '=', $this->id);
+            })
+            ->count();
+
+        return $videos;
+    }
+
+    public function totalMateriais()
+    {
+
+        $videos = DB::table('materiais')
+            ->join('unidades', 'unidades.id', '=', 'materiais.unidade_id')
+            ->join('cursos', function ($join) {
+                $join->on('cursos.id', '=', 'unidades.curso_id')
+                    ->where('cursos.id', '=', $this->id);
+            })
+            ->count();
+
+        return $videos;
+    }
+
+    public function totalUnidades()
+    {
+
+        $videos = DB::table('unidades')
+            ->join('cursos', function ($join) {
+                $join->on('cursos.id', '=', 'unidades.curso_id')
+                    ->where('cursos.id', '=', $this->id);
+            })
+            ->count();
+
+        return $videos;
+    }
 }

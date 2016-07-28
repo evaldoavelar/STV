@@ -44,7 +44,8 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/cursos-por-categoria/{categoria_id}', 'CursoController@cursoPorCategoria')->where('categoria_id', '[0-9]+');
     Route::post('/inscrever-curso', 'CursoController@inscreverCurso');
 
-
+    Route::get('/curso-detalhes/{id}', 'CursoController@detalhesUsuario')->where('id', '[0-9]+');
+ 
 
     /*------------------- Unidade ------------------------*/
     Route::get('/unidade-novo/{curso_id}','UnidadeController@novo')->where('curso_id', '[0-9]+');
@@ -52,6 +53,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::post('/unidade-atualizar', 'UnidadeController@atualizar');
     Route::get('/unidade-excluir/{id}', 'UnidadeController@excluir')->where('id', '[0-9]+');
     Route::get('/unidade-editar/{id}', 'UnidadeController@editar')->where('id', '[0-9]+');
+    Route::get('/unidade-detalhe/{id}', 'UnidadeController@detalhe')->where('id', '[0-9]+');
 
     /*------------------- Material ------------------------*/        
     Route::get('/material-novo/{curso_id}','MaterialController@novo')->where('curso_id', '[0-9]+');
@@ -67,6 +69,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/video-excluir/{id}','VideoController@excluir')->where('id', '[0-9]+');
     Route::post('/video-salvar','VideoController@salvar');
     Route::post('/video-atualizar','VideoController@atualizar');
+    Route::get('/video-detalhe/{id}','VideoController@detalhe')->where('id', '[0-9]+'); 
 
     /*Rotas Atividade */
     Route::get('/atividade-questao/{indice}','AtividadeController@novaQuestao')->where('indice', '[0-9]+');
@@ -90,12 +93,6 @@ Route::get('/curso-video', function () {
 
 Route::get('/categorias', function () {
     return view('cursos/listagem-categorias');
-});
-
-
-
-Route::get('/curso-detalhes', function () {
-    return view('cursos/curso-usuario-detalhes');
 });
 
 

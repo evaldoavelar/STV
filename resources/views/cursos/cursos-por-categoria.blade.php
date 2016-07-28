@@ -16,21 +16,23 @@
         </div>
     </section>
 
+    @forelse($cursos as $i => $curso)
 
+        <section id="cursos">
+            <div class="container espaco-40">
+                <div class="row-fluid">
+                    <div class="col-md-12 ">
+                        <div class="panel panel-default">
+                            <div class="panel-heading ">
+                                <h2>{{$curso->titulo}}</h2>
+                            </div>
 
-    <section id="video">
-        <div class="container espaco-40">
-            <div class="row-fluid">
-                <div class="col-md-12 ">
-                    <div class="panel panel-default">
-                        <div class="panel-body">
-
-                            @forelse($cursos as $i => $curso)
+                            <div class="panel-body">
+                                @if ( $inscrito = ($curso->inscritos()->where('user_id',Auth::user()->id)->get()->count() > 0)) @endif
 
                                 <div class="row-fluid">
                                     <div class="row contador">
                                         <div class="col-lg-9 ">
-                                            <h2>{{$curso->titulo}}</h2>
                                             <p><span class="badge ">{{$i+1}}</span> {{$curso->descricao}}
                                             </p>
                                             <p class="pull-left"><strong>Instrutor</strong> : {{$curso->instrutor}}</p>
@@ -52,7 +54,7 @@
                                             </div>
                                             <div class="col-md-12 ">
                                                 @if(Auth::check())
-                                                    @if( $curso->inscritos()->where('user_id',Auth::user()->id)->get()->count() > 0)
+                                                    @if( $inscrito )
                                                         <button class="btn btn-group-lg btn-primary" disabled>Inscrito
                                                         </button>
                                                     @else
@@ -63,7 +65,7 @@
                                                     @endif
                                                 @else
                                                     <a href="{{url('/login')}}" class="btn btn-group-lg btn-primary">
-                                                        Faça Login para se Inscrever
+                                                          Faça Login para se Inscrever
                                                     </a>
                                                 @endif
                                             </div>
@@ -71,30 +73,29 @@
 
                                         <div class="row-fluid ">
                                             <div class="col-lg-12 ">
-
-                                                <p>
-                                                    <a class="pull-right" href="{{url('curso-detalhes',$curso->id)}}">Acessar&nbsp;&nbsp;<span
+                                                @if( $inscrito )
+                                                    <a class="pull-right"
+                                                       href="{{url('curso-detalhes',$curso->id)}}">Acessar&nbsp;&nbsp;<span
                                                                 class="glyphicon glyphicon  glyphicon-chevron-right"
                                                                 aria-hidden="true"></span> </a>
-                                                </p>
+                                                @else
+                                                    <a class="pull-right">Acessar <span class="glyphicon glyphicon glyphicon-ban-circle " aria-hidden="true"></span></a>
+
+                                                    @endif
+                                                    </p>
                                             </div>
                                         </div>
-
                                     </div>
                                 </div>
-
-                            @empty
-
-                                <h3>Ainda não existem cursos nessa Categoria :( </h3>
-
-                            @endforelse
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-
+        </section>
+    @empty
+        <h3>Ainda não existem cursos nessa Categoria :( </h3>
+    @endforelse
 
 @stop
 
@@ -134,6 +135,8 @@
                         console.log(data);
                         if (data.inscrito) {
                             btn.textContent = 'Inscrito';
+                            $(btn).removeClass('btn-danger');
+                            $(btn).addClass('btn-primary');
                         } else {
                             btn.disabled = false;
                             alert(data.msg);

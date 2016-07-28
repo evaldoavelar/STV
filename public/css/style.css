@@ -105,21 +105,21 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 
 
 .contador{
-    padding-top: 2.8em;
-    padding-bottom: 5px;
+    padding-top: 1.8em;
+    padding-bottom: 1px;
 }
 .contador:not(:first-child) {
     border-top: 1px solid #c4c4c4;
 }
 
 .contador .badge{
-    padding: 15px;
+    padding: 8px;
     margin-right: 10px;
     background-color: #c4c4c4;
 }
 
 .contador p{
-    font-size: 1.5em;
+    font-size: 1em;
 }
 
 .contador p:last-child{
@@ -197,7 +197,7 @@ footer.site-footer .menu li a {
     text-align: center;
     font-family: Lato, Sans-serif;
     font-size: 20px;
-    font-weight: 300;
+    font-weight: 400 !important;
     color: #3b3b3b;
 }
 

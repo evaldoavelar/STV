@@ -14,8 +14,8 @@ class CreateTableVideos extends Migration
     {
         Schema::create('videos', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('titulo',200)->unique();
-            $table->string('descricao',200);
+            $table->string('titulo',500)->unique();
+            $table->string('descricao',1000);
             $table->string('url',1000);            
             $table->integer('unidade_id')->unsigned();
             $table->foreign('unidade_id')->references('id')->on('unidades')->onDelete('cascade');;
