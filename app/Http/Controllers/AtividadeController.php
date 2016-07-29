@@ -130,7 +130,7 @@ class AtividadeController extends Controller
                 $questao = null;
 
                 switch ($q['status']) {
-                    case 'N':{ //novo
+                    case 'N': { //novo
                         $questao = new Questao();
                         $questao->atividade_id = $atividade->id;
                         $questao->enunciado = trim($q['enunciado']);
@@ -156,7 +156,7 @@ class AtividadeController extends Controller
                 }
 
                 //a questão foi excluida, não precisa pecorre  as respostas
-                if( $q['status'] != 'X' ) {
+                if ($q['status'] != 'X') {
 
                     //pecorrer as respostas
                     foreach ($q['resposta'] as $j => $rd) {
@@ -212,7 +212,7 @@ class AtividadeController extends Controller
         $atividade = Atividade::find($id);
 
         if (is_null($atividade)) {
-            return abort(404,"Atividade não encontrada");
+            return abort(404, "Atividade não encontrada");
         }
 
         //recuperar a unidade do Material
@@ -236,7 +236,7 @@ class AtividadeController extends Controller
             return abort(404);
         }
 
-        //retornar a view passando as categorias
+        //retornar a view passando a atividade
         return view('atividade.atividade-editar')->with('atividade', $atividade);
     }
 
@@ -249,6 +249,21 @@ class AtividadeController extends Controller
         return view("atividade/partial/atividade-questao", ["indice" => $indice]);
     }
 
+    /*
+     * Detalhe da atividade
+     * */
+    public function Detalhe($id)
+    {
+        $atividade = Atividade::find($id);
+
+        if (is_null($atividade)) {
+            return abort(404);
+        }
+
+        //retornar a view passando a atividade
+        return view('atividade.atividade-detalhe')->with('atividade', $atividade);
+    }
+
 
     /*
      * Devolver uma resposta a requisição
@@ -256,5 +271,50 @@ class AtividadeController extends Controller
     public function novaResposta($indice, $valor)
     {
         return view("atividade/partial/atividade-resposta", ["indice" => $indice, "valor" => $valor]);
+    }
+
+
+    /*
+    * Atualizar a atividade
+    * */
+    public function realizarAtividade(Request $request)
+    {
+        $dados = ($request->all());
+
+        // dd($dados);
+        try {
+
+            DB::beginTransaction();
+
+            $acertos = 0;
+
+            foreach ($dados['questao'] as $questao_id => $questao) {
+                $resposta = Resposta::find($questao['selecionada']);
+
+                if ($resposta->correta) {
+                    $acertos++;
+                }
+
+                $respondida = new  UserQuestao();
+                $respondida->questao_id = $questao_id;
+                $respondida->user_id = Auth::user()->id;
+                $respondida->resposta = $questao['selecionada'];
+                $respondida->save();
+            }
+
+            DB::commit();
+
+            return $acertos;
+
+        } catch (Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->withErrors(['msg', 'Não foi possível Salvar as questões!!! Contate o suporte.']);
+        }
+
+        //recuperar a unidade 
+        $unidade = Unidade::find($dados[id]);
+
+        /*redirecionar para os detalhes da unidade*/
+        return view('atividade.atividade-detalhe')->with('atividade', $atividade);
     }
 }

@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTableAssistidos extends Migration
+class CreateTableUserVideos extends Migration
 {
     /**
      * Run the migrations.
@@ -12,7 +12,7 @@ class CreateTableAssistidos extends Migration
      */
     public function up()
     {
-        Schema::create('assistidos', function (Blueprint $table) {
+        Schema::create('user_videos', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('video_id')->unsigned();
             $table->foreign('video_id')->references('id')->on('videos')->onDelete('cascade');

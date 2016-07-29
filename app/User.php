@@ -27,6 +27,16 @@ class User extends Authenticatable
 
     public function inscricoes()
     {
-        return $this->hasMany('App\Inscrito', 'user_id', 'id');
+        return $this->hasMany('App\UserCurso', 'user_id', 'id');
+    }
+
+    public function videosAssistidos()
+    {
+        return $this->hasMany('App\UserVideo', 'user_id', 'id');
+    }
+
+    public function respostaQuestoes()
+    {
+        return $this->hasMany('App\UserQuestao', 'user_id', 'id');
     }
 }

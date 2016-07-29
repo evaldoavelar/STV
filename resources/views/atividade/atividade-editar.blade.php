@@ -120,7 +120,7 @@
                                         <div class="col-sm-3 "></div>
                                         <div class="col-sm-9">
                                             <div class=" btn-group btn-group-xs " role="group" aria-label="...">
-                                                <button type="button" class="btn btn-success questao-adicionar">
+                                                <button type="button" class="btn btn-success resposta-adicionar">
                                                     <span class="glyphicon  glyphicon-plus"></span>Adicionar Resposta
                                                 </button>
                                             </div>
@@ -165,11 +165,17 @@
 
             $.each($('.questao'), function (i, value) {
 
-                configurarAdicionarQuestao('.questao-adicionar',value.dataset.questaoid);
+                //configurarAdicionarQuestao('.resposta-adicionar',value.dataset.questaoid);
 
                 configurarExcluirQuestao('.questao-excluir');
 
                 configurarExcluirResposta('.resposta-excluir');
+
+
+                $(value).find('.resposta-adicionar').click(function () {
+                    var root = this.parentNode.parentNode.parentNode.parentNode;
+                    AdicionarResposta($(root).find('.respostas'), value.dataset.questaoid);
+                });
             });
 
             $("#btnNovaQuestao").click(function (event) {
@@ -185,7 +191,7 @@
 
                         $("#questoes").append(result);
 
-                        configurarAdicionarQuestao('.questao-adicionar', idQuestao);
+                        configurarAdicionarQuestao('.resposta-adicionar', idQuestao);
 
                         configurarExcluirQuestao('.questao-excluir');
 

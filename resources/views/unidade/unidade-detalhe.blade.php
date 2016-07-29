@@ -62,7 +62,8 @@
                                 @forelse($unidade->atividades as $i => $atividade)
                                     <div class="col-lg-12 contador">
                                         <p><span class="badge ">{{$i + 1}}</span> {{$atividade->titulo}}</p>
-                                        <p><a class="pull-right" href=""><span class="glyphicon glyphicon-ok"
+                                        <p>
+                                            <a class="pull-right" href="{{url('atividade-detalhe',$atividade->id)}}"><span class="glyphicon glyphicon-ok"
                                                                                aria-hidden="true"></span> Concluído</a>
                                         </p>
                                     </div>
@@ -93,9 +94,16 @@
                                 @forelse($unidade->videos as $i => $video)
                                     <div class="col-lg-12 contador">
                                         <p><span class="badge ">{{$i +1 }}</span>{{$video->titulo}}</p>
-                                        <p><a class="pull-right" href="{{url('video-detalhe',$video->id)}}">
+                                        <p>
+                                            @if ( $video->videosAssistidos()->where('user_id',Auth::user()->id)->count() > 0)
+                                            <a class="pull-right" href="{{url('video-detalhe',$video->id)}}">
                                                 <span class="glyphicon glyphicon-ok"
                                                       aria-hidden="true"></span> Vídeo Assitido</a>
+                                             @else
+                                                <a class="pull-right" href="{{url('video-detalhe',$video->id)}}">
+                                                <span class="glyphicon glyphicon-record"
+                                                      aria-hidden="true"></span>Assistir</a>
+                                            @endif
                                         </p>
                                     </div>
                                 @empty

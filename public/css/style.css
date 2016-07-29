@@ -93,7 +93,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 }
 
 .questao input[type=radio],.resposta-excluir {
-  margin-top: 10px !important;
+   /* margin-top: 10px !important;*/
     font-size: 1.5em;
     color: #ac2925;
     cursor: pointer;
@@ -103,6 +103,21 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 
 }
 
+.questao-detalhe-titulo{
+    font-weight: bold;
+}
+
+.questao-detalhe{
+    background-color: #d9edf7;
+    border-color: #bce8f1;
+    color: #3a87ad;
+    color: #333;
+    padding: 8px 35px 8px 14px;
+    margin-bottom: 20px;
+    text-shadow: 0 1px 0 rgba(255,255,255,0.5);
+    border: 1px solid #fbeed5;
+    border-radius: 5px;
+}
 
 .contador{
     padding-top: 1.8em;
@@ -360,6 +375,10 @@ footer.site-footer .menu li a {
     }
 
     .card p {
+
+    }
+
+    .questao-detalhe{
 
     }
 

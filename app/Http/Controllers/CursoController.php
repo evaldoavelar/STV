@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\UserCurso;
 use Illuminate\Support\Facades\Input;
 use App\Categoria;
 use App\Curso;
@@ -179,7 +180,7 @@ class CursoController extends Controller
         if ($inscrito->get()->count() > 0)
             return response()->json(['inscrito' => false,'msg' => 'Usuário já inscrito no curso']);
 
-        $inscrito = new Inscrito();
+        $inscrito = new UserCurso();
         $inscrito->curso_id = $curso_id;
         $inscrito->user_id = $user_id;
         $inscrito->save();

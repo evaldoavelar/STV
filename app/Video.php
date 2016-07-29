@@ -15,4 +15,9 @@ class Video extends Model
     {
         return $this->hasMany('App\Curso', 'unidade_id', 'id');
     }
+
+    public function videosAssistidos()
+    {
+        return $this->hasMany('App\UserVideo', 'video_id', 'id');
+    }
 }

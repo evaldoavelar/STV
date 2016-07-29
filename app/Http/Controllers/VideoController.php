@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\UserVideo;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use Illuminate\Support\Facades\Input;
 use App\Unidade;
+use App\User;
 use App\Video;
 use App\Http\Requests\VideoRequest;
 
@@ -15,10 +17,10 @@ class VideoController extends Controller
     function __construct()
     {
         //ligar os filtros para os metodos de administrador
-        $this->middleware('autorizacaoAdmin', ['except' => ['detalhe']]);
+        $this->middleware('autorizacaoAdmin', ['except' => ['detalhe','marcarAssitido']]);
 
         //ligar os filtros para os metodos de  usuário
-        $this->middleware('autorizacaoUsuarios')->only('detalhe');
+        $this->middleware('autorizacaoUsuarios')->only('detalhe','marcarAssitido');
     }
 
 
@@ -149,4 +151,32 @@ class VideoController extends Controller
         return view('video/video-detalhe')->with('video' , $video);
 
     }
+
+
+    /*Inscrever o usuário no curso*/
+    public function marcarAssitido(Request $request)
+    {
+        $dados = $request->all();
+        $video_id = $dados['video_id'];
+        $user_id = $dados['user_id'];
+
+        $video = Video::find($video_id);
+        if (is_null($video)) abort(404, 'Vídeo não encontrado');
+
+        $user = User::find($user_id);
+        if (is_null($user)) abort(404, 'Usuario não encontrado');
+
+        $assistido = $user->videosAssistidos()->where('video_id',$video_id);
+
+        if ($assistido->count() > 0)
+            return response()->json(['assistido' => true,'msg' => 'Video já marcado como assistido']);
+
+        $assistido = new UserVideo();
+        $assistido->video_id = $video_id;
+        $assistido->user_id = $user_id;
+        $assistido->save();
+
+        return response()->json(['assistido' => true]);
+    }
+    
 }

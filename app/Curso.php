@@ -24,7 +24,7 @@ class Curso extends Model
 
     public function inscritos()
     {
-        return $this->hasMany('App\Inscrito', 'curso_id', 'id');
+        return $this->hasMany('App\UserCurso', 'curso_id', 'id');
     }
 
     /*    public function curso()
