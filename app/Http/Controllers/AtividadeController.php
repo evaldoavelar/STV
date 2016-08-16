@@ -15,6 +15,7 @@ use App\Unidade;
 use App\Atividade;
 use App\Questao;
 use App\Resposta;
+use App\UserQuestao;
 
 
 use App\Http\Requests;
@@ -26,7 +27,11 @@ class AtividadeController extends Controller
 
     function __construct()
     {
-        $this->middleware('autorizacaoAdmin');
+        //ligar os filtros para os metodos de administrador
+        $this->middleware('autorizacaoAdmin', ['except' => ['realizarAtividade', 'detalhe']]);
+
+        //ligar os filtros para os metodos de  usuário
+        $this->middleware('autorizacaoUsuarios')->only('realizarAtividade','detalhe');
     }
 
     public function novo($unidade_id)
@@ -252,7 +257,7 @@ class AtividadeController extends Controller
     /*
      * Detalhe da atividade
      * */
-    public function Detalhe($id)
+    public function detalhe($id)
     {
         $atividade = Atividade::find($id);
 

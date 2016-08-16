@@ -28,14 +28,19 @@
                             </div>
 
                             <div class="panel-body">
-                                @if ( $inscrito = ($curso->inscritos()->where('user_id',Auth::user()->id)->get()->count() > 0)) @endif
+                                @if(Auth::check())
+                                    @if ( $inscrito = ($curso->inscritos()->where('user_id',Auth::user()->id)->get()->count() > 0))@endif
+                                @else
+                                    @if ( $inscrito = false) @endif
+                                @endif
 
                                 <div class="row-fluid">
                                     <div class="row contador">
                                         <div class="col-lg-9 ">
                                             <p><span class="badge ">{{$i+1}}</span> {{$curso->descricao}}
                                             </p>
-                                            <p class="pull-left"><strong>Instrutor</strong> : {{$curso->instrutor}}</p>
+                                            <p class="pull-left"><strong>Instrutor</strong>
+                                                : {{$curso->instrutor}}</p>
                                         </div>
                                         <div class="col-lg-3 avaliacao avaliacao-direita">
                                             <div class="col-md-12" title="Clique para avaliar o Curso ">
@@ -55,7 +60,8 @@
                                             <div class="col-md-12 ">
                                                 @if(Auth::check())
                                                     @if( $inscrito )
-                                                        <button class="btn btn-group-lg btn-primary" disabled>Inscrito
+                                                        <button class="btn btn-group-lg btn-primary" disabled>
+                                                            Inscrito
                                                         </button>
                                                     @else
                                                         <button class="btn btn-group-lg btn-danger inscrever"
@@ -64,8 +70,9 @@
                                                         </button>
                                                     @endif
                                                 @else
-                                                    <a href="{{url('/login')}}" class="btn btn-group-lg btn-primary">
-                                                          Faça Login para se Inscrever
+                                                    <a href="{{url('/login')}}"
+                                                       class="btn btn-group-lg btn-primary">
+                                                        Faça Login para se Inscrever
                                                     </a>
                                                 @endif
                                             </div>
@@ -73,16 +80,14 @@
 
                                         <div class="row-fluid ">
                                             <div class="col-lg-12 ">
-                                                @if( $inscrito )
+                                                @if( $inscrito && Auth::check())
                                                     <a class="pull-right"
                                                        href="{{url('curso-detalhes',$curso->id)}}">Acessar&nbsp;&nbsp;<span
                                                                 class="glyphicon glyphicon  glyphicon-chevron-right"
                                                                 aria-hidden="true"></span> </a>
-                                                @else
-                                                    <a class="pull-right">Acessar <span class="glyphicon glyphicon glyphicon-ban-circle " aria-hidden="true"></span></a>
 
-                                                    @endif
-                                                    </p>
+                                                @endif
+
                                             </div>
                                         </div>
                                     </div>
@@ -151,4 +156,4 @@
             })
         });
     </script>
-@stop    
+@stop

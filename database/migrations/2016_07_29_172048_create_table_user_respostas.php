@@ -14,7 +14,7 @@ class CreateTableUserRespostas extends Migration
     {
         Schema::create('user_questoes', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('respota');
+            $table->integer('resposta');
             $table->integer('questao_id')->unsigned();
             $table->foreign('questao_id')->references('id')->on('questoes')->onDelete('cascade');
             $table->integer('user_id')->unsigned();
