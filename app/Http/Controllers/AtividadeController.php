@@ -307,9 +307,7 @@ class AtividadeController extends Controller
                 $respondida->save();
             }
 
-            DB::commit();
-
-            return $acertos;
+            DB::commit();            
 
         } catch (Exception $e) {
             DB::rollBack();
