@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 
+use App\UserAtividade;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\DB;
@@ -31,7 +32,7 @@ class AtividadeController extends Controller
         $this->middleware('autorizacaoAdmin', ['except' => ['realizarAtividade', 'detalhe']]);
 
         //ligar os filtros para os metodos de  usuário
-        $this->middleware('autorizacaoUsuarios')->only('realizarAtividade','detalhe');
+        $this->middleware('autorizacaoUsuarios')->only('realizarAtividade', 'detalhe');
     }
 
     public function novo($unidade_id)
@@ -286,15 +287,18 @@ class AtividadeController extends Controller
     {
         $dados = ($request->all());
 
+
         // dd($dados);
         try {
 
             DB::beginTransaction();
 
             $acertos = 0;
+            $total = 0;
+            $nota = 0;
 
-            foreach ($dados['questao'] as $questao_id => $questao) {
-                $resposta = Resposta::find($questao['selecionada']);
+            foreach ($dados['questao'] as $questao_id => $questao_resposta) {
+                $resposta = Resposta::find($questao_resposta['selecionada']);
 
                 if ($resposta->correta) {
                     $acertos++;
@@ -303,21 +307,39 @@ class AtividadeController extends Controller
                 $respondida = new  UserQuestao();
                 $respondida->questao_id = $questao_id;
                 $respondida->user_id = Auth::user()->id;
-                $respondida->resposta = $questao['selecionada'];
+                $respondida->resposta = $questao_resposta['selecionada'];
                 $respondida->save();
+
+                $total++;
             }
 
-            DB::commit();            
 
+            $nota = round(($acertos * 100) / $total);
+
+            $userAtividade = new UserAtividade();
+            $userAtividade->user_id = Auth::user()->id;
+            $userAtividade->atividade_id = $dados['atividade_id'];
+            $userAtividade->acertos = $acertos;
+            $userAtividade->total_questoes = $total;
+            $userAtividade->nota = $nota;
+            $userAtividade->save();
+
+            DB::commit();
+
+            /*redirecionar para os detalhes da unidade*/
+
+            return view('atividade.atividade-acertos')->with('userAtividade', $userAtividade);
+            //return redirect()->action('AtividadeController@exibeResultado', ['user_unidade'=>$user_unidade]);
         } catch (Exception $e) {
             DB::rollBack();
             return redirect()->back()->withErrors(['msg', 'Não foi possível Salvar as questões!!! Contate o suporte.']);
         }
 
-        //recuperar a unidade 
-        $unidade = Unidade::find($dados[id]);
+    }
 
-        /*redirecionar para os detalhes da unidade*/
-        return view('atividade.atividade-detalhe')->with('atividade', $atividade);
+
+    public function exibeResultado(UserAtividade $user_unidade)
+    {
+        return view('atividade.atividade-acertos')->with('user_unidade', $user_unidade);
     }
 }

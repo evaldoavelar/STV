@@ -4,13 +4,13 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class UserCurso extends Model
+class UserAtividade extends Model
 {
-    protected $table = 'user_cursos';
+    protected $table = 'user_atividade';
 
-    public function curso()
+    public function questoes()
     {
-        return $this->hasOne('App\Curso', 'id','curso_id');
+        return $this->hasOne('App\Atividade', 'id','atividade_id');
     }
 
     public function usuario()

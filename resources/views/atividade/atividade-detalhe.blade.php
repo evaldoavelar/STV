@@ -31,7 +31,7 @@
                           method="post">
 
                         <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
-                        <input type="hidden" name="id" value="{{$atividade->id ? $atividade->id : old('id')}}"/>
+                        <input type="hidden" name="atividade_id" value="{{$atividade->id ? $atividade->id : old('id')}}"/>
 
 
                         <h4>{{$atividade->descricao}}</h4>

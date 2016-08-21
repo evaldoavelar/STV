@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTableUserCursos extends Migration
+class CreateTableUserAtividade extends Migration
 {
     /**
      * Run the migrations.
@@ -12,10 +12,13 @@ class CreateTableUserCursos extends Migration
      */
     public function up()
     {
-        Schema::create('user_cursos', function (Blueprint $table) {
+        Schema::create('user_atividade', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('curso_id')->unsigned();
-            $table->foreign('curso_id')->references('id')->on('cursos')->onDelete('cascade');
+            $table->float('nota');
+            $table->integer('acertos');
+            $table->integer('total_questoes');
+            $table->integer('atividade_id')->unsigned();
+            $table->foreign('atividade_id')->references('id')->on('atividades')->onDelete('cascade');
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 

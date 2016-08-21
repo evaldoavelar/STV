@@ -46,6 +46,44 @@
         </div>
     </section>
 
+    <section id="video">
+        <div class="container espaco-40">
+            <div class="row-fluid">
+                <div class="col-md-12 ">
+                    <div class="panel panel-default">
+                        <div class="panel-heading ">
+                            <h4><span class="glyphicon glyphicon-facetime-video" aria-hidden="true"></span> Vídeos</h4>
+
+                        </div>
+                        <div class="panel-body">
+                            <div class="row-fluid">
+                                @forelse($unidade->videos as $i => $video)
+                                    <div class="col-lg-12 contador">
+                                        <p><span class="badge ">{{$i +1 }}</span>{{$video->titulo}}</p>
+                                        <p>
+                                            @if ( $video->videosAssistidos()->where('user_id',Auth::user()->id)->count() > 0)
+                                                <a class="pull-right" href="{{url('video-detalhe',$video->id)}}">
+                                                <span class="glyphicon glyphicon-ok"
+                                                      aria-hidden="true"></span> Vídeo Assitido</a>
+                                            @else
+                                                <a class="pull-right" href="{{url('video-detalhe',$video->id)}}">
+                                                <span class="glyphicon glyphicon-record"
+                                                      aria-hidden="true"></span>Assistir</a>
+                                            @endif
+                                        </p>
+                                    </div>
+                                @empty
+                                    <p>Nenhum Vídeo Cadastrado</p>
+                                @endforelse
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
 
     <section id="atividades">
         <div class="container espaco-40">
@@ -80,42 +118,6 @@
     </section>
 
 
-    <section id="video">
-        <div class="container espaco-40">
-            <div class="row-fluid">
-                <div class="col-md-12 ">
-                    <div class="panel panel-default">
-                        <div class="panel-heading ">
-                            <h4><span class="glyphicon glyphicon-facetime-video" aria-hidden="true"></span> Vídeos</h4>
 
-                        </div>
-                        <div class="panel-body">
-                            <div class="row-fluid">
-                                @forelse($unidade->videos as $i => $video)
-                                    <div class="col-lg-12 contador">
-                                        <p><span class="badge ">{{$i +1 }}</span>{{$video->titulo}}</p>
-                                        <p>
-                                            @if ( $video->videosAssistidos()->where('user_id',Auth::user()->id)->count() > 0)
-                                            <a class="pull-right" href="{{url('video-detalhe',$video->id)}}">
-                                                <span class="glyphicon glyphicon-ok"
-                                                      aria-hidden="true"></span> Vídeo Assitido</a>
-                                             @else
-                                                <a class="pull-right" href="{{url('video-detalhe',$video->id)}}">
-                                                <span class="glyphicon glyphicon-record"
-                                                      aria-hidden="true"></span>Assistir</a>
-                                            @endif
-                                        </p>
-                                    </div>
-                                @empty
-                                    <p>Nenhum Vídeo Cadastrado</p>
-                                @endforelse
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
 @stop
