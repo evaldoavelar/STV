@@ -8,6 +8,8 @@ use DB;
 class Curso extends Model
 {
     protected $table = 'cursos';
+
+    private $media = 0;
     
     //campos que seram recuperados no request
     protected $fillable = array('titulo','descricao', 'instrutor', 'categoria_id','palavras_chaves');
@@ -90,5 +92,25 @@ class Curso extends Model
             ->count();
 
         return $videos;
+    }
+
+    public static function mediaAvaliacao($id)
+    {
+        $media = DB::table('curso_avalicao')
+            ->join('cursos', function ($join) {
+                $join->on('cursos.id', '=', 'curso_avalicao.curso_id')
+                    ->where('cursos.id', '=', $id);
+            })
+            ->avg('avaliacao');
+
+        return $media;
+    }
+    
+    
+    public function avaliacoes(){
+        if($this->media ==0)
+            $this->media = $this->mediaAvaliacao($this->id);
+        
+        return $this->media;
     }
 }

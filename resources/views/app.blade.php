@@ -50,18 +50,6 @@
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav pull-right">
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">Cursos<span
-                                class="caret"></span></a>
-                    <ul class="dropdown-menu dropdown-menu-right " aria-labelledby="download">
-                        @foreach(\App\Categoria::all() as $cat)
-                            <li><a href="{{url('cursos-por-categoria',$cat->id)}}" target="_top">{{$cat->descricao}}</a></li>
-                        @endforeach
-
-                    </ul>
-                </li>
-
-
 
 
                 @if(Auth::check() &&  Auth::user()->admin)
@@ -79,6 +67,17 @@
                     </li>
 
                 @elseif( Auth::check() &&  !Auth::user()->admin)
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">Cursos<span
+                                    class="caret"></span></a>
+                        <ul class="dropdown-menu dropdown-menu-right " aria-labelledby="download">
+                            @foreach(\App\Categoria::all() as $cat)
+                                <li><a href="{{url('cursos-por-categoria',$cat->id)}}" target="_top">{{$cat->descricao}}</a></li>
+                            @endforeach
+
+                        </ul>
+                    </li>
+
                     <li class="dropdown">
                         <a class="" href=" {{url('meus-cursos')}}" id="download" aria-expanded="false">Meus Cursos
                             <span class="card"></span></a>

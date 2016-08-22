@@ -44,7 +44,8 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/cursos-por-categoria/{categoria_id}', 'CursoController@cursoPorCategoria')->where('categoria_id', '[0-9]+');
     Route::post('/inscrever-curso', 'CursoController@inscreverCurso');
     Route::get('/curso-detalhes/{id}', 'CursoController@detalhesUsuario')->where('id', '[0-9]+');
- 
+    Route::get('/curso-avaliacao/{id}/{nota}', 'CursoController@avaliacao')->where(['id' => '[0-9]+','nota' => '[1-5]+']);
+    
 
     /*------------------- Unidade ------------------------*/
     Route::get('/unidade-novo/{curso_id}','UnidadeController@novo')->where('curso_id', '[0-9]+');

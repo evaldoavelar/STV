@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\Input;
 use App\Categoria;
 use App\Curso;
 use App\Inscrito;
+use App\User;
+use App\CursoAvaliacao;
+use Auth;
 use App\Library\Util;
 use Illuminate\Http\Request;
 use App\Http\Requests\CursoRequest;
@@ -20,10 +23,10 @@ class CursoController extends Controller
     function __construct()
     {
         //ligar os filtros para os metodos de administrador
-        $this->middleware('autorizacaoAdmin', ['except' => ['meusCursos', 'cursoPorCategoria','inscreverCurso','detalhesUsuario']]);
+        $this->middleware('autorizacaoAdmin', ['except' => ['meusCursos', 'cursoPorCategoria','inscreverCurso','detalhesUsuario','avaliacao']]);
 
         //ligar os filtros para os metodos de  usuário
-        $this->middleware('autorizacaoUsuarios')->only('meusCursos');
+        $this->middleware('autorizacaoUsuarios')->only('meusCursos','avaliacao');
     }
 
     /*Novo Curso*/
@@ -198,9 +201,45 @@ class CursoController extends Controller
         return view('cursos/curso-usuario-detalhes')->with(['curso'=>$curso]);
     }
 
+    /*Listar os cursos do usuario logado*/
     public function meusCursos()
     {
-        return view('cursos/meus-cursos');
+
+        $user = User::find(Auth::user()->id);
+        $cursos = $user->cursos()->get();
+
+        foreach ($cursos as $curso){
+            $curso->avaliacao = Curso::mediaAvaliacao( $curso->id);
+        }
+
+        $inscrito = $user->cursos()->count();
+        
+        return view('cursos/meus-cursos')->with(['cursos'=>$cursos,'inscrito'=>$inscrito]);
     }
 
+    /*Avaliar um curso */
+    public function avaliacao($curso_id,$avaliacao){
+        $curso = Curso::find($curso_id);
+        $avaliado = CursoAvaliacao::where('user_id', '=',Auth::user()->id)
+            ->where('curso_id' , '=',$curso_id)
+            ->get();
+        
+        if($avaliado->count() == 0){
+            $avaliado = new CursoAvaliacao();
+            $avaliado->curso_id = $curso_id;
+            $avaliado->user_id = Auth::user()->id;
+            $avaliado->avaliacao = $avaliacao;
+            $avaliado->save();
+
+        }else{
+            $avaliado[0]->avaliacao = $avaliacao;
+            $avaliado[0]->save();
+        }
+
+        $curso = Curso::find($curso_id);
+        if (is_null($curso)) abort(404, 'Curso não encontrado');
+
+        return view('cursos/curso-usuario-detalhes')->with(['curso'=>$curso]);
+
+    }
 }
