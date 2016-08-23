@@ -17,7 +17,11 @@ class MaterialController extends Controller
 
     function __construct()
     {
-        $this->middleware('autorizacaoAdmin');
+        //ligar os filtros para os metodos de administrador
+        $this->middleware('autorizacaoAdmin', ['except' => ['download']]);
+
+        //ligar os filtros para os metodos de  usuário
+        $this->middleware('autorizacaoUsuarios')->only('download');
     }
 
     /*Verificar Título duplicado RN02*/
