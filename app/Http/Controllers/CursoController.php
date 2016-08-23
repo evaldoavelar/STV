@@ -13,6 +13,7 @@ use Auth;
 use App\Library\Util;
 use Illuminate\Http\Request;
 use App\Http\Requests\CursoRequest;
+use DB;
 
 
 use App\Http\Requests;
@@ -204,13 +205,17 @@ class CursoController extends Controller
     /*Listar os cursos do usuario logado*/
     public function meusCursos()
     {
-
         $user = User::find(Auth::user()->id);
+
+     //   DB::enableQueryLog();
         $cursos = $user->cursos()->get();
 
+
         foreach ($cursos as $curso){
-            $curso->avaliacao = Curso::mediaAvaliacao( $curso->id);
+            $curso->avaliacao = $curso->avaliacoes();
         }
+
+      //  dd(DB::getQueryLog());
 
         $inscrito = $user->cursos()->count();
         
@@ -239,7 +244,11 @@ class CursoController extends Controller
         $curso = Curso::find($curso_id);
         if (is_null($curso)) abort(404, 'Curso não encontrado');
 
-        return view('cursos/curso-usuario-detalhes')->with(['curso'=>$curso]);
+
+
+        return redirect()->action('CursoController@detalhesUsuario', [$curso_id]);
+
+        return view('cursos/curso-usuario-detalhes')->with(['curso'=>$curso,'msg'=>"Curso Avaliado com Sucesso!"]);
 
     }
 }

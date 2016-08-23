@@ -47,7 +47,7 @@
                                                 <h2> Avaliação</h2>
                                                 <p>
                                                     @for($j = 1; $j<=5;$j++)
-                                                        @if($j <= $curso->avaliação)
+                                                        @if($j <= $curso->avaliacoes())
                                                             <span class="glyphicon glyphicon-star"
                                                                   aria-hidden="true"></span>
                                                         @else

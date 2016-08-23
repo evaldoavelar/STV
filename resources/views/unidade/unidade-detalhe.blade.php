@@ -100,10 +100,26 @@
                                 @forelse($unidade->atividades as $i => $atividade)
                                     <div class="col-lg-12 contador">
                                         <p><span class="badge ">{{$i + 1}}</span> {{$atividade->titulo}}</p>
-                                        <p>
-                                            <a class="pull-right" href="{{url('atividade-detalhe',$atividade->id)}}"><span class="glyphicon glyphicon-ok"
-                                                                               aria-hidden="true"></span> Concluído</a>
-                                        </p>
+
+                                        @if ( $realizado = $atividade->UserNota()->where('user_id',Auth::user()->id )->get())@endif
+
+
+                                        @if($realizado->count() > 0)
+                                            <p>Acertos: {{$realizado[0]->acertos}} de {{$realizado[0]->total_questoes}} - {{$realizado[0]->nota}}%</p>
+                                            <p>
+                                            <a class="pull-right"
+                                               href="{{url('atividade-detalhe',$atividade->id)}}">
+                                                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                                                Concluído</a>
+                                            </p>
+                                        @else
+                                            <p>
+                                                <a class="pull-right"
+                                                   href="{{url('atividade-detalhe',$atividade->id)}}">
+                                                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                                                    Realizar Atividade</a>
+                                            </p>
+                                        @endif
                                     </div>
                                 @empty
                                     <p>Nenhuma Atividade Cadastrada</p>

@@ -45,12 +45,19 @@ class User extends Authenticatable
     public function cursos()
     {
 
-        $cursos = DB::table('cursos')
-            ->join('UserCursos', 'UserCursos.curso_id', '=', 'cursos.id')
+      /*  $cursos = DB::table('cursos')
+            ->join('user_cursos', 'user_cursos.curso_id', '=', 'cursos.id')
             ->join('users', function ($join) {
-                $join->on('users.id', '=', 'UserCursos.user_id')
+                $join->on('users.id', '=', 'user_cursos.user_id')
                     ->where('users.id', '=', $this->id);
-            })            ;
+            });  */
+
+        return $this->belongsToMany('App\Curso','user_cursos')->withPivot('curso_id', 'user_id');
+
+        /*return $this->hasManyThrough(
+            'App\Curso', 'App\User',
+            'curso_id', 'user_id', 'id'
+        );*/
 
         return $cursos;
     }

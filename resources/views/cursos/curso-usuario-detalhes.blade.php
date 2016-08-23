@@ -34,15 +34,16 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div title="Clique para avaliar o Curso" >
-                                        <h2> Avaliação - Clique na estrela para Avaliar o Curso</h2>
+                                        <h2> Avaliação </h2>
+                                        <p>Clique na estrela para Avaliar o Curso</p>
                                         <p>
                                             @for($j = 1; $j<=5;$j++)
-                                                @if($j <= $curso->avaliação)
+                                                @if($j <= $curso->avaliacoes())
                                                    <a href="{{url('curso-avaliacao/'.$curso->id.'/'.$j)}}"> <span class="glyphicon glyphicon-star"
-                                                          aria-hidden="true"></span></a>
+                                                          aria-hidden="true" title="Nota: {{$j}}"></span></a>
                                                 @else
                                                     <a href="{{url('curso-avaliacao/'.$curso->id.'/'.$j)}}"> <span class="glyphicon glyphicon-star-empty"
-                                                          aria-hidden="true"></span></a>
+                                                          aria-hidden="true" title="Nota: {{$j}}"></span></a>
                                                 @endif
                                             @endfor
                                         </p>

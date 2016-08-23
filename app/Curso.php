@@ -94,12 +94,12 @@ class Curso extends Model
         return $videos;
     }
 
-    public static function mediaAvaliacao($id)
+    public function mediaAvaliacao()
     {
         $media = DB::table('curso_avalicao')
             ->join('cursos', function ($join) {
                 $join->on('cursos.id', '=', 'curso_avalicao.curso_id')
-                    ->where('cursos.id', '=', $id);
+                    ->where('cursos.id', '=', $this->id);
             })
             ->avg('avaliacao');
 
@@ -108,7 +108,7 @@ class Curso extends Model
     
     
     public function avaliacoes(){
-        if($this->media ==0)
+        if($this->media ==0 || $this->media == null)
             $this->media = $this->mediaAvaliacao($this->id);
         
         return $this->media;

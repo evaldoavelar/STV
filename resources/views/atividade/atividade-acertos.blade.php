@@ -11,7 +11,7 @@
         <div class="container jumbotron espaco-40">
             <div class="row">
                 <div class="col-md-12 ">
-                    <h1 class="destaque">Nota: <span>{{$userAtividade->nota}}%</span></h1>
+                    <h1 class="destaque">Total: <span>{{$userAtividade->nota}}%</span></h1>
                     <p class="destaque-sub">Você acertou {{$userAtividade->acertos}} de {{$userAtividade->total_questoes}} respostas</p>
                     <p><a href="{{url('unidade-detalhe',$userAtividade)}}">Voltar</a> </p>
                 </div>

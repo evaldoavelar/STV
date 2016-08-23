@@ -21,4 +21,9 @@ class Atividade extends Model
         return $this->hasMany('App\Questao', 'atividade_id', 'id');
     }
 
+    public function UserNota()
+    {
+        return $this->hasMany('App\UserAtividade', 'atividade_id', 'id');
+    }
+
 }

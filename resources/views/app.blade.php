@@ -72,7 +72,8 @@
                                     class="caret"></span></a>
                         <ul class="dropdown-menu dropdown-menu-right " aria-labelledby="download">
                             @foreach(\App\Categoria::all() as $cat)
-                                <li><a href="{{url('cursos-por-categoria',$cat->id)}}" target="_top">{{$cat->descricao}}</a></li>
+                                <li><a href="{{url('cursos-por-categoria',$cat->id)}}"
+                                       target="_top">{{$cat->descricao}}</a></li>
                             @endforeach
 
                         </ul>
@@ -88,7 +89,11 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <span class="glyphicon glyphicon-user"></span> 
-                            <strong>Usuário</strong>
+                            @if( Auth::check())
+                                <strong>{{Auth::user()->name }}</strong>
+                            @else
+                                <strong>Login</strong>
+                            @endif
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
@@ -105,7 +110,7 @@
                                                 <p class="text-left"><strong>{{Auth::user()->name }}</strong></p>
                                                 <p class="text-left small">{{Auth::user()->email }}</p>
                                                 <p class="text-left">
-                                                    <a href="{{url('/password/reset')}}" class="">Alterar Senha</a>
+
                                                 </p>
 
                                             @else
@@ -166,7 +171,7 @@
 
 @yield('container')
 @yield('scripts')
-<!-- Rodapé -->
+        <!-- Rodapé -->
 
 <footer class="site-footer style-2">
     <div class="vc_empty_space" style="height: 30px"><span
