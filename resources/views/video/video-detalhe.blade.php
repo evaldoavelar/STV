@@ -14,8 +14,7 @@
                     <p class="destaque"><span>{{$video->descricao}}</span></p>
                 </div>
             </div>
-        </div>
-    </section>
+
 
 
     <section id="video">
@@ -59,6 +58,10 @@
     </section>
 
 
+    <p><a href="{{url('unidade-detalhe',$video->unidade_id)}}"> <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Voltar</a> </p>
+
+        </div>
+    </section>
 @stop
 
 <meta name="_token" content="{!! csrf_token() !!}"/>

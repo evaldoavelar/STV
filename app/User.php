@@ -41,6 +41,8 @@ class User extends Authenticatable
         return $this->hasMany('App\UserQuestao', 'user_id', 'id');
     }
 
+    
+
 
     public function cursos()
     {

@@ -11,7 +11,7 @@
             <div class="row">
                 <div class="col-md-12 ">
                     <h1 class="destaque"><span>{{$curso->titulo}}</span></h1>
-                    <p class="destaque-sub">{{$curso->totalUnidades()}} Unidades</p>
+                    <p class="destaque-sub"><a href="#unidades">{{$curso->totalUnidades()}} Unidades</a></p>
                     <p class="destaque-sub"><a href="#video">{{$curso->totalVideos()}} Vídeos</a> | <a href="#atividades"> {{$curso->totalAtividades()}} Atividades  Avaliativas</a> | <a href="#material">{{$curso->totalMateriais()}} Materiais Didáticos</a>
                            </p>
 
@@ -81,18 +81,15 @@
 
 
 
-        <section id="atividades">
+        <section id="unidades">
             <div class="container espaco-40">
                 <div class="row">
                     <div class="col-md-12 ">
-                        <div class="panel panel-default">
-                            <div class="panel-heading ">
-                                <h4><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Unidades</h4>
-
-                            </div>
+                        @foreach( $curso->unidades()->get() as $i => $unidade)
+                        <div class="panel panel-default" id="unidade{{$unidade->id}}">
 
                             <div class="panel-body">
-                                @foreach( $curso->unidades()->get() as $i => $unidade)
+
 
                                     <div class="col-lg-12 contador">
                                         <p><span class="badge ">{{$i+1}}</span>{{$unidade->descricao}}</p>
@@ -100,11 +97,12 @@
                                                 <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
                                         </p>
                                     </div>
-                                @endforeach
+
 
                             </div>
 
                         </div>
+                        @endforeach
                     </div>
                 </div>
             </div>

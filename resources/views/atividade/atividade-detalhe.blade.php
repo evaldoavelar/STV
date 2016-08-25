@@ -10,6 +10,7 @@
 
     <div class="container">
 
+        <p><a href="{{url('unidade-detalhe',$atividade->unidade_id)}}"> <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Voltar</a> </p>
         <div class="row">
             <div class="panel panel-default">
 
@@ -32,10 +33,10 @@
 
                         <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
                         <input type="hidden" name="atividade_id" value="{{$atividade->id ? $atividade->id : old('id')}}"/>
+                        <input type="hidden" name="unidade_id" value="{{$atividade->unidade_id}}"/>
 
 
                         <h4>{{$atividade->descricao}}</h4>
-
 
                         <div id="questoes">
                             @foreach( $atividade->questoes as $indice => $questao)
@@ -70,10 +71,7 @@
                                                 </div>
                                             @endforeach
                                         </div>
-
                                     </div>
-
-
                                 </div>
                             @endforeach
                         </div>
@@ -83,9 +81,13 @@
                     </form>
 
 
+
+
                 </div>
             </div>
         </div>
+
+        <p><a href="{{url('unidade-detalhe',$atividade->unidade_id)}}"> <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Voltar</a> </p>
     </div>
     </section>
 

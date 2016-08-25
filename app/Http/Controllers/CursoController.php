@@ -202,6 +202,29 @@ class CursoController extends Controller
         return view('cursos/curso-usuario-detalhes')->with(['curso'=>$curso]);
     }
 
+    /*Nota usuario*/
+    public function RetornaNotaUsuarioCurso($curso_id,$user_id){
+
+        $sql = "";
+        $sql .= "SELECT unidades.descricao, ";
+        $sql .= "       COALESCE(atividades.titulo, '')       titulo, ";
+        $sql .= "       COALESCE(Max(user_atividade.nota), 0) nota ";
+        $sql .= "FROM   unidades ";
+        $sql .= "       LEFT JOIN atividades ";
+        $sql .= "              ON atividades.unidade_id = unidades. id ";
+        $sql .= "       LEFT JOIN user_atividade ";
+        $sql .= "              ON atividades.id = user_atividade.atividade_id ";
+        $sql .= "WHERE  ( user_atividade.user_id = ".$user_id;
+        $sql .= "          OR user_atividade.user_id IS NULL ) ";
+        $sql .= "       AND curso_id = ".$curso_id;
+        $sql .= "GROUP  BY unidades.id, ";
+        $sql .= "          unidades.curso_id, ";
+        $sql .= "          user_atividade.atividade_id ";
+        $sql .= "ORDER  BY unidades.id;" ;
+
+        return DB::select($sql);
+    }
+
     /*Listar os cursos do usuario logado*/
     public function meusCursos()
     {

@@ -9,6 +9,8 @@
 
     <section>
         <div class="container ">
+            <p><a href="{{url('curso-detalhes\\'.$unidade->curso_id.'#unidades')}}"> <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Voltar</a> </p>
+
             <div class="row-fluid">
                 <div class="col-md-12 ">
                     <p class="destaque"><span>{{$unidade->descricao}}</span></p>
@@ -128,6 +130,8 @@
                         </div>
 
                     </div>
+
+                    <p><a href="{{url('curso-detalhes\\'.$unidade->curso_id.'#unidades')}}"> <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Voltar</a> </p>
                 </div>
             </div>
         </div>

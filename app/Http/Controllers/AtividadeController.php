@@ -295,7 +295,7 @@ class AtividadeController extends Controller
 
             $acertos = 0;
             $total = 0;
-            $nota = 0;
+           
 
             foreach ($dados['questao'] as $questao_id => $questao_resposta) {
                 $resposta = Resposta::find($questao_resposta['selecionada']);
@@ -313,7 +313,7 @@ class AtividadeController extends Controller
                 $total++;
             }
 
-
+           
             $nota = round(($acertos * 100) / $total);
 
             $userAtividade = new UserAtividade();
@@ -328,7 +328,7 @@ class AtividadeController extends Controller
 
             /*redirecionar para os detalhes da unidade*/
 
-            return view('atividade.atividade-acertos')->with('userAtividade', $userAtividade);
+            return view('atividade.atividade-acertos')->with(['userAtividade' => $userAtividade,"unidade_id"=> $dados['unidade_id']]);
             //return redirect()->action('AtividadeController@exibeResultado', ['user_unidade'=>$user_unidade]);
         } catch (Exception $e) {
             DB::rollBack();
