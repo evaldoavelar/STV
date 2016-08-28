@@ -113,4 +113,30 @@ class Curso extends Model
         
         return $this->media;
     }
+
+
+    /*Nota usuario*/
+    public function RetornaNotaUsuarioCurso($user_id){
+
+        $sql = "";
+        $sql .= " SELECT unidades.descricao, ";
+        $sql .= "       COALESCE(atividades.titulo, '')       titulo, ";
+        $sql .= "       Max(user_atividade.nota) nota ";
+        $sql .= " FROM   unidades ";
+        $sql .= "       LEFT JOIN atividades ";
+        $sql .= "              ON atividades.unidade_id = unidades. id ";
+        $sql .= "       LEFT JOIN user_atividade ";
+        $sql .= "              ON atividades.id = user_atividade.atividade_id ";
+        $sql .= " WHERE  ( user_atividade.user_id = ".$user_id;
+        $sql .= "          OR user_atividade.user_id IS NULL ) ";
+        $sql .= "       AND curso_id = ".$this->id;
+        $sql .= " GROUP  BY unidades.id, ";
+        $sql .= "          unidades.curso_id, ";
+        $sql .= "          user_atividade.atividade_id ";
+        $sql .= " ORDER  BY unidades.id " ;
+
+        dd($sql);
+
+        return DB::select($sql);
+    }
 }

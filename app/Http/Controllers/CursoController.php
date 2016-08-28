@@ -199,31 +199,22 @@ class CursoController extends Controller
         $curso = Curso::find($curso_id);
         if (is_null($curso)) abort(404, 'Curso não encontrado');
 
-        return view('cursos/curso-usuario-detalhes')->with(['curso'=>$curso]);
+        $notas = $curso->RetornaNotaUsuarioCurso(Auth::user()->id);
+
+        $aprovado = true;
+
+        foreach ($notas as $nota){
+            if($nota->nota < 60 ){
+                $aprovado = false;
+                break;
+            }
+        }
+
+
+        return view('cursos/curso-usuario-detalhes')->with(['curso'=>$curso,'notas'=>$notas,'aprovado'=>$aprovado]);
     }
 
-    /*Nota usuario*/
-    public function RetornaNotaUsuarioCurso($curso_id,$user_id){
 
-        $sql = "";
-        $sql .= "SELECT unidades.descricao, ";
-        $sql .= "       COALESCE(atividades.titulo, '')       titulo, ";
-        $sql .= "       COALESCE(Max(user_atividade.nota), 0) nota ";
-        $sql .= "FROM   unidades ";
-        $sql .= "       LEFT JOIN atividades ";
-        $sql .= "              ON atividades.unidade_id = unidades. id ";
-        $sql .= "       LEFT JOIN user_atividade ";
-        $sql .= "              ON atividades.id = user_atividade.atividade_id ";
-        $sql .= "WHERE  ( user_atividade.user_id = ".$user_id;
-        $sql .= "          OR user_atividade.user_id IS NULL ) ";
-        $sql .= "       AND curso_id = ".$curso_id;
-        $sql .= "GROUP  BY unidades.id, ";
-        $sql .= "          unidades.curso_id, ";
-        $sql .= "          user_atividade.atividade_id ";
-        $sql .= "ORDER  BY unidades.id;" ;
-
-        return DB::select($sql);
-    }
 
     /*Listar os cursos do usuario logado*/
     public function meusCursos()

@@ -12,8 +12,10 @@
                 <div class="col-md-12 ">
                     <h1 class="destaque"><span>{{$curso->titulo}}</span></h1>
                     <p class="destaque-sub"><a href="#unidades">{{$curso->totalUnidades()}} Unidades</a></p>
-                    <p class="destaque-sub"><a href="#video">{{$curso->totalVideos()}} Vídeos</a> | <a href="#atividades"> {{$curso->totalAtividades()}} Atividades  Avaliativas</a> | <a href="#material">{{$curso->totalMateriais()}} Materiais Didáticos</a>
-                           </p>
+                    <p class="destaque-sub"><a href="#video">{{$curso->totalVideos()}} Vídeos</a> | <a
+                                href="#atividades"> {{$curso->totalAtividades()}} Atividades Avaliativas</a> | <a
+                                href="#material">{{$curso->totalMateriais()}} Materiais Didáticos</a>
+                    </p>
 
                 </div>
             </div>
@@ -33,17 +35,19 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
-                                    <div title="Clique para avaliar o Curso" >
+                                    <div title="Clique para avaliar o Curso">
                                         <h2> Avaliação </h2>
                                         <p>Clique na estrela para Avaliar o Curso</p>
                                         <p>
                                             @for($j = 1; $j<=5;$j++)
                                                 @if($j <= $curso->avaliacoes())
-                                                   <a href="{{url('curso-avaliacao/'.$curso->id.'/'.$j)}}"> <span class="glyphicon glyphicon-star"
-                                                          aria-hidden="true" title="Nota: {{$j}}"></span></a>
+                                                    <a href="{{url('curso-avaliacao/'.$curso->id.'/'.$j)}}"> <span
+                                                                class="glyphicon glyphicon-star"
+                                                                aria-hidden="true" title="Nota: {{$j}}"></span></a>
                                                 @else
-                                                    <a href="{{url('curso-avaliacao/'.$curso->id.'/'.$j)}}"> <span class="glyphicon glyphicon-star-empty"
-                                                          aria-hidden="true" title="Nota: {{$j}}"></span></a>
+                                                    <a href="{{url('curso-avaliacao/'.$curso->id.'/'.$j)}}"> <span
+                                                                class="glyphicon glyphicon-star-empty"
+                                                                aria-hidden="true" title="Nota: {{$j}}"></span></a>
                                                 @endif
                                             @endfor
                                         </p>
@@ -56,22 +60,73 @@
 
                                     </div>
                                     <div class="col-md-12 espaco-10 ">
-                                        <a class="btn btn-info btn-half-block">Gerar Certificado</a>
+                                        @if($aprovado)
+                                            <a class="btn btn-info btn-half-block">Gerar Certificado</a>
+                                        @else
+                                            <button class="btn btn-block btn-half-block disabled" >Gerar Certificado</button>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
+
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+
+
+    <section id="notas">
+        <div class="container ">
+            <div class="panel panel-default ">
+                <div class="panel-heading">
+                    <h3>Quadro de Notas</h3>
+                </div>
+                <div class="panel-body">
+
+                    <div class="row">
+                        <div class="col-md-12 ">
+                            <div class="table-responsive">
+                                <table class="table table-condensed ">
+                                    <thead>
+                                    <tr>
+                                        <th>Unidade</th>
+                                        <th>Avaliação</th>
+                                        <th>Nota</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($notas as $nota)
+                                        <tr>
+                                            <td>{{$nota->descricao}}</td>
+                                            <td>{{$nota->titulo}}</td>
+
+                                            @if($nota->nota > 60)
+                                                <td class="nota-aprovado">{{$nota->nota}}</td>
+                                            @else
+                                                <td class="nota-reprovado">{{$nota->nota}}</td>
+                                            @endif
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </section>
+
 
     <section>
         <div class="container ">
             <div class="row">
                 <div class="col-md-12 ">
-                    <p class="destaque"><span>Conteúdo</span> do curso </p>
+                    <p class="destaque"><span>Unidades</span> do curso </p>
                 </div>
             </div>
         </div>
@@ -81,32 +136,33 @@
 
 
 
-        <section id="unidades">
-            <div class="container espaco-40">
-                <div class="row">
-                    <div class="col-md-12 ">
-                        @foreach( $curso->unidades()->get() as $i => $unidade)
+    <section id="unidades">
+        <div class="container espaco-40">
+            <div class="row">
+                <div class="col-md-12 ">
+                    @foreach( $curso->unidades()->get() as $i => $unidade)
                         <div class="panel panel-default" id="unidade{{$unidade->id}}">
 
                             <div class="panel-body">
 
 
-                                    <div class="col-lg-12 contador">
-                                        <p><span class="badge ">{{$i+1}}</span>{{$unidade->descricao}}</p>
-                                        <p><a class="pull-right" href="{{url('unidade-detalhe',$unidade->id)}}">Acessar
-                                                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
-                                        </p>
-                                    </div>
+                                <div class="col-lg-12 contador">
+                                    <p><span class="badge ">{{$i+1}}</span>{{$unidade->descricao}}</p>
+                                    <p><a class="pull-right" href="{{url('unidade-detalhe',$unidade->id)}}">Acessar
+                                            <span class="glyphicon glyphicon-chevron-right"
+                                                  aria-hidden="true"></span></a>
+                                    </p>
+                                </div>
 
 
                             </div>
 
                         </div>
-                        @endforeach
-                    </div>
+                    @endforeach
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
 
 
