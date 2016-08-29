@@ -9,7 +9,8 @@
 
     <section>
         <div class="container ">
-            <p><a href="{{url('curso-detalhes\\'.$unidade->curso_id.'#unidades')}}"> <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Voltar</a> </p>
+            <p><a href="{{url('curso-detalhes\\'.$unidade->curso_id.'#unidades')}}"> <span
+                            class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Voltar</a></p>
 
             <div class="row-fluid">
                 <div class="col-md-12 ">
@@ -57,29 +58,31 @@
                             <h4><span class="glyphicon glyphicon-facetime-video" aria-hidden="true"></span> Vídeos</h4>
 
                         </div>
-                        <div class="panel-body">
-                            <div class="row-fluid">
-                                @forelse($unidade->videos as $i => $video)
-                                    <div class="col-lg-12 contador">
-                                        <p><span class="badge ">{{$i +1 }}</span>{{$video->titulo}}</p>
-                                        <p>
-                                            @if ( $video->videosAssistidos()->where('user_id',Auth::user()->id)->count() > 0)
-                                                <a class="pull-right" href="{{url('video-detalhe',$video->id)}}">
+                        @if($unidade->videos->count() > 0)
+                            <div class="panel-body">
+                                <div class="row-fluid">
+                                    @forelse($unidade->videos as $i => $video)
+                                        <div class="col-lg-12 contador">
+                                            <p><span class="badge ">{{$i +1 }}</span>{{$video->titulo}}</p>
+                                            <p>
+                                                @if ( $video->videosAssistidos()->where('user_id',Auth::user()->id)->count() > 0)
+                                                    <a class="pull-right" href="{{url('video-detalhe',$video->id)}}">
                                                 <span class="glyphicon glyphicon-ok"
                                                       aria-hidden="true"></span> Vídeo Assitido</a>
-                                            @else
-                                                <a class="pull-right" href="{{url('video-detalhe',$video->id)}}">
+                                                @else
+                                                    <a class="pull-right" href="{{url('video-detalhe',$video->id)}}">
                                                 <span class="glyphicon glyphicon-record"
                                                       aria-hidden="true"></span>Assistir</a>
-                                            @endif
-                                        </p>
-                                    </div>
-                                @empty
-                                    <p>Nenhum Vídeo Cadastrado</p>
-                                @endforelse
+                                                @endif
+                                            </p>
+                                        </div>
+                                    @empty
+                                        <p>Nenhum Vídeo Cadastrado</p>
+                                    @endforelse
 
+                                </div>
                             </div>
-                        </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -107,12 +110,13 @@
 
 
                                         @if($realizado->count() > 0)
-                                            <p>Acertos: {{$realizado[0]->acertos}} de {{$realizado[0]->total_questoes}} - {{$realizado[0]->nota}}%</p>
+                                            <p>Acertos: {{$realizado[0]->acertos}} de {{$realizado[0]->total_questoes}}
+                                                - {{$realizado[0]->nota}}%</p>
                                             <p>
-                                            <a class="pull-right"
-                                               href="{{url('atividade-detalhe',$atividade->id)}}">
-                                                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-                                                Concluído</a>
+                                                <a class="pull-right"
+                                                   href="{{url('atividade-detalhe',$atividade->id)}}">
+                                                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                                                    Concluído</a>
                                             </p>
                                         @else
                                             <p>
@@ -131,7 +135,8 @@
 
                     </div>
 
-                    <p><a href="{{url('curso-detalhes\\'.$unidade->curso_id.'#unidades')}}"> <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Voltar</a> </p>
+                    <p><a href="{{url('curso-detalhes\\'.$unidade->curso_id.'#unidades')}}"> <span
+                                    class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Voltar</a></p>
                 </div>
             </div>
         </div>

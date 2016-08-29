@@ -135,7 +135,7 @@ class Curso extends Model
         $sql .= "          user_atividade.atividade_id ";
         $sql .= " ORDER  BY unidades.id " ;
 
-        dd($sql);
+       // dd($sql);
 
         return DB::select($sql);
     }

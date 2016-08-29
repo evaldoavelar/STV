@@ -63,6 +63,7 @@
                                 <th>Título</th>
                                 <th>Instrutor</th>
                                 <th>Vizualizar</th>
+                                <th>Publicado</th>
                                 <th>Editar</th>
                                 <th>Excluir</th>
                             </tr>
@@ -73,7 +74,21 @@
                                 <tr>
                                     <td>{{$c->titulo}}</td>
                                     <td>{{$c->instrutor}}</td>
-                                    <td><a href="{{ url('/curso-admin-detalhes',$c->id)  }}"><span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span></a> </td>
+                                    <td><a href="{{ url('/curso-admin-detalhes',$c->id)  }}"><span
+                                                    class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span></a>
+                                    </td>
+                                    <td>
+                                        @if($c->publicado)
+                                            <a href="{{ url('/curso-despublicar',$c->id)  }}" title="Despublicar">
+                                                <span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span>
+                                            </a>
+                                        @else
+                                            <a href="{{ url('/curso-publicar',$c->id)  }}" title="Publicar">
+                                                <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
+                                            </a>
+                                        @endif
+
+                                    </td>
                                     <td>
                                         <a href="{{url('curso-editar',$c->id)}}">
                                             <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>

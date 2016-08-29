@@ -19,6 +19,27 @@
         </div>
     </section>
 
+
+    @if(isset($erro))
+        <section>
+            <div class="container ">
+                <div class="alert alert-danger" role="alert">
+                    <a href="#" class="alert-link">{{ $erro  }}</a>
+                </div>
+            </div>
+        </section>
+    @endif
+
+    @if(isset($msg))
+        <section>
+            <div class="container ">
+                <div class="alert alert-info" role="alert">
+                    <a href="#" class="alert-link">{{ $msg  }}</a>
+                </div>
+            </div>
+        </section>
+    @endif
+
     <section>
         <div class="container ">
             <div class="">
@@ -40,6 +61,21 @@
                                             class="glyphicon glyphicon-trash"
                                             aria-hidden="true"></span>&nbsp;Excluir</a>
                             </li>
+
+
+                            <li>
+                                @if($curso->publicado)
+                                    <a href="{{ url('curso-despublicar', $curso->id)   }}" class=""><span
+                                                class="glyphicon glyphicon-pushpin"
+                                                aria-hidden="true"></span>&nbsp;Despublicar</a>
+                                @else
+                                    <a href="{{ url('curso-publicar', $curso->id)   }}" class=""><span
+                                                class="glyphicon glyphicon-pushpin"
+                                                aria-hidden="true"></span>&nbsp;Publicar</a>
+                                @endif
+
+                            </li>
+
 
                         </ul>
 
@@ -64,7 +100,7 @@
                     >
 
                         <div class="panel-heading ">
-                            <h4 >
+                            <h4>
 
                                 <span class="pdd glyphicon glyphicon-list-alt"
                                       aria-hidden="true"></span> {{$unidade->descricao}}
