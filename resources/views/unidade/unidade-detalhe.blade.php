@@ -106,12 +106,14 @@
                                     <div class="col-lg-12 contador">
                                         <p><span class="badge ">{{$i + 1}}</span> {{$atividade->titulo}}</p>
 
-                                        @if ( $realizado = $atividade->UserNota()->where('user_id',Auth::user()->id )->get())@endif
+                                        @if ( $realizado = $atividade->UserNota()->where('user_id',Auth::user()->id )->orderBy('id', 'DESC')->get())@endif
 
 
                                         @if($realizado->count() > 0)
-                                            <p>Acertos: {{$realizado[0]->acertos}} de {{$realizado[0]->total_questoes}}
+                                            <p><span class="glyphicon glyphicon-list"></span> Nota: <strong>{{$atividade->UserNota()->where('user_id',Auth::user()->id )->max('nota')}}%</strong></p>
+                                            <p><span class="glyphicon glyphicon-indent-left"></span> Ultima tentativa - Acertos: {{$realizado[0]->acertos}} de {{$realizado[0]->total_questoes}}
                                                 - {{$realizado[0]->nota}}%</p>
+
                                             <p>
                                                 <a class="pull-right"
                                                    href="{{url('atividade-detalhe',$atividade->id)}}">

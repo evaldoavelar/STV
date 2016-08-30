@@ -10,9 +10,9 @@ class Curso extends Model
     protected $table = 'cursos';
 
     private $media = 0;
-    
+
     //campos que seram recuperados no request
-    protected $fillable = array('titulo','descricao', 'instrutor', 'categoria_id','palavras_chaves');
+    protected $fillable = array('titulo', 'descricao', 'instrutor', 'categoria_id', 'palavras_chaves');
 
     public function unidades()
     {
@@ -105,18 +105,69 @@ class Curso extends Model
 
         return $media;
     }
-    
-    
-    public function avaliacoes(){
-        if($this->media ==0 || $this->media == null)
+
+
+    public function avaliacoes()
+    {
+        if ($this->media == 0 || $this->media == null)
             $this->media = $this->mediaAvaliacao($this->id);
-        
+
         return $this->media;
+    }
+
+    public function aprovado($user_id)
+    {
+        $notas = $this->RetornaNotaUsuarioCurso($user_id);
+
+        $aprovado = true;
+
+        //verificar se o aluno tem nota superior a 70%
+        foreach ($notas as $nota) {
+            if ($nota->nota < 70) {
+                $aprovado = false;
+                break;
+            }
+        }
+
+        //verificar se o aluno assistiu a todos os cursos 
+        $videosAssitidos = $this->RetornaUsuarioVideosVisualizados($user_id);
+        foreach ($videosAssitidos as $videos) {
+            if ($videos->assitido == 0) {
+                $aprovado = false;
+                break;
+            }
+        }
+
+
+        return $aprovado;
+    }
+
+    /*Nota usuario*/
+    public function RetornaUsuarioVideosVisualizados($user_id)
+    {
+        $sql = "";
+        $sql .= " SELECT videos.titulo, ";
+        $sql .= "       Count(user_videos.video_id) assitido ";
+        $sql .= " FROM   videos ";
+        $sql .= "       LEFT JOIN unidades ";
+        $sql .= "              ON unidades.id = videos. unidade_id ";
+        $sql .= "       LEFT JOIN user_videos ";
+        $sql .= "              ON videos.id = user_videos.video_id ";
+        $sql .= " WHERE  ( user_videos.user_id = " . $user_id;
+        $sql .= "          OR user_videos.user_id IS NULL ) ";
+        $sql .= "       AND unidades.curso_id = " . $this->id;
+        $sql .= " GROUP  BY videos.id ";
+        $sql .= " ORDER  BY videos.id";
+
+        // dd($sql);
+
+        return DB::select($sql);
     }
 
 
     /*Nota usuario*/
-    public function RetornaNotaUsuarioCurso($user_id){
+    public function RetornaNotaUsuarioCurso($user_id)
+    {
 
         $sql = "";
         $sql .= " SELECT unidades.descricao, ";
@@ -127,15 +178,15 @@ class Curso extends Model
         $sql .= "              ON atividades.unidade_id = unidades. id ";
         $sql .= "       LEFT JOIN user_atividade ";
         $sql .= "              ON atividades.id = user_atividade.atividade_id ";
-        $sql .= " WHERE  ( user_atividade.user_id = ".$user_id;
+        $sql .= " WHERE  ( user_atividade.user_id = " . $user_id;
         $sql .= "          OR user_atividade.user_id IS NULL ) ";
-        $sql .= "       AND curso_id = ".$this->id;
+        $sql .= "       AND curso_id = " . $this->id;
         $sql .= " GROUP  BY unidades.id, ";
         $sql .= "          unidades.curso_id, ";
-        $sql .= "          user_atividade.atividade_id ";
-        $sql .= " ORDER  BY unidades.id " ;
+        $sql .= "          atividades.id  ";
+        $sql .= " ORDER  BY unidades.id ";
 
-       // dd($sql);
+        // dd($sql);
 
         return DB::select($sql);
     }

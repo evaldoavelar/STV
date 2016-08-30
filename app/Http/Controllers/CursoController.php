@@ -26,10 +26,10 @@ class CursoController extends Controller
     function __construct()
     {
         //ligar os filtros para os metodos de administrador
-        $this->middleware('autorizacaoAdmin', ['except' => ['meusCursos', 'cursoPorCategoria', 'inscreverCurso', 'detalhesUsuario', 'avaliacao']]);
+        $this->middleware('autorizacaoAdmin', ['except' => ['meusCursos', 'cursoPorCategoria', 'inscreverCurso', 'detalhesUsuario', 'avaliacao', 'certificado']]);
 
         //ligar os filtros para os metodos de  usuário
-        $this->middleware('autorizacaoUsuarios')->only('meusCursos', 'inscreverCurso', 'detalhesUsuario', 'avaliacao');
+        $this->middleware('autorizacaoUsuarios')->only('meusCursos', 'inscreverCurso', 'detalhesUsuario', 'avaliacao', 'certificado');
     }
 
     /*Novo Curso*/
@@ -180,7 +180,7 @@ class CursoController extends Controller
         $curso = Curso::find($curso_id);
         if (is_null($curso)) abort(404, 'Curso não encontrado');
 
-        $user = Curso::find($user_id);
+        $user = User::find($user_id);
         if (is_null($user)) abort(404, 'Usuario não encontrado');
 
         $inscrito = Curso::find($curso_id)->inscritos()->where('user_id', $user_id);
@@ -209,7 +209,7 @@ class CursoController extends Controller
                     ->with([
                         'curso' => $curso,
                         'unidade_expande' => 0,
-                        'erro' => 'A unidade "'.$unidade->descricao.'" não contem uma atividade avaliativa. Cadastre ao menos uma atividade para publicar o curso.'
+                        'erro' => 'A unidade "' . $unidade->descricao . '" não contem uma atividade avaliativa. Cadastre ao menos uma atividade para publicar o curso.'
                     ]);
             }
         }
@@ -250,14 +250,12 @@ class CursoController extends Controller
 
         $notas = $curso->RetornaNotaUsuarioCurso(Auth::user()->id);
 
-        $aprovado = true;
+        $assistidos = $curso->RetornaUsuarioVideosVisualizados(Auth::user()->id);
 
-        foreach ($notas as $nota) {
-            if ($nota->nota < 60) {
-                $aprovado = false;
-                break;
-            }
-        }
+        
+
+
+        $aprovado = $curso->aprovado(Auth::user()->id);
 
         return view('cursos/curso-usuario-detalhes')->with(['curso' => $curso, 'notas' => $notas, 'aprovado' => $aprovado]);
     }
@@ -266,10 +264,6 @@ class CursoController extends Controller
     /*Listar os cursos do usuario logado*/
     public function meusCursos()
     {
-
-        $pdf = SnappyPdf::loadView('welcome');
-        return $pdf->setPaper('a4')->setOrientation('landscape')->setOption('margin-bottom', 0)->stream('welcome.pdf');
-
         $user = User::find(Auth::user()->id);
 
         //   DB::enableQueryLog();
@@ -315,5 +309,40 @@ class CursoController extends Controller
 
         // return view('cursos/curso-usuario-detalhes')->with(['curso'=>$curso,'msg'=>"Curso Avaliado com Sucesso!"]);
 
+    }
+
+
+    /*IGerar Certificado do curso*/
+    public function certificado($curso_id)
+    {
+        $curso = Curso::find($curso_id);
+        if (is_null($curso)) abort(404, 'Curso não encontrado');
+
+        $aprovado = $curso->aprovado(Auth::user()->id);
+        if(!$aprovado)
+            abort(404, 'Usuário não aprovado');
+
+        $user = User::find(Auth::user()->id);
+
+        $inscrito = UserCurso::where('curso_id', $curso->id)
+            ->where('user_id', Auth::user()->id)
+            ->get()[0];
+
+        $data = Util::formatDatePt_Br_ex(strtotime('today'));
+
+        $dados = [
+            'nome' => $user->name,
+            'curso' => $curso->titulo,
+            'data' => $data,
+            'data_inscrito' => date('d/m/Y', strtotime($inscrito->created_at)),
+        ];
+
+        $pdf = SnappyPdf::loadView('cursos/curso-certificado', $dados);
+        /* $pdf->setOption('margin-top',0);
+         $pdf->setOption('margin-right',0);
+         $pdf->setOption('margin-bottom',0);
+         $pdf->setOption('margin-left',0);*/
+
+        return $pdf->setPaper('a4')->setOrientation('landscape')->stream();
     }
 }

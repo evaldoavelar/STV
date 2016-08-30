@@ -82,7 +82,7 @@
         <div class="container ">
             <div class="panel panel-default ">
                 <div class="panel-heading">
-                    <h3>Quadro de Notas</h3>
+                    <h3>Quadro de Notas - Aprovação Miníma 70%</h3>
                 </div>
                 <div class="panel-body">
 
@@ -103,10 +103,10 @@
                                             <td>{{$nota->descricao}}</td>
                                             <td>{{$nota->titulo}}</td>
 
-                                            @if($nota->nota > 60)
+                                            @if($nota->nota > 70)
                                                 <td class="nota-aprovado">{{$nota->nota}}</td>
                                             @else
-                                                <td class="nota-reprovado">{{$nota->nota}}</td>
+                                                <td class="nota-reprovado">{{$nota->nota ? $nota->nota : '-' }}</td>
                                             @endif
                                         </tr>
                                     @endforeach
@@ -115,6 +115,13 @@
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="panel-footer">
+                    @if($aprovado)
+                        <p class="text-center nota-aprovado">Você já foi aprovado neste Curso</p>
+                    @else
+                        <p class="text-center nota-reprovado">Você ainda não foi aprovado neste Curso</p>
+                    @endif
                 </div>
             </div>
         </div>
