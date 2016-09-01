@@ -8,6 +8,27 @@
 
     <section>
         <div class="container ">
+
+            @if(isset($erro))
+                <section>
+                    <div class="container ">
+                        <div class="alert alert-danger" role="alert">
+                            <a href="#" class="alert-link">{{ $erro  }}</a>
+                        </div>
+                    </div>
+                </section>
+            @endif
+
+            @if(isset($msg))
+                <section>
+                    <div class="container ">
+                        <div class="alert alert-info" role="alert">
+                            <a href="#" class="alert-link">{{ $msg  }}</a>
+                        </div>
+                    </div>
+                </section>
+            @endif
+
             <div class="row-fluid">
                 <div class="col-md-12 ">
                     <p class="destaque">Listagem de <span>Usuários</span></p>
@@ -50,52 +71,78 @@
                 </nav>
             </div>
 
-            @if(!empty($usuarios))
 
-            <div class="row">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4><span class="glyphicon  glyphicon-user " aria-hidden="true"></span> Usuários
-                        </h4>
-                    </div>
-                    <div class="">
-                        <table class="table">
-                            <thead>
-                            <tr>
-                                <th>Nome</th>
-                                <th>Email</th>
-                                <th>Ativo</th>
-                                <th>Administrador</th>
-                                <th>Relatório</th>
-                                <th>Editar</th>
-                                <th>Excluir</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @foreach($usuarios as $usuario)
+
+                <div class="row">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4><span class="glyphicon  glyphicon-user " aria-hidden="true"></span> Usuários
+                            </h4>
+                        </div>
+                        <div class="">
+                            <table class="table">
+                                <thead>
                                 <tr>
-                                    <td>{{$usuario->name}}</td>
-                                    <td>{{$usuario->email}}</td>
-                                    <td>{{$usuario->ativo ? 'Sim' : 'Não'}}</td>
-                                    <td>{{$usuario->admin ? 'Sim' : 'Não'}}</td>
-                                    <td><a href="{{url('/usuario-relatorio',$usuario->id)}}"> <span
-                                                    class="glyphicon glyphicon-object-align-bottom"
-                                                    aria-hidden="true"></span></a></td>
-                                    <td><a href="{{url('/usuario-editar',$usuario->id)}}"><span
-                                                    class="glyphicon glyphicon-edit" aria-hidden="true"></span></a></td>
-                                    <td><a href="{{url('/usuario-excluir',$usuario->id)}}"><span
-                                                    class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
-                                    </td>
+                                    <th>Nome</th>
+                                    <th>Email</th>
+                                    <th>Ativo</th>
+                                    <th>Administrador</th>
+                                    <th>Relatório</th>
+                                    <th>Editar</th>
+                                    <th>Excluir</th>
                                 </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($usuarios as $usuario)
+                                    <tr>
+                                        <td>{{$usuario->name}}</td>
+                                        <td>{{$usuario->email}}</td>
+                                        <td>{{$usuario->ativo ? 'Sim' : 'Não'}}</td>
+                                        <td>{{$usuario->admin ? 'Sim' : 'Não'}}</td>
+                                        @if($usuario->admin)
+                                            <td> <span
+                                                    class="glyphicon glyphicon-object-align-bottom"
+                                                    aria-hidden="true"></span> </td>
+                                        @else
+                                            <td><a href="{{url('/usuario-relatorio',$usuario->id)}}"> <span
+                                                            class="glyphicon glyphicon-object-align-bottom"
+                                                            aria-hidden="true"></span></a></td>
+                                        @endif
+                                        <td><a href="{{url('/usuario-editar',$usuario->id)}}"><span
+                                                        class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+                                        </td>
+                                        <td><a href="{{url('/usuario-excluir',$usuario->id)}}"><span
+                                                        class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                                        </td>
+                                    </tr>
 
-                            @endforeach
-                            </tbody>
-                        </table>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            @endif
+
         </div>
     </section>
+@stop
+
+
+@section('scripts')
+
+    <script>
+        $(document).ready(function () {
+
+
+            $(".glyphicon-trash").click(function (event) {
+
+                if (confirm("Deseja Excluir?") === false)
+                    event.preventDefault();
+            });
+
+        });
+
+    </script>
+
 @stop

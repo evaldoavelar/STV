@@ -7,7 +7,32 @@
 @section('container')
     <section>
         <div class="container">
+
+            <p><a href="{{ url('usuario-lista') }}"> <span
+                            class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Voltar</a></p>
+
             <div class="row">
+
+                @if(isset($erro))
+                    <section>
+                        <div class="container ">
+                            <div class="alert alert-danger" role="alert">
+                                <a href="#" class="alert-link">{{ $erro  }}</a>
+                            </div>
+                        </div>
+                    </section>
+                @endif
+
+                @if(isset($msg))
+                    <section>
+                        <div class="container ">
+                            <div class="alert alert-info" role="alert">
+                                <a href="#" class="alert-link">{{ $msg  }}</a>
+                            </div>
+                        </div>
+                    </section>
+                @endif
+
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h1>Cadastro de Usuário</h1>
@@ -125,6 +150,8 @@
                     </div>
                 </div>
 
+                    <p><a href="{{ url('usuario-lista') }}"> <span
+                                    class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Voltar</a></p>
             </div>
         </div>
     </section>

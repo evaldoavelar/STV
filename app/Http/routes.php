@@ -20,6 +20,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/usuario-editar/{id}', 'Auth\AuthController@edit')->where('id', '[0-9]+');
     Route::get('/usuario-excluir/{id}', 'Auth\AuthController@delete')->where('id', '[0-9]+');
     Route::post('/usuario-salvar', 'Auth\AuthController@salvar');
+    Route::get('/usuario-relatorio/{id}', 'Auth\AuthController@relatorio')->where('id', '[0-9]+');
 
     /*------------------- Home ------------------------*/
     Route::get('/', function () {

@@ -7,9 +7,11 @@ use App\Library\Util;
 use Validator;
 use DB;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+//use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use Barryvdh\Snappy\Facades\SnappyPdf;
+use Illuminate\Support\Facades\Request;
 
 class AuthController extends Controller
 {
@@ -102,7 +104,7 @@ class AuthController extends Controller
      */
     public function register(Request $request)
     {
-        $validator = $this->validator($request->all());
+        $validator = $this->validator(Request::all());
 
         if ($validator->fails()) {
             $this->throwValidationException(
@@ -110,9 +112,10 @@ class AuthController extends Controller
             );
         }
 
-        $this->create($request->all());
+        $user = $this->create(Request::all());
 
-        return redirect('/usuario-lista');
+        return view('auth/edit')->with(['usuario'=> $user,'msg'=>"Usuário salvo com Sucesso!"]);
+       // return redirect('/usuario-lista');
     }
 
 
@@ -153,10 +156,10 @@ class AuthController extends Controller
     /**
      * Listar Usuário
      */
-    public function lista(Request $request)
+    public function lista(Request $request,$msg = null)
     {
         //Recuperar os parametros da requisição
-        $data = $request->all();
+        $data = Request::all();
 
         //verifcar se está usando o filtro
         if ( Util::checkIsNullAndEmpty($data,'campo') && Util::checkIsNullAndEmpty($data,'valor')  ){
@@ -164,11 +167,11 @@ class AuthController extends Controller
             $usuarios = User::where($data['campo'], "LIKE", $data['valor'] . '%')->get();
 
             //retornar a consulta e os campos do filtro para a view
-            return view('auth/list')->with(['usuarios' => $usuarios, 'valor' => $data['valor'], 'campo' => $data['campo']]);
+            return view('auth/list')->with(['usuarios' => $usuarios, 'valor' => $data['valor'], 'campo' => $data['campo'],'msg'=>$msg]);
             // dd(DB::getQueryLog());
         } else {
-            $usuarios = User::all();
-            return view('auth/list')->with(['usuarios' => $usuarios]);
+            $usuarios = [];
+            return view('auth/list')->with(['usuarios' => $usuarios,'msg'=>$msg]);
         }
 
     }
@@ -182,7 +185,7 @@ class AuthController extends Controller
 
         if (is_null($usuario)) abort(404);
 
-        return view('auth/edit')->with('usuario', $usuario);
+            return view('auth/edit')->with('usuario', $usuario);
     }
 
 
@@ -191,13 +194,39 @@ class AuthController extends Controller
      */
     public function delete($id)
     {
-        $usuario = User::find($id);
+        $msg = "Usuário excluido com sucesso!";
 
+        $usuario = User::find($id);
         if (is_null($usuario)) abort(404);
 
-        $usuario->delete();
+     //   $usuario->delete();
 
-        return redirect('/usuario-lista');
+        $this->lista( Request::instance(),$msg);
     }
 
+    public function relatorio($id)
+    {
+        $usuario = User::find($id);
+        if (is_null($usuario)) abort(404);
+
+        $cursos = $usuario->cursos()->get();
+
+        foreach ($cursos as $curso) {
+            $curso->notas = $curso->RetornaNotaUsuarioCurso($id);
+            $curso->aprovado = $curso->aprovado($id);
+            $curso->PorcetagemAssistidos = $curso->RetornaPorcentagemVideosAssistidos($id);
+        }
+
+        $dados = [
+            'nome' => $usuario->name,
+            'cursos' => $cursos,
+            'data' =>  date('d/m/Y'),
+        ];
+        
+
+        $pdf = SnappyPdf::loadView('auth/usuario-relatorio', $dados);
+        return $pdf->setPaper('a4')->stream();
+
+      //  return view('auth/usuario-relatorio')->with($dados);
+    }
 }

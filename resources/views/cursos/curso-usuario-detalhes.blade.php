@@ -63,7 +63,8 @@
                                         @if($aprovado)
                                             <a class="btn btn-info btn-half-block">Gerar Certificado</a>
                                         @else
-                                            <button class="btn btn-block btn-half-block disabled" >Gerar Certificado</button>
+                                            <button class="btn btn-block btn-half-block disabled">Gerar Certificado
+                                            </button>
                                         @endif
                                     </div>
                                 </div>
@@ -82,7 +83,7 @@
         <div class="container ">
             <div class="panel panel-default ">
                 <div class="panel-heading">
-                    <h3>Quadro de Notas - Aprovação Miníma 70%</h3>
+                    <h3>Quadro de Notas</h3>
                 </div>
                 <div class="panel-body">
 
@@ -110,18 +111,28 @@
                                             @endif
                                         </tr>
                                     @endforeach
+                                    <td> Porcentagem de Vídeos Assistidos:</td>
+                                    <td></td>
+                                    @if($nota->nota >= 100)
+                                        <td class="nota-aprovado">{{$videosAssistido}}%</td>
+                                    @else
+                                        <td class="nota-reprovado">{{$videosAssistido}}%</td>
+                                    @endif
                                     </tbody>
                                 </table>
+
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="panel-footer">
+                    <p ><small>Aprovação: 70% de Acertos nas atividades e 100% dos vídeos assistidos</small></p>
                     @if($aprovado)
                         <p class="text-center nota-aprovado">Você já foi aprovado neste Curso</p>
                     @else
                         <p class="text-center nota-reprovado">Você ainda não foi aprovado neste Curso</p>
                     @endif
+
                 </div>
             </div>
         </div>

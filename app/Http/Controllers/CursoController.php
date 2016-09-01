@@ -250,14 +250,16 @@ class CursoController extends Controller
 
         $notas = $curso->RetornaNotaUsuarioCurso(Auth::user()->id);
 
-        $assistidos = $curso->RetornaUsuarioVideosVisualizados(Auth::user()->id);
-
-        
-
-
         $aprovado = $curso->aprovado(Auth::user()->id);
 
-        return view('cursos/curso-usuario-detalhes')->with(['curso' => $curso, 'notas' => $notas, 'aprovado' => $aprovado]);
+        $videosAssistido = $curso->RetornaPorcentagemVideosAssistidos(Auth::user()->id);
+
+        return view('cursos/curso-usuario-detalhes')->with([
+            'curso' => $curso,
+            'notas' => $notas,
+            'aprovado' => $aprovado,
+            'videosAssistido' =>$videosAssistido
+        ]);
     }
 
 

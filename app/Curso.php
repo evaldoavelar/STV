@@ -142,6 +142,25 @@ class Curso extends Model
         return $aprovado;
     }
 
+    public function  RetornaPorcentagemVideosAssistidos($user_id)
+    {
+        $videosVisualizados = $this->RetornaUsuarioVideosVisualizados($user_id);
+
+        $visualizado = 0;
+        $naoVisualizado = 0;
+
+        foreach (  $videosVisualizados as $video ){
+            if ($video->assitido > 0)
+                $visualizado++;
+            else
+                $naoVisualizado++;
+        }
+
+        if (count($videosVisualizados) == 0 ) return 0;
+
+        return ($visualizado * 100) /  count($videosVisualizados);
+    }
+
     /*Nota usuario*/
     public function RetornaUsuarioVideosVisualizados($user_id)
     {

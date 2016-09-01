@@ -5,8 +5,13 @@
 @stop
 
 @section('container')
+
     <section>
         <div class="container">
+            <div class="row">
+                <p><a href="{{ app('url')->previous() }}"> <span
+                                class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Voltar</a></p>
+            </div>
             <div class="row">
                 <div class="panel panel-default">
                     <div class="panel-heading">
@@ -77,7 +82,8 @@
                                 <label class="col-sm-3 control-label"></label>
 
                                 <div class="col-sm-9">
-                                    <input type="checkbox" name="ativo" {{ old('ativo') ? 'true' : 'false' }} value="{{ old('ativo') ? old('ativo') : 'true'}}">Ativo
+                                    <input type="checkbox" name="ativo"
+                                           {{ old('ativo') ? 'true' : 'false' }} value="{{ old('ativo') ? old('ativo') : 'true'}}">Ativo
                                     @if ($errors->has('ativo'))
                                         <span class="help-block">
                                         <strong>{{ $errors->first('ativo') }}</strong>
@@ -90,7 +96,8 @@
                                 <label class="col-sm-3 control-label"></label>
 
                                 <div class="col-sm-9">
-                                    <input type="checkbox" name="admin" value="{{ old('admin') ? old('admin') : 'true'}}">Adminstrador
+                                    <input type="checkbox" name="admin"
+                                           value="{{ old('admin') ? old('admin') : 'true'}}">Adminstrador
                                     @if ($errors->has('admin'))
                                         <span class="help-block">
                                         <strong>{{ $errors->first('admin') }}</strong>
@@ -108,7 +115,8 @@
                         </form>
                     </div>
                 </div>
-
+                <p><a href="{{ app('url')->previous() }}"> <span
+                                class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Voltar</a></p>
             </div>
         </div>
     </section>
