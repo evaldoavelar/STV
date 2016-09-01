@@ -321,8 +321,8 @@ class CursoController extends Controller
         if (is_null($curso)) abort(404, 'Curso não encontrado');
 
         $aprovado = $curso->aprovado(Auth::user()->id);
-        if(!$aprovado)
-            abort(404, 'Usuário não aprovado');
+      //  if(!$aprovado)
+       //     abort(404, 'Usuário não aprovado');
 
         $user = User::find(Auth::user()->id);
 
