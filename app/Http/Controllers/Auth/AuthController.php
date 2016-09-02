@@ -4,14 +4,16 @@ namespace App\Http\Controllers\Auth;
 
 use App\User;
 use App\Library\Util;
+use Illuminate\Support\Facades\Redirect;
 use Validator;
 use DB;
+use Auth;
 use App\Http\Controllers\Controller;
-//use Illuminate\Http\Request;
+use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Barryvdh\Snappy\Facades\SnappyPdf;
-use Illuminate\Support\Facades\Request;
+//use Illuminate\Support\Facades\Request;
 
 class AuthController extends Controller
 {
@@ -104,7 +106,7 @@ class AuthController extends Controller
      */
     public function register(Request $request)
     {
-        $validator = $this->validator(Request::all());
+        $validator = $this->validator($request->all());
 
         if ($validator->fails()) {
             $this->throwValidationException(
@@ -112,7 +114,7 @@ class AuthController extends Controller
             );
         }
 
-        $user = $this->create(Request::all());
+        $user = $this->create($request->all());
 
         return view('auth/edit')->with(['usuario'=> $user,'msg'=>"Usuário salvo com Sucesso!"]);
        // return redirect('/usuario-lista');
@@ -149,17 +151,26 @@ class AuthController extends Controller
 
         $usuario->save();
 
-        return redirect('/usuario-lista');
+        $msg = "Usuário Salvo com sucesso!";
+        $dados = \Illuminate\Support\Facades\Request::all();
+
+        //redirecionar com os parametros
+        return redirect('usuario-editar/'.$usuario->id.'?msg='.urlencode($msg));
+
+       // return redirect('/usuario-lista');
     }
 
 
     /**
      * Listar Usuário
      */
-    public function lista(Request $request,$msg = null)
+    public function lista(Request $request)
     {
         //Recuperar os parametros da requisição
-        $data = Request::all();
+        $data = $request->all();
+        $urlParametros = http_build_query($data);
+
+        $msg = isset($data['msg']) ? $data['msg'] : null;
 
         //verifcar se está usando o filtro
         if ( Util::checkIsNullAndEmpty($data,'campo') && Util::checkIsNullAndEmpty($data,'valor')  ){
@@ -167,11 +178,17 @@ class AuthController extends Controller
             $usuarios = User::where($data['campo'], "LIKE", $data['valor'] . '%')->get();
 
             //retornar a consulta e os campos do filtro para a view
-            return view('auth/list')->with(['usuarios' => $usuarios, 'valor' => $data['valor'], 'campo' => $data['campo'],'msg'=>$msg]);
+            return view('auth/list')->with([
+                'usuarios' => $usuarios, 
+                'valor' => $data['valor'], 
+                'campo' => $data['campo'],
+                'msg'=>$msg,
+                'urlParametros' => $urlParametros
+            ]);
             // dd(DB::getQueryLog());
         } else {
             $usuarios = [];
-            return view('auth/list')->with(['usuarios' => $usuarios,'msg'=>$msg]);
+            return view('auth/list')->with(['usuarios' => $usuarios,'msg'=>$msg, 'urlParametros' => $urlParametros]);
         }
 
     }
@@ -185,7 +202,9 @@ class AuthController extends Controller
 
         if (is_null($usuario)) abort(404);
 
-            return view('auth/edit')->with('usuario', $usuario);
+        $msg = \Illuminate\Support\Facades\Request::input('msg');
+
+        return view('auth/edit')->with(['usuario'=> $usuario,'msg'=>$msg]);
     }
 
 
@@ -194,14 +213,21 @@ class AuthController extends Controller
      */
     public function delete($id)
     {
+
         $msg = "Usuário excluido com sucesso!";
 
         $usuario = User::find($id);
         if (is_null($usuario)) abort(404);
 
-     //   $usuario->delete();
+        if($id == Auth::user()->id)
+         return redirect()->back()->withErrors(['erro', 'Você não pode se excluir']);
 
-        $this->lista( Request::instance(),$msg);
+        $usuario->delete();
+
+        //capiturar os parametros da url
+        $dados = \Illuminate\Support\Facades\Request::all();
+        //redirecionar com os parametros
+        return redirect('usuario-lista?'.http_build_query($dados,'&').'&msg='.urlencode($msg));
     }
 
     public function relatorio($id)

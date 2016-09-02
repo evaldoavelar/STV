@@ -83,8 +83,13 @@ class CursoController extends Controller
         /*salvar o model*/
         $curso->save();
 
+        $msg = "Curso salvo com sucesso!";
+
+        //redirecionar com os parametros
+        return redirect('curso-admin-detalhes/'.$curso->id.'/0?&msg='.urlencode($msg));
+
         /*redirecionar para os detalhes do curso*/
-        return redirect()->action('CursoController@detalhesAdmin', [$curso->id, 0]);
+      //  return redirect()->action('CursoController@detalhesAdmin', [$curso->id, 0]);
     }
 
     /*Editar o curso */
@@ -116,10 +121,15 @@ class CursoController extends Controller
 
         if (is_null($curso)) abort(404);
 
-
         $curso->delete();
 
-        return redirect()->action('CursoController@listagem');
+        $msg = "Curso excluido com sucesso!";
+        $dados = \Illuminate\Support\Facades\Request::all();
+
+        //redirecionar com os parametros
+        return redirect('curso-lista?'.http_build_query($dados,'&').'&msg='.urlencode($msg));
+
+      //  return redirect()->action('CursoController@listagem');
 
     }
 
@@ -130,7 +140,13 @@ class CursoController extends Controller
 
         if (is_null($curso)) abort(404);
 
-        return view('cursos/curso-admin-detalhes')->with(['curso' => $curso, 'unidade_expande' => $unidade]);
+        $msg = \Illuminate\Support\Facades\Request::input('msg');
+
+        return view('cursos/curso-admin-detalhes')->with([
+            'curso' => $curso,
+            'unidade_expande' => $unidade,
+            'msg' => $msg,
+        ]);
     }
 
     /*Listar todos os cursos Cadastrados*/
@@ -139,18 +155,20 @@ class CursoController extends Controller
 
         //Recuperar os parametros da requisição
         $data = $request->all();
+        $msg = isset($data['msg']) ? $data['msg'] : null;
 
         //verifcar se está usando o filtro
         if (Util::checkIsNullAndEmpty($data, 'campo') && Util::checkIsNullAndEmpty($data, 'valor')) {
             //filtrar os usuários
-            $usuarios = Curso::where($data['campo'], "LIKE", $data['valor'] . '%')
+            $cursos = Curso::where($data['campo'], "LIKE", $data['valor'] . '%')
                 ->get();
 
             //retornar a consulta e os campos do filtro para a view
-            return view('cursos/curso-listagem')->with(['cursos' => $usuarios, 'valor' => $data['valor'], 'campo' => $data['campo']]);
+            return view('cursos/curso-listagem')->with(['cursos' => $cursos, 'valor' => $data['valor'], 'campo' => $data['campo'],'msg'=>$msg]);
             // dd(DB::getQueryLog());
         } else {
-            return view('cursos/curso-listagem')->with('cursos', []);
+            $cursos = [];
+            return view('cursos/curso-listagem')->with(['cursos' => $cursos, 'msg'=>$msg]);
         }
 
     }

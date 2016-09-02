@@ -35,7 +35,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/curso-novo', 'CursoController@novo');
     Route::post('/curso-salvar', 'CursoController@salvar');
     Route::post('/curso-atualizar', 'CursoController@atualizar');
-    Route::get('/curso-excluir', 'CursoController@excluir');
+    Route::get('/curso-excluir/{id}', 'CursoController@excluir')->where('id', '[0-9]+');
     Route::get('/curso-lista', 'CursoController@lista');
     Route::get('/curso-admin-detalhes/{id}', 'CursoController@detalhesAdmin')->where('id', '[0-9]+');
     Route::get('/curso-admin-detalhes/{id}/{unidade}', 'CursoController@detalhesAdmin')->where(['id' => '[0-9]+','unidade' => '[0-9]+']);

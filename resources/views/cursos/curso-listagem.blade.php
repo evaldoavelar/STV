@@ -109,3 +109,21 @@
         </div>
     </section>
 @stop
+
+@section('scripts')
+
+    <script>
+        $(document).ready(function () {
+
+
+            $(".glyphicon-trash").click(function (event) {
+
+                if (confirm("Deseja Excluir?") === false)
+                    event.preventDefault();
+            });
+
+        });
+
+    </script>
+
+@stop

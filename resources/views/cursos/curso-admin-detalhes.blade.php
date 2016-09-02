@@ -1,7 +1,7 @@
 @extends('app')
 
 @section('title')
-    STV Treinamento em Vídeos
+    Cadastro de Cursos
 @stop
 
 @section('container')
@@ -20,26 +20,6 @@
     </section>
 
 
-    @if(isset($erro))
-        <section>
-            <div class="container ">
-                <div class="alert alert-danger" role="alert">
-                    <a href="#" class="alert-link">{{ $erro  }}</a>
-                </div>
-            </div>
-        </section>
-    @endif
-
-    @if(isset($msg))
-        <section>
-            <div class="container ">
-                <div class="alert alert-info" role="alert">
-                    <a href="#" class="alert-link">{{ $msg  }}</a>
-                </div>
-            </div>
-        </section>
-    @endif
-
     <section>
         <div class="container ">
             <div class="">
@@ -48,18 +28,15 @@
                     <!-- Collect the nav links, forms, and other content for toggling -->
                     <div class="navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul class="nav navbar-nav">
-                            <li>
-                                <a href="{{ url('curso-novo')  }} " class=""><span class="glyphicon glyphicon-plus"
-                                                                                   aria-hidden="true"></span>&nbsp;Novo</a>
-                            </li>
+
                             <li>
                                 <a href="{{ url('curso-editar', $curso->id)   }}" class=""><span
                                             class="glyphicon glyphicon-edit" aria-hidden="true"></span>&nbsp;Editar</a>
                             </li>
                             <li>
-                                <a href="{{ url('curso-excluir', $curso->id)   }}" class=""><span
-                                            class="glyphicon glyphicon-trash"
-                                            aria-hidden="true"></span>&nbsp;Excluir</a>
+                                <a href="{{ url('curso-excluir', $curso->id)   }}" class="">
+                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>&nbsp;Excluir
+                                </a>
                             </li>
 
 
@@ -295,7 +272,7 @@
             });
 
 
-            $(".glyphicon-trash").click(function (event) {
+            $(".glyphicon-trash").parent().click(function (event) {
 
                 if (confirm("Deseja Excluir?") === false)
                     event.preventDefault();

@@ -84,11 +84,13 @@ class UnidadeController extends Controller
 
         if (is_null($unidade)) abort(404);
 
-
         $unidade->delete();
 
-        return redirect()->action('CursoController@detalhesAdmin', [$unidade->curso_id,0] );
+       // return redirect()->action('CursoController@detalhesAdmin', [$unidade->curso_id,0] );
+        $msg = "Operação realizada com Sucesso!";
 
+        //redirecionar com os parametros
+        return redirect('/curso-admin-detalhes/'.$unidade->curso_id.'/0?msg='.urlencode($msg));
     }
     
     /*detalhe da unidade */

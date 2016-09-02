@@ -169,6 +169,30 @@
     </nav>
 </div>
 
+<section>
+    <div class="container ">
+        @if(isset($erro))
+            <section>
+                <div class=" ">
+                    <div class="alert alert-danger" role="alert">
+                        <a href="#" class="alert-link">{{ $erro  }}</a>
+                    </div>
+                </div>
+            </section>
+        @endif
+
+        @if(isset($msg))
+            <section>
+                <div class=" ">
+                    <div class="alert alert-info" role="alert">
+                        <a href="#" class="alert-link">{{ $msg  }}</a>
+                    </div>
+                </div>
+            </section>
+        @endif
+    </div>
+</section>
+
 @yield('container')
 @yield('scripts')
         <!-- Rodapé -->
