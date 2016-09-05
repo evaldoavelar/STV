@@ -27,6 +27,9 @@
 
                     <!-- Collect the nav links, forms, and other content for toggling -->
                     <div class="navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <div class="navbar-header">
+                            <span class="navbar-brand" href="">Curso</span>
+                        </div>
                         <ul class="nav navbar-nav">
 
                             <li>
@@ -38,7 +41,6 @@
                                     <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>&nbsp;Excluir
                                 </a>
                             </li>
-
 
                             <li>
                                 @if($curso->publicado)
@@ -63,6 +65,13 @@
         </div>
     </section>
 
+    <div class="container espaco-20">
+
+        <a class="btn btn-danger" href="{{url('unidade-novo',$curso->id)}}">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Adicionar uma
+            Unidade</a>
+
+    </div>
 
     @forelse( $curso->unidades()->get() as $unidade)
 
@@ -86,8 +95,6 @@
                                       aria-hidden="true"></span>
                             </h4>
                             <div>
-                                <a href="{{url('unidade-novo',$curso->id)}}">
-                                    <span class="pdd glyphicon glyphicon-plus" aria-hidden="true"></span> Novo</a>
                                 <a href="{{url('unidade-editar',$unidade->id)}}">
                                     <span class="pdd glyphicon glyphicon-edit" aria-hidden="true"></span>Editar</a>
                                 <a href="{{url('unidade-excluir',$unidade->id)}}">
@@ -97,8 +104,8 @@
                         </div>
                     </a>
                     <div id="unidade-{{$unidade->id}}"
-                         class="panel-body {{ $unidade_expande == $unidade->id ?'collapse in ' :'collapse' }}"
-                            {{$unidade_expande == $unidade->id ?'aria-expanded="true" ' :'' }}>
+                         class="panel-body {{-- $unidade_expande == $unidade->id ?'collapse in ' :'collapse' --}}"
+                            {{--$unidade_expande == $unidade->id ?'aria-expanded="true" ' :'' --}}>
 
                         <section name="material">
                             <div class="panel panel-default">
@@ -239,24 +246,19 @@
             </div>
         </section>
 
-    @empty
-        <section name="unidade">
-            <div class="container espaco-20">
-                <div class="panel panel-default">
-                    <div class="panel-heading ">
 
-                        <h4>
-                            <a href="{{url('unidade-novo',$curso->id)}}">
-                                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Adicione uma
-                                Unidade</a>
-                        </h4>
-                    </div>
-                </div>
-            </div>
-        </section>
+    @empty
+
 
     @endforelse
 
+    <div class="container espaco-20">
+
+        <a class="btn btn-danger" href="{{url('unidade-novo',$curso->id)}}">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Adicionar uma
+            Unidade</a>
+
+    </div>
 
 @stop
 
@@ -274,7 +276,7 @@
 
             $(".glyphicon-trash").parent().click(function (event) {
 
-                if (confirm("Deseja Excluir?") === false)
+                if (confirm("Deseja realmente excluir?") === false)
                     event.preventDefault();
             });
 

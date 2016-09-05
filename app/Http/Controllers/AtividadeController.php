@@ -57,6 +57,9 @@ class AtividadeController extends Controller
     {
         $dados = ($request->all());
 
+      //  if(count($dados['questao'] < 2))
+        //    return redirect()->back()->withErrors(['A atividade deve ter ao menos duas questões']);
+
         // dd($dados);
         try {
 

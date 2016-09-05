@@ -154,7 +154,7 @@
                         if (root.childElementCount === 2) {
                             alert('A questão deve ter ao menos duas respostas!');
                         } else {
-                            if (confirm('Excluir a resposta?')) {
+                            if (confirm('Deseja realmente excluir?')) {
                                 //auto remover
                                 $(this.parentNode.parentNode).remove();
                             }
@@ -173,7 +173,7 @@
 
                     //adicionar o novo click
                     $(value).click(function () {
-                        if (confirm('Excluir a Questão?')) {
+                        if (confirm('Deseja realmente excluir?')) {
                             //auto remover
                             $(this.parentNode.parentNode).closest('.questao').remove();
                         }
@@ -204,6 +204,11 @@
             $('#frmAtividade').submit(function (event) {
                 var erros = 0;
                 var semCorreta = 0;
+
+               if( $('.questao').size() < 2 ){
+                   alert('A atividade deve ter ao menos 2 questões');
+                   return false;
+               }
 
                 //validar respostas
                 $.each($('.questao'), function (i, value) {

@@ -238,7 +238,7 @@
                         if (root.childElementCount === 2) {
                             alert('A questão deve ter ao menos duas respostas!');
                         } else {
-                            if (confirm('Excluir a resposta?')) {
+                            if (confirm('Deseja realmente excluir?')) {
                                 //auto remover
                                 $(this.parentNode.parentNode).find('input[type=hidden]')[0].value = 'X'
                                 $(this.parentNode.parentNode).hide();
@@ -258,7 +258,7 @@
 
                     //adicionar o novo click
                     $(value).click(function () {
-                        if (confirm('Excluir a Questão?')) {
+                        if (confirm('Deseja realmente excluir?')) {
                             //auto remover
                             $e =         $(this.parentNode.parentNode).closest('.questao');
                             $e.find('input[type=hidden]')[0].value = 'X'

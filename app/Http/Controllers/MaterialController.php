@@ -79,10 +79,14 @@ class MaterialController extends Controller
             return abort(404);
         }
 
+        //recuperar a unidade do Material
+        $unidade = Unidade::find($material->unidade_id );
+
         $material->delete();
 
-        //retornar a view passando as categorias
-        return redirect()->action('CursoController@detalhesAdmin', [$material->unidade_id]);
+        /*redirecionar para os detalhes do curso*/
+        return redirect()->action('CursoController@detalhesAdmin', [$unidade->curso_id,$unidade->id] );
+
     }
 
 
