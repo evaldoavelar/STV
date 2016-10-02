@@ -154,12 +154,12 @@
     <img class=" pull-left hidden-xs " src="{{url('images/logo.png')}}">
 
     <nav id="busca" class=" pull-right">
-        <form class="navbar-form navbar-left" role="search">
+        <form class="navbar-form navbar-left" role="search" action="{{url('curso-pesquisa')}}" method="get">
 
             <div class="input-group">
-                <input type="text" class="form-control pesquisa" placeholder="Pesquisar...">
+                <input type="text" name="valor" class="form-control pesquisa" placeholder="Pesquisar...">
                 <span class="input-group-btn">
-                            <button class="btn btn-default" type="button">
+                            <button class="btn btn-default" type="submit">
                                 <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                             </button>
                           </span>

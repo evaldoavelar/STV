@@ -23,13 +23,10 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/usuario-relatorio/{id}', 'Auth\AuthController@relatorio')->where('id', '[0-9]+');
 
     /*------------------- Home ------------------------*/
-    Route::get('/', function () {
-        return view('home/home');
-    });
 
-    Route::get('/home', function () {
-        return view('home/home');
-    });
+    Route::get('/', 'HomeController@home');
+    Route::get('/home', 'HomeController@home');
+
 
     /*------------------- Curso ------------------------*/
     Route::get('/curso-novo', 'CursoController@novo');
@@ -49,6 +46,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/curso-publicar/{id}', 'CursoController@publicar')->where('id', '[0-9]+');
     Route::get('/curso-despublicar/{id}', 'CursoController@despublicar')->where('id', '[0-9]+');
     Route::get('/curso-certificado/{id}', 'CursoController@certificado')->where('id', '[0-9]+');
+    Route::get('/curso-pesquisa', 'CursoController@pesquisa');
     
 
     /*------------------- Unidade ------------------------*/

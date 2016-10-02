@@ -26,7 +26,7 @@ class CursoController extends Controller
     function __construct()
     {
         //ligar os filtros para os metodos de administrador
-        $this->middleware('autorizacaoAdmin', ['except' => ['meusCursos', 'cursoPorCategoria', 'inscreverCurso', 'detalhesUsuario', 'avaliacao', 'certificado']]);
+        $this->middleware('autorizacaoAdmin', ['except' => ['meusCursos','pesquisa', 'cursoPorCategoria', 'inscreverCurso', 'detalhesUsuario', 'avaliacao', 'certificado']]);
 
         //ligar os filtros para os metodos de  usuário
         $this->middleware('autorizacaoUsuarios')->only('meusCursos', 'inscreverCurso', 'detalhesUsuario', 'avaliacao', 'certificado');
@@ -364,5 +364,32 @@ class CursoController extends Controller
          $pdf->setOption('margin-left',0);*/
 
         return $pdf->setPaper('a4')->setOrientation('landscape')->stream();
+    }
+
+
+    public function pesquisa(Request $request)
+    {
+        DB::enableQueryLog();
+
+        $dados = $request->all();
+        $valor = $dados['valor'];
+
+
+        $cursos = Curso::where('palavras_chaves','like',$valor.'%' )
+            ->orWhere('titulo','like',$valor.'%' )
+            ->orWhere('descricao', 'like', $valor.'%' )
+            ->orWhere('instrutor', 'like', $valor.'%' )
+            ->where('publicado', '=', '1')
+            ->get();
+
+
+
+   //     dd(DB::getQueryLog());
+
+        foreach ($cursos as $curso) {
+            $curso->avaliacao = $curso->avaliacoes();
+        }
+
+             return view('cursos/pesquisa')->with(['cursos' => $cursos]);
     }
 }
