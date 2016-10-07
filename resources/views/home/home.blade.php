@@ -2,13 +2,12 @@
 
 @section('title')
     STV Treinamento em Vídeos
-@stop
+    @stop
 
-@section('container')
+    @section('container')
 
 
-
-    <!-- Slides -->
+            <!-- Slides -->
     <section class=" ">
         <div class="container-fluid">
             <div id="slides" class="carousel slide" data-ride="carousel">
@@ -73,55 +72,22 @@
 
 
                     <div class="row">
-                        <div class="col-sm-6 col-md-4">
-                            <div class="thumbnail">
-                                <img class="img-thumbnail" src="images/curso1.jpg" alt="...">
-                                <div class="caption">
-                                    <h3>Thumbnail label</h3>
-                                    <p class="thumbnail-p"> Cras justo odio, dapibus ac facilisis in, egestas eget quam.
-                                        Donec id elit non mi
-                                        porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id
-                                        porta gravida at eget metus. Nullam id dolor id nibh ultricies vehi porta gravida at
-                                        eget metus. Nullam id dolor id nibh ultricies vehielit.</p>
-                                    <p>
-                                        <a href="#" class="pull-right" role="button">Inscrever</a>
-                                        <span class="badge "> 6 Inscritos</span>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-md-4">
-                            <div class="thumbnail">
-                                <img class="img-thumbnail" src="images/curso1.jpg" alt="...">
-                                <div class="caption">
-                                    <h3>Thumbnail label humbnail label humbnail</h3>
-                                    <p class="thumbnail-p">Cras justo odio, dapibus ac facilisis in, egestas eget quam.
-                                        Donec id elit non mi
-                                    </p>
-                                    <p>
-                                        <a href="#" class="pull-right" role="button">Inscrever</a>
-                                        <span class="badge "> 6 Inscritos</span>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-md-4">
-                            <div class="thumbnail">
 
-                                <img class="img-thumbnail" src="images/curso1.jpg" alt="...">
-                                <div class="caption">
-                                    <h3>Thumbnail label</h3>
-                                    <p class="thumbnail-p">Cras justo odio, dapibus ac facilisis in, egestas eget quam.
-                                        Donec id elit non mi
-                                        porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id
-                                        elit.</p>
-                                    <p>
-                                        <a href="#" class="pull-right" role="button">Inscrever</a>
-                                        <span class="badge "> 6 Inscritos</span>
-                                    </p>
+                        @foreach($cursos as $curso)
+                            <div class="col-sm-6 col-md-4">
+                                <div class="thumbnail">
+                                    <img class="img-thumbnail" src="images/curso1.jpg" alt="...">
+                                    <div class="caption">
+                                        <h3>{{$curso->titulo}}</h3>
+                                        <p class="thumbnail-p"> {{ $curso->descricao  }}</p>
+                                        <p>
+
+                                            <span class="badge "> {{$curso->inscritos()->count()}} Inscritos</span>
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        @endforeach
 
                     </div>
 

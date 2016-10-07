@@ -149,25 +149,29 @@
 
 <!-- Barra de Pesquisa -->
 
+
 <div class="container espaco-30">
 
     <img class=" pull-left hidden-xs " src="{{url('images/logo.png')}}">
 
     <nav id="busca" class=" pull-right">
-        <form class="navbar-form navbar-left" role="search" action="{{url('curso-pesquisa')}}" method="get">
+        @if(Auth::check() &&  !Auth::user()->admin)
+            <form class="navbar-form navbar-left" role="search" action="{{url('curso-pesquisa')}}" method="get">
 
-            <div class="input-group">
-                <input type="text" name="valor" class="form-control pesquisa" placeholder="Pesquisar...">
+                <div class="input-group">
+                    <input type="text" name="valor" class="form-control pesquisa" placeholder="Pesquisar...">
                 <span class="input-group-btn">
                             <button class="btn btn-default" type="submit">
                                 <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                             </button>
                           </span>
-            </div>
+                </div>
 
-        </form>
+            </form>
+        @endif
     </nav>
 </div>
+
 
 <section>
     <div class="container ">

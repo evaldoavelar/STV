@@ -26,7 +26,7 @@ class CursoController extends Controller
     function __construct()
     {
         //ligar os filtros para os metodos de administrador
-        $this->middleware('autorizacaoAdmin', ['except' => ['meusCursos','pesquisa', 'cursoPorCategoria', 'inscreverCurso', 'detalhesUsuario', 'avaliacao', 'certificado']]);
+        $this->middleware('autorizacaoAdmin', ['except' => ['meusCursos', 'pesquisa', 'cursoPorCategoria', 'inscreverCurso', 'detalhesUsuario', 'avaliacao', 'certificado']]);
 
         //ligar os filtros para os metodos de  usuário
         $this->middleware('autorizacaoUsuarios')->only('meusCursos', 'inscreverCurso', 'detalhesUsuario', 'avaliacao', 'certificado');
@@ -86,10 +86,10 @@ class CursoController extends Controller
         $msg = "Curso salvo com sucesso!";
 
         //redirecionar com os parametros
-        return redirect('curso-admin-detalhes/'.$curso->id.'/0?&msg='.urlencode($msg));
+        return redirect('curso-admin-detalhes/' . $curso->id . '/0?&msg=' . urlencode($msg));
 
         /*redirecionar para os detalhes do curso*/
-      //  return redirect()->action('CursoController@detalhesAdmin', [$curso->id, 0]);
+        //  return redirect()->action('CursoController@detalhesAdmin', [$curso->id, 0]);
     }
 
     /*Editar o curso */
@@ -127,9 +127,9 @@ class CursoController extends Controller
         $dados = \Illuminate\Support\Facades\Request::all();
 
         //redirecionar com os parametros
-        return redirect('curso-lista?'.http_build_query($dados,'&').'&msg='.urlencode($msg));
+        return redirect('curso-lista?' . http_build_query($dados, '&') . '&msg=' . urlencode($msg));
 
-      //  return redirect()->action('CursoController@listagem');
+        //  return redirect()->action('CursoController@listagem');
 
     }
 
@@ -164,11 +164,11 @@ class CursoController extends Controller
                 ->get();
 
             //retornar a consulta e os campos do filtro para a view
-            return view('cursos/curso-listagem')->with(['cursos' => $cursos, 'valor' => $data['valor'], 'campo' => $data['campo'],'msg'=>$msg]);
+            return view('cursos/curso-listagem')->with(['cursos' => $cursos, 'valor' => $data['valor'], 'campo' => $data['campo'], 'msg' => $msg]);
             // dd(DB::getQueryLog());
         } else {
             $cursos = [];
-            return view('cursos/curso-listagem')->with(['cursos' => $cursos, 'msg'=>$msg]);
+            return view('cursos/curso-listagem')->with(['cursos' => $cursos, 'msg' => $msg]);
         }
 
     }
@@ -220,16 +220,27 @@ class CursoController extends Controller
         $curso = Curso::find($curso_id);
         if (is_null($curso)) abort(404, 'Curso não encontrado');
 
-        //verificar se as unidades do curso tem uma atividade avaliativa
-        foreach ($curso->unidades()->get() as $unidade) {
-            if ($unidade->atividades()->count() == 0) {
-                return view('cursos/curso-admin-detalhes')
-                    ->with([
-                        'curso' => $curso,
-                        'unidade_expande' => 0,
-                        'erro' => 'A unidade "' . $unidade->descricao . '" não contem uma atividade avaliativa. Cadastre ao menos uma atividade para publicar o curso.'
-                    ]);
+        $unidades = $curso->unidades()->get();
+
+        if ($unidades->count() > 0) {
+            //verificar se as unidades do curso tem uma atividade avaliativa
+            foreach ($unidades as $unidade) {
+                if ($unidade->atividades()->count() == 0) {
+                    return view('cursos/curso-admin-detalhes')
+                        ->with([
+                            'curso' => $curso,
+                            'unidade_expande' => 0,
+                            'erro' => 'A unidade "' . $unidade->descricao . '" não contem uma atividade avaliativa. Cadastre ao menos uma atividade para publicar o curso.'
+                        ]);
+                }
             }
+        }else{
+            return view('cursos/curso-admin-detalhes')
+                ->with([
+                    'curso' => $curso,
+                    'unidade_expande' => 0,
+                    'erro' => 'Cadastre ao menos uma unidade para publicar o curso.'
+                ]);
         }
 
         $curso->publicado = true;
@@ -276,7 +287,7 @@ class CursoController extends Controller
             'curso' => $curso,
             'notas' => $notas,
             'aprovado' => $aprovado,
-            'videosAssistido' =>$videosAssistido
+            'videosAssistido' => $videosAssistido
         ]);
     }
 
@@ -339,8 +350,8 @@ class CursoController extends Controller
         if (is_null($curso)) abort(404, 'Curso não encontrado');
 
         $aprovado = $curso->aprovado(Auth::user()->id);
-      //  if(!$aprovado)
-       //     abort(404, 'Usuário não aprovado');
+        //  if(!$aprovado)
+        //     abort(404, 'Usuário não aprovado');
 
         $user = User::find(Auth::user()->id);
 
@@ -375,21 +386,20 @@ class CursoController extends Controller
         $valor = $dados['valor'];
 
 
-        $cursos = Curso::where('palavras_chaves','like',$valor.'%' )
-            ->orWhere('titulo','like',$valor.'%' )
-            ->orWhere('descricao', 'like', $valor.'%' )
-            ->orWhere('instrutor', 'like', $valor.'%' )
+        $cursos = Curso::where('palavras_chaves', 'like', $valor . '%')
+            ->orWhere('titulo', 'like', $valor . '%')
+            ->orWhere('descricao', 'like', $valor . '%')
+            ->orWhere('instrutor', 'like', $valor . '%')
             ->where('publicado', '=', '1')
             ->get();
 
 
-
-   //     dd(DB::getQueryLog());
+        //     dd(DB::getQueryLog());
 
         foreach ($cursos as $curso) {
             $curso->avaliacao = $curso->avaliacoes();
         }
 
-             return view('cursos/pesquisa')->with(['cursos' => $cursos]);
+        return view('cursos/pesquisa')->with(['cursos' => $cursos]);
     }
 }
