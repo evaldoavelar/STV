@@ -61,7 +61,7 @@
                                     </div>
                                     <div class="col-md-12 espaco-10 ">
                                         @if($aprovado)
-                                            <a class="btn btn-info btn-half-block">Gerar Certificado</a>
+                                            <a href="{{url('curso-certificado',$curso->id)}}" class="btn btn-info btn-half-block">Gerar Certificado</a>
                                         @else
                                             <button class="btn btn-block btn-half-block disabled">Gerar Certificado
                                             </button>

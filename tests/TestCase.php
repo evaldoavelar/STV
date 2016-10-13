@@ -22,4 +22,19 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
 
         return $app;
     }
+
+
+    public function setUp()
+    {
+        parent::setUp();
+
+        $this->prepareForTests();
+    }
+
+    //o banco de dados de teste está na memória,
+    //então toda as vezes que executar os testes é nescessário chamar o migrate
+    private function prepareForTests()
+    {
+        Artisan::call('migrate');
+    }
 }

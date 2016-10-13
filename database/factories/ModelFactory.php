@@ -19,3 +19,24 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'remember_token' => str_random(10),
     ];
 });
+
+
+$factory->define(App\Curso::class, function (Faker\Generator $faker) {
+    return [
+        'titulo' => $faker->title,
+        'descricao' => $faker->text,
+        'instrutor' => $faker->name,
+        'categoria_id' => str_random(1,5),
+        'palavras_chaves' =>  $faker->words('curso','teste','laravel'),
+        'publicado' => str_random(0,1)
+    ];
+});
+
+$factory->define(App\Unidade::class, function (Faker\Generator $faker) use ($factory) {
+    return [
+        'curso_id' =>  factory(App\Curso::class)->create()->id,
+        'descricao' => $faker->text
+    ];
+});
+
+
