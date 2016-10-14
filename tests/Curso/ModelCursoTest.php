@@ -69,14 +69,12 @@ class ModelCursoTest extends TestCase
     public function testPodeListarUnidades()
     {
         //criar um curso fake com o ModelFactory
-        $curso = factory(App\Curso::class)
-            ->create()
-            ->each(function($c) {
-                $c->unidades()->save(factory('App\Unidade')->make());
-            });
+        $curso = factory(App\Curso::class)->create();
 
+        //gerar as unidades do curso
+        $curso->unidades()->save(factory('App\Unidade',2)->make([ 'curso_id' => $curso->id ]));
 
-        $this->assertEquals( $curso->unidades()->count(),2);
+        $this->assertEquals( 2, $curso->unidades()->count());
 
     }
 

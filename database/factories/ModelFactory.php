@@ -32,9 +32,12 @@ $factory->define(App\Curso::class, function (Faker\Generator $faker) {
     ];
 });
 
-$factory->define(App\Unidade::class, function (Faker\Generator $faker) use ($factory) {
+$factory->defineAs(App\Unidade::class, function (Faker\Generator $faker) use ($factory) {
+
+   // $curso_id = factory(App\Curso::class)->create()->id;
+
     return [
-        'curso_id' =>  factory(App\Curso::class)->create()->id,
+        'curso_id' =>   $faker->uuid,
         'descricao' => $faker->text
     ];
 });
