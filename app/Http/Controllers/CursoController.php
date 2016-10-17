@@ -26,7 +26,7 @@ class CursoController extends Controller
     function __construct()
     {
         //ligar os filtros para os metodos de administrador
-        $this->middleware('autorizacaoAdmin', ['except' => ['meusCursos', 'pesquisa', 'cursoPorCategoria', 'inscreverCurso', 'detalhesUsuario', 'avaliacao', 'certificado']]);
+        $this->middleware('autorizacaoAdmin', ['except' => ['salvar', 'meusCursos', 'pesquisa', 'cursoPorCategoria', 'inscreverCurso', 'detalhesUsuario', 'avaliacao', 'certificado']]);
 
         //ligar os filtros para os metodos de  usuário
         $this->middleware('autorizacaoUsuarios')->only('meusCursos', 'inscreverCurso', 'detalhesUsuario', 'avaliacao', 'certificado');
@@ -49,20 +49,34 @@ class CursoController extends Controller
     /*Salvar um curso*/
     public function salvar(CursoRequest $request)
     {
-        $curso = new Curso();
+        var_dump("HI!");
 
-        //popular o model
-        $curso->titulo = Input::get('titulo');
-        $curso->descricao = Input::get('descricao');
-        $curso->instrutor = Input::get('instrutor');
-        $curso->categoria_id = Input::get('categoria_id');
-        $curso->palavras_chaves = Input::get('palavras_chaves');
+        try {
 
-        /*salvar o model*/
-        $curso->save();
+            echo "salvando";
+            $curso = new Curso();
 
-        /*redirecionar para os detalhes do curso*/
-        return redirect()->action('CursoController@detalhesAdmin', [$curso->id, 0]);
+            //popular o model
+            $curso->titulo = Input::get('titulo');
+            $curso->descricao = Input::get('descricao');
+            $curso->instrutor = Input::get('instrutor');
+            $curso->categoria_id = Input::get('categoria_id');
+            $curso->palavras_chaves = Input::get('palavras_chaves');
+
+            /*salvar o model*/
+            $curso->save();
+
+
+            return response()->setStatusCode(200, 'The resource is created successfully!');
+            /*redirecionar para os detalhes do curso*/
+            // return redirect()->action('CursoController@detalhesAdmin', [$curso->id, 0]);
+
+
+        } catch (Exception $e) {
+            Log::info('Erro ao salvar usuário: ' . $e->getMessage());
+
+            return $e->getMessage();
+        }
     }
 
 
@@ -198,6 +212,9 @@ class CursoController extends Controller
         $curso = Curso::find($curso_id);
         if (is_null($curso)) abort(404, 'Curso não encontrado');
 
+        if (!$curso->publicado)
+            return response()->json(['inscrito' => false, 'msg' => 'Curso não publicado']);
+
         $user = User::find($user_id);
         if (is_null($user)) abort(404, 'Usuario não encontrado');
 
@@ -234,7 +251,7 @@ class CursoController extends Controller
                         ]);
                 }
             }
-        }else{
+        } else {
             return view('cursos/curso-admin-detalhes')
                 ->with([
                     'curso' => $curso,

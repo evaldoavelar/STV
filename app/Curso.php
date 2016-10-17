@@ -29,16 +29,6 @@ class Curso extends Model
         return $this->hasMany('App\UserCurso', 'curso_id', 'id');
     }
 
-    /*    public function curso()
-        {
-            return $this->hasMany('App\Curso', 'curso_id', 'id');
-        }
-
-        public function videos()
-        {
-            return $this->hasMany('App\Video', 'curso_id', 'id');
-        }*/
-
     public function totalVideos()
     {
 
