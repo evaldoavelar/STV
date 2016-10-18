@@ -13,12 +13,15 @@ class ControllerCursoTest extends TestCase
      */
     public function testPodeInscreverCurso()
     {
+
         //Abmiente
-        $curso = factory(App\Curso::class)->create(['publicado'=>true]);
+        $categoria_id = factory(App\Categoria::class)->create()->id;
+        $curso = factory(App\Curso::class)->create(['publicado'=>true,'categoria_id'=>$categoria_id]);
         $user = factory(App\User::class)->create();
 
         //autenticar
         $this->be($user);
+
 
 
         //testes
@@ -80,25 +83,66 @@ class ControllerCursoTest extends TestCase
         //Ambiente
         $curso = factory(App\Curso::class)->make();
         $user = factory(App\User::class)->create(['admin'=>true]);
+        $this->be($user);//autenticar
+
+        //ação
+        $this->visit('/curso-novo')
+            ->submitForm('Salvar Curso',[
+                'titulo'=>$curso->titulo,
+                'descricao'=>'Novo curso',
+                'instrutor'=>$curso->instrutor,
+                'categoria_id'=>$curso->categoria_id,
+                'palavras_chaves'=>$curso->palavras_chaves,
+            ])
+            ->see('Novo curso')
+            ->seeInDatabase('cursos', [
+                'titulo' => $curso->titulo,
+                'descricao' => 'Novo curso',
+                'instrutor'=>$curso->instrutor,
+                'categoria_id'=>$curso->categoria_id,
+                'palavras_chaves'=>$curso->palavras_chaves,
+            ]);
+    }
+
+
+    public function testPodeEditarCurso()
+    {
+        //Ambiente
+        $curso = factory(App\Curso::class)->create();
+        $user = factory(App\User::class)->create(['admin'=>true]);
         //autenticar
         $this->be($user);
 
         //ação
-        $this->post('/curso-salvar',[$curso->toArray()])
-                    ->see('ok')
-                    ->seeStatusCode(302);
-
-        //testes
-        $this->assertNotEquals(0,App\Curso::all()->count());
-
-        /*$ultimo_curso = App\Curso::latest()->first();
-        $this->assertEquals($curso->id, $ultimo_curso->id);
-        $this->assertEquals($curso->titulo, $ultimo_curso->titulo);
-        $this->assertEquals($curso->descricao, $ultimo_curso->descricao);
-        $this->assertEquals($curso->instrutor, $ultimo_curso->instrutor);
-        $this->assertEquals($curso->categoria_id, $ultimo_curso->categoria_id);
-        $this->assertEquals($curso->palavras_chaves, $ultimo_curso->palavras_chaves);
-        $this->assertEquals($curso->publicado, $ultimo_curso->publicado);*/
+        $this->visit('/curso-editar/'.$curso->id)
+            ->submitForm('Salvar Curso',[
+                'id'=>$curso->id,
+                'titulo'=>$curso->titulo,
+                'descricao'=>'Nova Descrição',
+                'instrutor'=>$curso->instrutor,
+                'categoria_id'=>$curso->categoria_id,
+                'palavras_chaves'=>$curso->palavras_chaves,
+            ])
+            ->see('Nova Descrição');
 
     }
+
+
+    public function testPodeExibirDetalhesDoCurso()
+    {
+        //Ambiente
+        $curso = factory(App\Curso::class)->create();
+        $user = factory(App\User::class)->create(['admin'=>true]);
+        //autenticar
+        $this->be($user);
+
+        //ação
+        $this->visit('/curso-admin-detalhes/'.$curso->id)
+            ->see($curso->titulo)
+            ->see($curso->descricao);
+
+    }
+
+
+
 }

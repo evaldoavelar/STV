@@ -53,7 +53,7 @@ class CursoController extends Controller
 
         try {
 
-            echo "salvando";
+
             $curso = new Curso();
 
             //popular o model
@@ -62,14 +62,15 @@ class CursoController extends Controller
             $curso->instrutor = Input::get('instrutor');
             $curso->categoria_id = Input::get('categoria_id');
             $curso->palavras_chaves = Input::get('palavras_chaves');
+            $curso->publicado = false;
 
             /*salvar o model*/
             $curso->save();
 
 
-            return response()->setStatusCode(200, 'The resource is created successfully!');
+            //return response()->setStatusCode(200, 'The resource is created successfully!');
             /*redirecionar para os detalhes do curso*/
-            // return redirect()->action('CursoController@detalhesAdmin', [$curso->id, 0]);
+             return redirect()->action('CursoController@detalhesAdmin', [$curso->id, 0]);
 
 
         } catch (Exception $e) {

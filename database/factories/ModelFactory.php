@@ -22,16 +22,26 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
     ];
 });
 
+$factory->define(App\Categoria::class, function (Faker\Generator $faker) {
+    return [
+        'descricao' => $faker->text,
+    ];
+});
 
 $factory->define(App\Curso::class, function (Faker\Generator $faker) {
-    return [
-        'titulo' => $faker->title.$faker->uuid,
+
+    $categoria_id = factory(App\Categoria::class)->create()->id;
+
+    $curso = [
+        'titulo' => $faker->title. $faker->uuid,
         'descricao' => $faker->text,
         'instrutor' => $faker->name,
-        'categoria_id' => rand (1,5),
-        'palavras_chaves' =>  $faker->words('curso','teste','laravel'),
+        'categoria_id' => $categoria_id,
+        'palavras_chaves' =>  $faker->streetName,  // $faker->words($nb = 3, $asText = false),
         'publicado' => rand (0,1)
     ];
+
+    return $curso;
 });
 
 $factory->defineAs(App\Unidade::class,'unidades', function (Faker\Generator $faker) use ($factory) {
@@ -87,6 +97,6 @@ $factory->defineAs(App\Resposta::class,'respostas', function (Faker\Generator $f
     return [
         'questao_id' =>   $faker->uuid,
         'enunciado' => $faker->text,
-        'correta' => random(0,1),
+        'correta' => rand(0,1),
     ];
 });

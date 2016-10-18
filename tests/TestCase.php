@@ -1,5 +1,7 @@
 <?php
 
+
+
 class TestCase extends Illuminate\Foundation\Testing\TestCase
 {
     /**
@@ -16,6 +18,9 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
      */
     public function createApplication()
     {
+         // ini_set('memory_limit',-1);
+
+
         $app = require __DIR__.'/../bootstrap/app.php';
 
         $app->make(Illuminate\Contracts\Console\Kernel::class)->bootstrap();
@@ -29,6 +34,18 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
         parent::setUp();
 
         $this->prepareForTests();
+    }
+
+
+    protected function tearDown()
+    {
+        $refl = new ReflectionObject($this);
+        foreach ($refl->getProperties() as $prop) {
+            if (!$prop->isStatic() && 0 !== strpos($prop->getDeclaringClass()->getName(), 'PHPUnit_')) {
+                $prop->setAccessible(true);
+                $prop->setValue($this, null);
+            }
+        }
     }
 
     //o banco de dados de teste está na memória,
