@@ -18,4 +18,12 @@ class HomeControllerTest extends TestCase
     }
 
 
+    public function testPodeAcessarLogin()
+    {
+        $this->visit('/home')
+            ->click('Login')
+            ->click('Login')
+            ->seePageIs('/login');
+    }
+
 }

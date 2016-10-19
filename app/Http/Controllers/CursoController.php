@@ -49,7 +49,7 @@ class CursoController extends Controller
     /*Salvar um curso*/
     public function salvar(CursoRequest $request)
     {
-        var_dump("HI!");
+
 
         try {
 

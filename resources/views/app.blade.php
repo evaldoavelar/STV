@@ -33,7 +33,7 @@
 
 <!-- Barra de Navegação -->
 
-<div class="navbar navbar-default navbar-static-top ">
+<div class="navbar navbar-default navbar-fixed-top ">
     <div class="container">
 
         <!-- Brand and toggle -->
@@ -92,7 +92,7 @@
                             @if( Auth::check())
                                 <strong>{{Auth::user()->name }}</strong>
                             @else
-                                <strong>Login</strong>
+                                <strong>Fazer login</strong>
                             @endif
                             <span class="caret"></span>
                         </a>
@@ -150,26 +150,29 @@
 <!-- Barra de Pesquisa -->
 
 
-<div class="container espaco-30">
+<div class="container ">
 
-    <img class=" pull-left hidden-xs " src="{{url('images/logo.png')}}">
+    <div class="row  espaco-70">
+       <img class=" pull-left hidden-xs " src="{{url('images/logo.png')}}">
 
-    <nav id="busca" class=" pull-right">
-        @if(Auth::check() &&  !Auth::user()->admin)
-            <form class="navbar-form navbar-left" role="search" action="{{url('curso-pesquisa')}}" method="get">
 
-                <div class="input-group">
-                    <input type="text" name="valor" class="form-control pesquisa" placeholder="Pesquisar...">
-                <span class="input-group-btn">
+        <nav id="busca" class="nav-pesquisa pull-right">
+            @if( (!Auth::check()) || (Auth::check() &&  !Auth::user()->admin))
+                <form class="navbar-form navbar-left" role="search" action="{{url('curso-pesquisa')}}" method="get">
+
+                    <div class="input-group">
+                        <input type="text" name="valor" class="form-control pesquisa" placeholder="Pesquisar...">
+                        <span class="input-group-btn">
                             <button class="btn btn-default" type="submit">
                                 <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                             </button>
                           </span>
-                </div>
+                    </div>
 
-            </form>
-        @endif
-    </nav>
+                </form>
+            @endif
+        </nav>
+    </div>
 </div>
 
 
@@ -199,50 +202,30 @@
 
 @yield('container')
 @yield('scripts')
-        <!-- Rodapé -->
+<!-- Rodapé -->
 
 <footer class="site-footer style-2">
-    <div class="vc_empty_space" style="height: 30px"><span
-                class="vc_empty_space_inner"></span></div>
-    <div class="container">
 
+    <div class="container pad-lg-t pad-md-b pad-md-t-mobi pad-no-b-mobi">
         <div class="row">
-            <div class="col-md-6 col-xs-12">
-                <ul>
-                    <li id="anpsimages-1" class="widget-container widget_anpsimages">
-                        <h3 class="widget-title"></h3>
-                        <img alt="Logo" class="img-rounded" src="{{url('images/logo3.png')}}"/>
-                    </li>
-                </ul>
+            <div class="col-md-5 relative">
+                <img src="{{url('images/logo4.png')}}" class="mascote-coala absolute">
             </div>
-            <div class="col-md-6 col-xs-12">
-                <ul>
-                    <li id="nav_menu-1" class="widget-container widget_nav_menu">
-                        <h3 class="widget-title">Navegação</h3>
-                        <div class="menu-main-menu-container">
-                            <ul id="menu-main-menu-1" class="menu">
-                                <li class="">
-                                    <a href="index  ">Início</a>
-                                </li>
-                                <li class="">
-                                    <a href="servicos">Serviços</a>
-                                </li>
-                                <li class="">
-                                    <a href="orcamento">Orçamento</a>
-                                </li>
-                                <li class=" ">
-                                    <a href="sobre">Sobre</a>
-                                </li>
 
-                            </ul>
-                        </div>
-                    </li>
-                </ul>
-
+            <div class="col-md-5 relative site-footer-logo">
+                <h4><span class="first-letter">S</span>istema de <span class="first-letter">T</span>reinamento em <span
+                            class="first-letter">V</span>ídeo</h4>
+                <p>
+                    Este sistema de treinamento online, permite que você tenha em mãos uma poderosa ferramenta para
+                    melhorar o desempenho de todos os colaboradores de sua empresa, através de uma plataforma online
+                    personalizada de treinamento em vídeo.
+                </p>
             </div>
 
         </div>
+        <!-- end .produtos -->
     </div>
+
     <div class="container-fluid text-center site-footer-credito">
         <p>Desenvolvido por Evaldo Avelar Marques</p>
     </div>

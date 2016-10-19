@@ -26,5 +26,14 @@ class LoginControllerTest extends TestCase
             ])
             ->seePageIs('/home');
 
+
+        //ação
+        $this->visit('/login')
+            ->submitForm('Login',[
+                'password'=>$admin->password,
+                'email'=>$admin->email,
+            ])
+            ->seePageIs('/home');
+
     }
 }

@@ -9,7 +9,7 @@
 
             <!-- Slides -->
     <section class=" ">
-        <div class="container-fluid">
+        <div class="container">
             <div id="slides" class="carousel slide" data-ride="carousel">
                 <!-- Indicators -->
                 <ol class="carousel-indicators">
@@ -61,7 +61,7 @@
 
     <!-- Ultimos Cursos -->
     <section>
-        <div class="container text-justify">
+        <div class="container text-justify espaco-40">
 
 
             <div class="panel panel-primary espaco-30">
