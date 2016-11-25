@@ -2,12 +2,12 @@
 
 @section('title')
     STV Treinamento em Vídeos
-    @stop
+@stop
 
-    @section('container')
+@section('container')
 
 
-            <!-- Slides -->
+    <!-- Slides -->
     <section class=" ">
         <div class="container">
             <div id="slides" class="carousel slide" data-ride="carousel">
@@ -75,17 +75,18 @@
 
                         @foreach($cursos as $curso)
                             <div class="col-sm-6 col-md-4">
-                                <div class="thumbnail">
-                                    <img class="img-thumbnail" src="images/curso1.jpg" alt="...">
-                                    <div class="caption">
-                                        <h3>{{$curso->titulo}}</h3>
-                                        <p class="thumbnail-p"> {{ $curso->descricao  }}</p>
-                                        <p>
-
-                                            <span class="badge "> {{$curso->inscritos()->count()}} Inscritos</span>
-                                        </p>
+                                <a href="{{url("curso-detalhes",$curso->id)}}">
+                                    <div class="thumbnail">
+                                        <img class="img-thumbnail" src="images/curso1.jpg" alt="...">
+                                        <div class="caption">
+                                            <h3>{{$curso->titulo}}</h3>
+                                            <p class="thumbnail-p"> {{ $curso->descricao  }}</p>
+                                            <p>
+                                                <span class="badge "> {{$curso->inscritos()->count()}} Inscritos</span>
+                                            </p>
+                                        </div>
                                     </div>
-                                </div>
+                                </a>
                             </div>
                         @endforeach
 

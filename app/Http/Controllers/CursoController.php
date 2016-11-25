@@ -29,7 +29,7 @@ class CursoController extends Controller
         $this->middleware('autorizacaoAdmin', ['except' => ['salvar', 'meusCursos', 'pesquisa', 'cursoPorCategoria', 'inscreverCurso', 'detalhesUsuario', 'avaliacao', 'certificado']]);
 
         //ligar os filtros para os metodos de  usuário
-        $this->middleware('autorizacaoUsuarios')->only('meusCursos', 'inscreverCurso', 'detalhesUsuario', 'avaliacao', 'certificado');
+        $this->middleware('autorizacaoUsuarios')->only('meusCursos', 'inscreverCurso', 'avaliacao', 'certificado');
     }
 
     /*Novo Curso*/
@@ -70,7 +70,7 @@ class CursoController extends Controller
 
             //return response()->setStatusCode(200, 'The resource is created successfully!');
             /*redirecionar para os detalhes do curso*/
-             return redirect()->action('CursoController@detalhesAdmin', [$curso->id, 0]);
+            return redirect()->action('CursoController@detalhesAdmin', [$curso->id, 0]);
 
 
         } catch (Exception $e) {
@@ -295,11 +295,17 @@ class CursoController extends Controller
         $curso = Curso::find($curso_id);
         if (is_null($curso)) abort(404, 'Curso não encontrado');
 
-        $notas = $curso->RetornaNotaUsuarioCurso(Auth::user()->id);
+        if (Auth::check()) {
+            $notas = $curso->RetornaNotaUsuarioCurso(Auth::user()->id);
 
-        $aprovado = $curso->aprovado(Auth::user()->id);
+            $aprovado = $curso->aprovado(Auth::user()->id);
 
-        $videosAssistido = $curso->RetornaPorcentagemVideosAssistidos(Auth::user()->id);
+            $videosAssistido = $curso->RetornaPorcentagemVideosAssistidos(Auth::user()->id);
+
+        }else{
+
+            
+        }
 
         return view('cursos/curso-usuario-detalhes')->with([
             'curso' => $curso,
