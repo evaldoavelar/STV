@@ -1,7 +1,7 @@
 @extends('app')
 
 @section('title')
-    STV Treinamento em Vídeos
+   Curso de {{$curso->titulo}}
 @stop
 
 @section('container')
@@ -37,20 +37,34 @@
                                 <div class="col-md-6">
                                     <div title="Clique para avaliar o Curso">
                                         <h2> Avaliação </h2>
-                                        <p>Clique na estrela para Avaliar o Curso</p>
-                                        <p>
-                                            @for($j = 1; $j<=5;$j++)
-                                                @if($j <= $curso->avaliacoes())
-                                                    <a href="{{url('curso-avaliacao/'.$curso->id.'/'.$j)}}"> <span
-                                                                class="glyphicon glyphicon-star"
-                                                                aria-hidden="true" title="Nota: {{$j}}"></span></a>
-                                                @else
-                                                    <a href="{{url('curso-avaliacao/'.$curso->id.'/'.$j)}}"> <span
-                                                                class="glyphicon glyphicon-star-empty"
-                                                                aria-hidden="true" title="Nota: {{$j}}"></span></a>
-                                                @endif
-                                            @endfor
-                                        </p>
+                                        @if (Auth::check())
+                                            <p>Clique na estrela para Avaliar o Curso</p>
+                                            <p>
+                                                @for($j = 1; $j<=5;$j++)
+                                                    @if($j <= $curso->avaliacoes())
+                                                        <a href="{{url('curso-avaliacao/'.$curso->id.'/'.$j)}}"> <span
+                                                                    class="glyphicon glyphicon-star"
+                                                                    aria-hidden="true" title="Nota: {{$j}}"></span></a>
+                                                    @else
+                                                        <a href="{{url('curso-avaliacao/'.$curso->id.'/'.$j)}}"> <span
+                                                                    class="glyphicon glyphicon-star-empty"
+                                                                    aria-hidden="true" title="Nota: {{$j}}"></span></a>
+                                                    @endif
+                                                @endfor
+                                            </p>
+                                        @else
+                                            <p>
+                                                @for($j = 1; $j<=5;$j++)
+                                                    @if($j <= $curso->avaliacoes())
+                                                       <span   class="glyphicon glyphicon-star"
+                                                                    aria-hidden="true" title="Nota: {{$j}}"></span>
+                                                    @else
+                                                        <span  class="glyphicon glyphicon-star-empty"
+                                                                    aria-hidden="true" title="Nota: {{$j}}"></span>
+                                                    @endif
+                                                @endfor
+                                            </p>
+                                        @endif
                                     </div>
                                     <p class="pull-left"><strong>Instrutor</strong> : {{$curso->instrutor}}</p>
 
@@ -60,11 +74,14 @@
 
                                     </div>
                                     <div class="col-md-12 espaco-10 ">
-                                        @if($aprovado)
-                                            <a href="{{url('curso-certificado',$curso->id)}}" class="btn btn-info btn-half-block">Gerar Certificado</a>
-                                        @else
-                                            <button class="btn btn-block btn-half-block disabled">Gerar Certificado
-                                            </button>
+                                        @if (Auth::check())
+                                            @if($aprovado)
+                                                <a href="{{url('curso-certificado',$curso->id)}}"
+                                                   class="btn btn-info btn-half-block">Gerar Certificado</a>
+                                            @else
+                                                <button class="btn btn-block btn-half-block disabled">Gerar Certificado
+                                                </button>
+                                            @endif
                                         @endif
                                     </div>
                                 </div>
@@ -78,67 +95,72 @@
         </div>
     </section>
 
+    @if (Auth::check())
 
-    <section id="notas">
-        <div class="container ">
-            <div class="panel panel-default ">
-                <div class="panel-heading">
-                    <h3>Quadro de Notas</h3>
-                </div>
-                <div class="panel-body">
+        <section id="notas">
+            <div class="container ">
+                <div class="panel panel-default ">
+                    <div class="panel-heading">
+                        <h3>Quadro de Notas</h3>
+                    </div>
+                    <div class="panel-body">
 
-                    <div class="row">
-                        <div class="col-md-12 ">
-                            <div class="table-responsive">
-                                <table class="table table-condensed ">
-                                    <thead>
-                                    <tr>
-                                        <th>Unidade</th>
-                                        <th>Avaliação</th>
-                                        <th>Nota</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    @foreach($notas as $nota)
+                        <div class="row">
+                            <div class="col-md-12 ">
+                                <div class="table-responsive">
+                                    <table class="table table-condensed ">
+                                        <thead>
                                         <tr>
-                                            <td>{{$nota->descricao}}</td>
-                                            <td>{{$nota->titulo}}</td>
-
-                                            @if($nota->nota > 70)
-                                                <td class="nota-aprovado">{{$nota->nota}}</td>
-                                            @else
-                                                <td class="nota-reprovado">{{$nota->nota ? $nota->nota : '-' }}</td>
-                                            @endif
+                                            <th>Unidade</th>
+                                            <th>Avaliação</th>
+                                            <th>Nota</th>
                                         </tr>
-                                    @endforeach
-                                    <td> Porcentagem de Vídeos Assistidos:</td>
-                                    <td></td>
-                                    @if($nota->nota >= 100)
-                                        <td class="nota-aprovado">{{$videosAssistido}}%</td>
-                                    @else
-                                        <td class="nota-reprovado">{{$videosAssistido}}%</td>
-                                    @endif
-                                    </tbody>
-                                </table>
+                                        </thead>
+                                        <tbody>
+                                        @forelse($notas as $nota)
+                                            <tr>
+                                                <td>{{$nota->descricao}}</td>
+                                                <td>{{$nota->titulo}}</td>
 
+                                                @if($nota->nota > 70)
+                                                    <td class="nota-aprovado">{{$nota->nota}}</td>
+                                                @else
+                                                    <td class="nota-reprovado">{{$nota->nota ? $nota->nota : '-' }}</td>
+                                                @endif
+                                            </tr>
+                                        @empty
+                                        @endforelse
+                                        <td> Porcentagem de Vídeos Assistidos:</td>
+                                        <td></td>
+                                        @if($aprovado)
+                                            <td class="nota-aprovado">{{$videosAssistido}}%</td>
+                                        @else
+                                            <td class="nota-reprovado">{{$videosAssistido}}%</td>
+                                        @endif
+                                        </tbody>
+                                    </table>
+
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="panel-footer">
-                    <p ><small>Aprovação: 70% de Acertos nas atividades e 100% dos vídeos assistidos</small></p>
-                    @if($aprovado)
-                        <p class="text-center nota-aprovado">Você já foi aprovado neste Curso</p>
-                    @else
-                        <p class="text-center nota-reprovado">Você ainda não foi aprovado neste Curso</p>
-                    @endif
+                    <div class="panel-footer">
+                        <p>
+                            <small>Aprovação: 70% de Acertos nas atividades e 100% dos vídeos assistidos</small>
+                        </p>
+                        @if($aprovado)
+                            <p class="text-center nota-aprovado">Você já foi aprovado neste Curso</p>
+                        @else
+                            <p class="text-center nota-reprovado">Você ainda não foi aprovado neste Curso</p>
+                        @endif
 
+                    </div>
                 </div>
             </div>
-        </div>
-        </div>
-    </section>
+            </div>
+        </section>
 
+    @endif
 
     <section>
         <div class="container ">
@@ -166,10 +188,12 @@
 
                                 <div class="col-lg-12 contador">
                                     <p><span class="badge ">{{$i+1}}</span>{{$unidade->descricao}}</p>
-                                    <p><a class="pull-right" href="{{url('unidade-detalhe',$unidade->id)}}">Acessar
-                                            <span class="glyphicon glyphicon-chevron-right"
-                                                  aria-hidden="true"></span></a>
-                                    </p>
+                                    @if (Auth::check())
+                                        <p><a class="pull-right" href="{{url('unidade-detalhe',$unidade->id)}}">Acessar
+                                                <span class="glyphicon glyphicon-chevron-right"
+                                                      aria-hidden="true"></span></a>
+                                        </p>
+                                    @endif
                                 </div>
 
 

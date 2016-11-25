@@ -182,7 +182,7 @@ class CursoController extends Controller
             return view('cursos/curso-listagem')->with(['cursos' => $cursos, 'valor' => $data['valor'], 'campo' => $data['campo'], 'msg' => $msg]);
             // dd(DB::getQueryLog());
         } else {
-            $cursos = [];
+            $cursos = Curso::all();
             return view('cursos/curso-listagem')->with(['cursos' => $cursos, 'msg' => $msg]);
         }
 
@@ -304,7 +304,9 @@ class CursoController extends Controller
 
         }else{
 
-            
+            $notas = array();
+            $aprovado = false;
+            $videosAssistido = 0;
         }
 
         return view('cursos/curso-usuario-detalhes')->with([

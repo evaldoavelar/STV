@@ -187,7 +187,7 @@ class AuthController extends Controller
             ]);
             // dd(DB::getQueryLog());
         } else {
-            $usuarios = [];
+            $usuarios = User::all();;
             return view('auth/list')->with(['usuarios' => $usuarios,'msg'=>$msg, 'urlParametros' => $urlParametros]);
         }
 
