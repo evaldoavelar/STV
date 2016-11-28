@@ -3,11 +3,11 @@
 @section('title')
     STV Treinamento em Vídeos
 
-    @stop
+@stop
 
-    @section('container')
+@section('container')
 
-            <!-- Slides -->
+    <!-- Slides -->
     <section class="content ">
         <div class="container">
             <div class="block-header">
@@ -16,7 +16,7 @@
 
             <div class="row clearfix espaco-40">
                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                    <a href="">
+                    <a href="{{url('curso-lista')}}">
                         <div class="info-box bg-pink hover-expand-effect">
                             <div class="icon">
                                 <i class="material-icons">collections</i>
@@ -31,17 +31,19 @@
                     </a>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                    <div class="info-box bg-orange hover-expand-effect">
-                        <div class="icon">
-                            <i class="material-icons">person</i>
-                        </div>
-                        <div class="content">
-                            <div class="text">USUÁRIOS</div>
-                            <div class="number count-to" data-from="0" data-to="1225" data-speed="1000"
-                                 data-fresh-interval="20">{{$usuarios}}
+                    <a href="{{url('usuario-lista')}}">
+                        <div class="info-box bg-orange hover-expand-effect">
+                            <div class="icon">
+                                <i class="material-icons">person</i>
+                            </div>
+                            <div class="content">
+                                <div class="text">USUÁRIOS</div>
+                                <div class="number count-to" data-from="0" data-to="1225" data-speed="1000"
+                                     data-fresh-interval="20">{{$usuarios}}
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
             </div>
 

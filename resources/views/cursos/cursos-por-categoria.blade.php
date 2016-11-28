@@ -10,7 +10,7 @@
         <div class="container ">
             <div class="row-fluid">
                 <div class="col-md-12 ">
-                    <p class="destaque">Cursos Categoria <span>{{$categoria->descricao}}</span></p>
+                    <p class="destaque">Cursos de <span>{{$categoria->descricao}}</span></p>
                 </div>
             </div>
         </div>

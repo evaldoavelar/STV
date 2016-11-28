@@ -20,28 +20,36 @@
 
                 <!-- Wrapper for slides -->
                 <div class="carousel-inner" role="listbox">
+
                     <div class="item active">
-                        <img src="images/slide1.jpg" alt="Chania">
-                        <div class="carousel-caption">
-                            <h3>Evolua</h3>
-                            <p>Dezenas de vídeos aulas para você melhorar seu conhecimento.</p>
-                        </div>
+                        <a href="{{url('cursos-por-categoria',5)}}">
+                            <img src="images/slide1.jpg" alt="Chania">
+                            <div class="carousel-caption">
+                                <h3>Inglês</h3>
+                                <p>Dezenas de vídeos aulas para você melhorar seu conhecimento em outro Idioma.</p>
+                            </div>
+                        </a>
+                    </div>
+
+
+                    <div class="item">
+                        <a href="{{url('cursos-por-categoria',2)}}">
+                            <img src="images/slide2.jpg" alt="Chania">
+                            <div class="carousel-caption">
+                                <h3>Melhore sua escrita</h3>
+                                <p>Aprenda como se comunicar melhor com sua equipe</p>
+                            </div>
+                        </a>
                     </div>
 
                     <div class="item">
-                        <img src="images/slide2.jpg" alt="Chania">
-                        <div class="carousel-caption">
-                            <h3>Comunique-se</h3>
-                            <p>Aprenda como se comunicar melhor com sua equipe</p>
-                        </div>
-                    </div>
-
-                    <div class="item">
-                        <img src="images/slide3.jpg" alt="Flower">
-                        <div class="carousel-caption">
-                            <h3>24 horas</h3>
-                            <p>Faça seu treinamento em qualquer lugar a qualquer hora</p>
-                        </div>
+                        <a href="{{url('cursos-por-categoria',4)}}">
+                            <img src="images/slide3.jpg" alt="Flower">
+                            <div class="carousel-caption">
+                                <h3>O futuro está na computação</h3>
+                                <p>Melhore o seu conhecimento em dezenas de softwares</p>
+                            </div>
+                        </a>
                     </div>
 
                 </div>
