@@ -85,8 +85,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/atividade-excluir/{id}','AtividadeController@excluir')->where('id', '[0-9]+');
     Route::get('/atividade-detalhe/{id}','AtividadeController@detalhe')->where('id', '[0-9]+');
     Route::post('/realizar-atividade', 'AtividadeController@realizarAtividade');
-    
-   
+
     
 });
 
