@@ -1,7 +1,7 @@
 @extends('app')
 
 @section('title')
-   Curso de {{$curso->titulo}}
+    Curso de {{$curso->titulo}}
 @stop
 
 @section('container')
@@ -37,7 +37,7 @@
                                 <div class="col-md-6">
                                     <div title="Clique para avaliar o Curso">
                                         <h2> Avaliação </h2>
-                                        @if (Auth::check())
+                                        @if ($inscrito)
                                             <p>Clique na estrela para Avaliar o Curso</p>
                                             <p>
                                                 @for($j = 1; $j<=5;$j++)
@@ -56,17 +56,18 @@
                                             <p>
                                                 @for($j = 1; $j<=5;$j++)
                                                     @if($j <= $curso->avaliacoes())
-                                                       <span   class="glyphicon glyphicon-star"
-                                                                    aria-hidden="true" title="Nota: {{$j}}"></span>
+                                                        <span class="glyphicon glyphicon-star"
+                                                              aria-hidden="true" title="Nota: {{$j}}"></span>
                                                     @else
-                                                        <span  class="glyphicon glyphicon-star-empty"
-                                                                    aria-hidden="true" title="Nota: {{$j}}"></span>
+                                                        <span class="glyphicon glyphicon-star-empty"
+                                                              aria-hidden="true" title="Nota: {{$j}}"></span>
                                                     @endif
                                                 @endfor
                                             </p>
                                         @endif
+                                        <p class="pull-left"><strong>Instrutor</strong> : {{$curso->instrutor}}</p>
                                     </div>
-                                    <p class="pull-left"><strong>Instrutor</strong> : {{$curso->instrutor}}</p>
+
 
                                 </div>
                                 <div class="col-md-6">
@@ -74,7 +75,7 @@
 
                                     </div>
                                     <div class="col-md-12 espaco-10 ">
-                                        @if (Auth::check())
+                                        @if ($inscrito)
                                             @if($aprovado)
                                                 <a href="{{url('curso-certificado',$curso->id)}}"
                                                    class="btn btn-info btn-half-block">Gerar Certificado</a>
@@ -82,6 +83,16 @@
                                                 <button class="btn btn-block btn-half-block disabled">Gerar Certificado
                                                 </button>
                                             @endif
+                                        @elseif(Auth::check())
+                                            <button class="btn btn-group-lg btn-danger inscrever pull-right"
+                                                    data-userID="{{Auth::user()->id}}"
+                                                    data-cursoId="{{$curso->id}}">Inscrever
+                                            </button>
+                                        @else
+                                            <a href="{{url('/login')}}"
+                                               class="btn btn-group-lg btn-primary pull-right">
+                                                Faça Login para se Inscrever
+                                            </a>
                                         @endif
                                     </div>
                                 </div>
@@ -95,7 +106,7 @@
         </div>
     </section>
 
-    @if (Auth::check())
+    @if ($inscrito)
 
         <section id="notas">
             <div class="container ">
@@ -188,10 +199,14 @@
 
                                 <div class="col-lg-12 contador">
                                     <p><span class="badge ">{{$i+1}}</span>{{$unidade->descricao}}</p>
-                                    @if (Auth::check())
+                                    @if ($inscrito)
                                         <p><a class="pull-right" href="{{url('unidade-detalhe',$unidade->id)}}">Acessar
                                                 <span class="glyphicon glyphicon-chevron-right"
                                                       aria-hidden="true"></span></a>
+                                        </p>
+                                    @else
+                                        <p class="pull-right">Se inscreva para iniciar está unidade
+
                                         </p>
                                     @endif
                                 </div>

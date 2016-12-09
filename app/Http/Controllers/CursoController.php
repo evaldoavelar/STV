@@ -296,24 +296,37 @@ class CursoController extends Controller
         if (is_null($curso)) abort(404, 'Curso não encontrado');
 
         if (Auth::check()) {
-            $notas = $curso->RetornaNotaUsuarioCurso(Auth::user()->id);
 
-            $aprovado = $curso->aprovado(Auth::user()->id);
+            $inscrito = $curso->inscritos()->where('user_id',Auth::user()->id)->get()->count() > 0;
 
-            $videosAssistido = $curso->RetornaPorcentagemVideosAssistidos(Auth::user()->id);
+           if ($inscrito) {
+                $notas = $curso->RetornaNotaUsuarioCurso(Auth::user()->id);
+
+                $aprovado = $curso->aprovado(Auth::user()->id);
+
+                $videosAssistido = $curso->RetornaPorcentagemVideosAssistidos(Auth::user()->id);
+            }
+            else{
+
+                $notas = array();
+                $aprovado = false;
+                $videosAssistido = 0;
+            }
 
         }else{
 
             $notas = array();
             $aprovado = false;
             $videosAssistido = 0;
+            $inscrito = false;
         }
 
         return view('cursos/curso-usuario-detalhes')->with([
             'curso' => $curso,
             'notas' => $notas,
             'aprovado' => $aprovado,
-            'videosAssistido' => $videosAssistido
+            'videosAssistido' => $videosAssistido,
+            'inscrito' =>$inscrito
         ]);
     }
 
