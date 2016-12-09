@@ -20,7 +20,7 @@
     <div class="row">
         <div class="text-center cabecalho">
             <h1>STV TREINAMENTOS</h1>
-            <h2>Relatório de acompanhamento de usuários</h2>
+            <h2>Relatório de acompanhamento de usuários*</h2>
         </div>
     </div>
 

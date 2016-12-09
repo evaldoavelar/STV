@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\User;
 use App\Library\Util;
 use Illuminate\Support\Facades\Redirect;
+use League\Flysystem\Exception;
 use Validator;
 use DB;
 use Auth;
@@ -13,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Barryvdh\Snappy\Facades\SnappyPdf;
+
 //use Illuminate\Support\Facades\Request;
 
 class AuthController extends Controller
@@ -116,8 +118,8 @@ class AuthController extends Controller
 
         $user = $this->create($request->all());
 
-        return view('auth/edit')->with(['usuario'=> $user,'msg'=>"Usuário salvo com Sucesso!"]);
-       // return redirect('/usuario-lista');
+        return view('auth/edit')->with(['usuario' => $user, 'msg' => "Usuário salvo com Sucesso!"]);
+        // return redirect('/usuario-lista');
     }
 
 
@@ -155,9 +157,9 @@ class AuthController extends Controller
         $dados = \Illuminate\Support\Facades\Request::all();
 
         //redirecionar com os parametros
-        return redirect('usuario-editar/'.$usuario->id.'?msg='.urlencode($msg));
+        return redirect('usuario-editar/' . $usuario->id . '?msg=' . urlencode($msg));
 
-       // return redirect('/usuario-lista');
+        // return redirect('/usuario-lista');
     }
 
 
@@ -173,22 +175,22 @@ class AuthController extends Controller
         $msg = isset($data['msg']) ? $data['msg'] : null;
 
         //verifcar se está usando o filtro
-        if ( Util::checkIsNullAndEmpty($data,'campo') && Util::checkIsNullAndEmpty($data,'valor')  ){
+        if (Util::checkIsNullAndEmpty($data, 'campo') && Util::checkIsNullAndEmpty($data, 'valor')) {
             //filtrar os usuários
             $usuarios = User::where($data['campo'], "LIKE", $data['valor'] . '%')->get();
 
             //retornar a consulta e os campos do filtro para a view
             return view('auth/list')->with([
-                'usuarios' => $usuarios, 
-                'valor' => $data['valor'], 
+                'usuarios' => $usuarios,
+                'valor' => $data['valor'],
                 'campo' => $data['campo'],
-                'msg'=>$msg,
+                'msg' => $msg,
                 'urlParametros' => $urlParametros
             ]);
             // dd(DB::getQueryLog());
         } else {
             $usuarios = User::all();;
-            return view('auth/list')->with(['usuarios' => $usuarios,'msg'=>$msg, 'urlParametros' => $urlParametros]);
+            return view('auth/list')->with(['usuarios' => $usuarios, 'msg' => $msg, 'urlParametros' => $urlParametros]);
         }
 
     }
@@ -204,7 +206,7 @@ class AuthController extends Controller
 
         $msg = \Illuminate\Support\Facades\Request::input('msg');
 
-        return view('auth/edit')->with(['usuario'=> $usuario,'msg'=>$msg]);
+        return view('auth/edit')->with(['usuario' => $usuario, 'msg' => $msg]);
     }
 
 
@@ -219,40 +221,42 @@ class AuthController extends Controller
         $usuario = User::find($id);
         if (is_null($usuario)) abort(404);
 
-        if($id == Auth::user()->id)
-         return redirect()->back()->withErrors(['erro', 'Você não pode se excluir']);
+        if ($id == Auth::user()->id)
+            return redirect()->back()->withErrors(['erro', 'Você não pode se excluir']);
 
         $usuario->delete();
 
         //capiturar os parametros da url
         $dados = \Illuminate\Support\Facades\Request::all();
         //redirecionar com os parametros
-        return redirect('usuario-lista?'.http_build_query($dados,'&').'&msg='.urlencode($msg));
+        return redirect('usuario-lista?' . http_build_query($dados, '&') . '&msg=' . urlencode($msg));
     }
 
     public function relatorio($id)
     {
-        $usuario = User::find($id);
-        if (is_null($usuario)) abort(404);
+        try {
+            $usuario = User::find($id);
+            if (is_null($usuario)) abort(404);
 
-        $cursos = $usuario->cursos()->get();
+            $cursos = $usuario->cursos()->get();
 
-        foreach ($cursos as $curso) {
-            $curso->notas = $curso->RetornaNotaUsuarioCurso($id);
-            $curso->aprovado = $curso->aprovado($id);
-            $curso->PorcetagemAssistidos = $curso->RetornaPorcentagemVideosAssistidos($id);
+            foreach ($cursos as $curso) {
+                $curso->notas = $curso->RetornaNotaUsuarioCurso($id);
+                $curso->aprovado = $curso->aprovado($id);
+                $curso->PorcetagemAssistidos = $curso->RetornaPorcentagemVideosAssistidos($id);
+            }
+
+            $dados = [
+                'nome' => $usuario->name,
+                'cursos' => $cursos,
+                'data' => date('d/m/Y'),
+            ];
+
+            $pdf = SnappyPdf::loadView('auth/usuario-relatorio', $dados);
+            return $pdf->setPaper('a4')->stream();
+        } catch (Exception $e) {
+            return $e->getMessage();
         }
-
-        $dados = [
-            'nome' => $usuario->name,
-            'cursos' => $cursos,
-            'data' =>  date('d/m/Y'),
-        ];
-        
-
-        $pdf = SnappyPdf::loadView('auth/usuario-relatorio', $dados);
-        return $pdf->setPaper('a4')->stream();
-
-      //  return view('auth/usuario-relatorio')->with($dados);
+        //  return view('auth/usuario-relatorio')->with($dados);
     }
 }
